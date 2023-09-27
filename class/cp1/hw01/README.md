@@ -18,3 +18,6 @@ make
 ./hw0105
 ```
 
+# Something to tell TA
+hw0105 is not completed yet
+

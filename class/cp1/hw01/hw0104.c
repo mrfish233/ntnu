@@ -658,19 +658,19 @@ int main()
 		{
 			printf("2H");
 		}
-		else if (spade_count == 7)
+		else if (spade_count >= 7)
 		{
 			printf("3S");
 		}
-		else if (heart_count == 7)
+		else if (heart_count >= 7)
 		{
 			printf("3H");
 		}
-		else if (diamond_count == 7)
+		else if (diamond_count >= 7)
 		{
 			printf("3D");
 		}
-		else if (club_count == 7)
+		else if (club_count >= 7)
 		{
 			printf("3C");
 		}

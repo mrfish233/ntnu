@@ -140,32 +140,32 @@ int main()
 			
 			printf("-----\n");
 
-			// Print ones_result
-			if (ones_result < 10)
-			{
-				printf("    %d\n", ones_result);
-			}
-			else
-			{
-				tens = ones_result / 10;
-				ones = ones_result % 10;
-
-				printf("  %d %d\n", tens, ones);
-			}
-
-			// Print tens_result
-			// As total < 100, therefore tens_result < 10
-			printf("  %d  \n", tens_result);
-			
-			printf("-----\n");
-			
-			// Check and print total
+			// Don't print process if total == 0
 			if (total == 0)
 			{
 				printf("    %d\n", total);
 			}
 			else
-			{
+			{	
+				// Print ones_result
+				if (ones_result < 10)
+				{
+					printf("    %d\n", ones_result);
+				}
+				else
+				{
+					tens = ones_result / 10;
+					ones = ones_result % 10;
+
+					printf("  %d %d\n", tens, ones);
+				}
+				// Print tens_result
+				// As total < 100, therefore tens_result < 10
+				printf("  %d  \n", tens_result);
+			
+				printf("-----\n");
+				
+				// Print total
 				tens = total / 10;
 				ones = total % 10;
 
@@ -201,12 +201,20 @@ int main()
 			{
 				printf("      %d\n", ones_result);
 			}
-			else
+			else if (ones_result < 100)
 			{
 				tens = ones_result / 10;
 				ones = ones_result % 10;
 
 				printf("    %d %d\n", tens, ones);
+			}
+			else
+			{
+				hundreds = ones_result / 100;
+				tens     = ones_result / 10 % 10;
+				ones     = ones_result % 10;
+
+				printf("  %d %d %d\n", hundreds, tens, ones);
 			}
 
 			// Check and print tens_result
