@@ -8,3 +8,6 @@
 
 # ignore zip files
 *.zip
+
+# Unignore Makefile
+!Makefile
