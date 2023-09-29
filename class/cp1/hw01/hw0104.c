@@ -60,6 +60,10 @@ int32_t checkCardSuit(int32_t card)
 	{
 		return CLUB;
 	}
+	else
+	{
+		return 0;
+	}
 }
 
 // Check balance suit
