@@ -9,7 +9,7 @@ int main()
 	// Input points
 	int32_t x1 = 0, y1 = 0;
 	int32_t x2 = 0, y2 = 0;
-	
+
 	// equation's value
 	float dx = 0, dy = 0;
 	float gradient = 0, y_intercept = 0;

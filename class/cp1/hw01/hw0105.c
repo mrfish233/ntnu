@@ -65,11 +65,11 @@ int main()
 	// Calculate title score to compare with read score
 	title_score = (read_subject_title - 11) * 10000000000;
 	//printf("%lu %lu\n", read_score, title_score);
-	
+
 	/*
 	 * Validity Check
 	 */
-	
+
 	// Check email validity
 	printf("\n================================================================================\n\n");
 	printf("Sender Address Test : ");

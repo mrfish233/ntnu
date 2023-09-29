@@ -114,7 +114,7 @@ int main()
 	scanf("%d", &card1);
 	
 	if (isValidCard(card1) == 0)
-	{	
+	{
 		return 1;
 	}
 
@@ -127,7 +127,7 @@ int main()
 	{
 		heart_AKQ++;
 	}
-	
+
 	high_card_points += highCardPoint(card1);
 
 	if (checkCardSuit(card1) == SPADE)
@@ -137,7 +137,7 @@ int main()
 	else if (checkCardSuit(card1) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card1) == DIAMOND)
 	{
 		diamond_count++;
@@ -151,7 +151,7 @@ int main()
 	printf("2nd  card: ");
 	scanf("%d", &card2);
 	if (isValidCard(card2) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -174,7 +174,7 @@ int main()
 	else if (checkCardSuit(card2) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card2) == DIAMOND)
 	{
 		diamond_count++;
@@ -188,7 +188,7 @@ int main()
 	printf("3rd  card: ");
 	scanf("%d", &card3);
 	if (isValidCard(card3) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -248,7 +248,7 @@ int main()
 	else if (checkCardSuit(card4) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card4) == DIAMOND)
 	{
 		diamond_count++;
@@ -285,7 +285,7 @@ int main()
 	else if (checkCardSuit(card5) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card5) == DIAMOND)
 	{
 		diamond_count++;
@@ -299,7 +299,7 @@ int main()
 	printf("6th  card: ");
 	scanf("%d", &card6);
 	if (isValidCard(card6) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -322,7 +322,7 @@ int main()
 	else if (checkCardSuit(card6) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card6) == DIAMOND)
 	{
 		diamond_count++;
@@ -336,7 +336,7 @@ int main()
 	printf("7th  card: ");
 	scanf("%d", &card7);
 	if (isValidCard(card7) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -359,7 +359,7 @@ int main()
 	else if (checkCardSuit(card7) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card7) == DIAMOND)
 	{
 		diamond_count++;
@@ -373,7 +373,7 @@ int main()
 	printf("8th  card: ");
 	scanf("%d", &card8);
 	if (isValidCard(card8) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -396,7 +396,7 @@ int main()
 	else if (checkCardSuit(card8) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card8) == DIAMOND)
 	{
 		diamond_count++;
@@ -410,7 +410,7 @@ int main()
 	printf("9th  card: ");
 	scanf("%d", &card9);
 	if (isValidCard(card9) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -433,7 +433,7 @@ int main()
 	else if (checkCardSuit(card9) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card9) == DIAMOND)
 	{
 		diamond_count++;
@@ -447,7 +447,7 @@ int main()
 	printf("10th card: ");
 	scanf("%d", &card10);
 	if (isValidCard(card10) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -470,7 +470,7 @@ int main()
 	else if (checkCardSuit(card10) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card10) == DIAMOND)
 	{
 		diamond_count++;
@@ -484,7 +484,7 @@ int main()
 	printf("11th card: ");
 	scanf("%d", &card11);
 	if (isValidCard(card11) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -507,7 +507,7 @@ int main()
 	else if (checkCardSuit(card11) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card11) == DIAMOND)
 	{
 		diamond_count++;
@@ -521,7 +521,7 @@ int main()
 	printf("12th card: ");
 	scanf("%d", &card12);
 	if (isValidCard(card12) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -544,7 +544,7 @@ int main()
 	else if (checkCardSuit(card12) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card12) == DIAMOND)
 	{
 		diamond_count++;
@@ -558,7 +558,7 @@ int main()
 	printf("13th card: ");
 	scanf("%d", &card13);
 	if (isValidCard(card13) == 0)
-	{	
+	{
 		return 1;
 	}
 	
@@ -581,7 +581,7 @@ int main()
 	else if (checkCardSuit(card13) == HEART)
 	{
 		heart_count++;
-	}	
+	}
 	else if (checkCardSuit(card13) == DIAMOND)
 	{
 		diamond_count++;
@@ -622,7 +622,7 @@ int main()
 	}
 	// 11 <= HCP <= 15
 	else if (high_card_points >= 11 && high_card_points <= 15)
-	{	
+	{
 		if (spade_count >= 5 || heart_count >= 5)
 		{
 			if (spade_count >= heart_count)
@@ -696,7 +696,7 @@ int main()
 			printf("Pass");
 		}
 	}
-	
+
 	printf("\n");
 	return 0;
 }
