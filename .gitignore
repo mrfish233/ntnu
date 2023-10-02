@@ -6,8 +6,14 @@
 !*/
 ### Above combination will ignore all files without extension ###
 
-# ignore zip files
+# Ignore .o files
+*.o
+
+# Ignore zip files
 *.zip
 
 # Unignore Makefile
 !Makefile
+
+# Ignore .vscode
+.vscode
