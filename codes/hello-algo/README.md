@@ -23,8 +23,8 @@ Some chapter does not have or only a few codes, therefore it is not included in 
 
 ## Chapter 2
 
-* [time complexity](./chapter2/time_complexity.c)
-* [space complexity](./chapter2/space_complexity.c)
+* [time complexity](./chapter2/time_complexity/main.c)
+* [space complexity](./chapter2/space_complexity/main.c)
 
 ## Chapter 4
 
