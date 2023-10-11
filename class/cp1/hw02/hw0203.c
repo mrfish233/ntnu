@@ -5,11 +5,9 @@ int main() {
 	// Inputs
 	int32_t input = 0, isOddInput = 0;
 
-	// States and next states
-	int32_t state0 = 1, state1 = 0, state2 = 0, state3 = 0;
-	int32_t state4 = 0, state5 = 0, state6 = 0;
-	int32_t state0_next = 0, state1_next = 0, state2_next = 0, state3_next = 0;
-	int32_t state4_next = 0, state5_next = 0, state6_next = 0;
+	// State and next state (using bit 0-6, start from LSB)
+	int8_t state     = 0b00000001;
+	int8_t stateNext = 0b00000000;
 
 	printf("Please enter an integer: ");
 	scanf("%d", &input);
@@ -21,113 +19,46 @@ int main() {
 		 * Determine next state
 		 */
 
-		// State 0
-		if (state0) {
-			if (isOddInput) {
-				state1_next = 1;
-				state2_next = 1;
-			} else {
-				state3_next = 1;
-			}
-			
-			// Reset state 0
-			state0 = 0;
+		// 0 -> odd: 1,2; even: 3
+		if (state & 0b00000001) {
+			stateNext |= (isOddInput) ? 0b00000110 : 0b00001000;
 		}
 
-		// State 1
-		if (state1) {
-			if (isOddInput) {
-				state2_next = 1;
-			} else {
-				state4_next = 1;
-			}
-
-			// Reset state 1
-			state1 = 0;
+		// 1 -> odd: 2; even: 4
+		if (state & 0b00000010) {
+			stateNext |= (isOddInput) ? 0b00000100 : 0b00010000;
 		}
 
-		// State 2
-		if (state2) {
-			if (isOddInput) {
-				state3_next = 1;
-			} else {
-				state5_next = 1;
-			}
-
-			// Reset state 2
-			state2 = 0;
+		// 2 -> odd: 3; even: 5
+		if (state & 0b00000100) {
+			stateNext |= (isOddInput) ? 0b00001000 : 0b00100000;
 		}
 
-		// State 3
-		if (state3) {
-			if (isOddInput) {
-				state5_next = 1;
-			} else {
-				state0_next = 1;
-			}
-
-			// Reset state 3
-			state3 = 0;
+		// 3 -> odd: 3; even: 0
+		if (state & 0b00001000) {
+			stateNext |= (isOddInput) ? 0b00100000 : 0b00000001;
 		}
 
-		// State 4
-		if (state4) {
-			if (isOddInput) {
-				state5_next = 1;
-			} else {
-				state2_next = 1;
-				state6_next = 1;
-			}
-
-			// Reset state 4
-			state4 = 0;
+		// 4 -> odd: 5; even: 2,6
+		if (state & 0b00010000) {
+			stateNext |= (isOddInput) ? 0b00100000 : 0b01000100;
 		}
 
-		// State 5
-		if (state5) {
-			if (isOddInput) {
-				state6_next = 1;
-			} else {
-				state0_next = 1;
-			}
-
-			// Reset state 5
-			state5 = 0;
+		// 5 -> odd: 6; even: 0
+		if (state & 0b00100000) {
+			stateNext |= (isOddInput) ? 0b01000000 : 0b00000001;
 		}
 
-		// State 6
-		if (state6) {
-			if (isOddInput) {
-				state6_next = 1;
-			} else {
-				state1_next = 1;
-			}
-
-			// Reset state 6
-			state6 = 0;
+		// 6 -> odd: 6; even: 1
+		if (state & 0b01000000) {
+			stateNext |= (isOddInput) ? 0b01000000 : 0b00000010;
 		}
 
-		// Replace state to next state
-		state0 = state0_next;
-		state1 = state1_next;
-		state2 = state2_next;
-		state3 = state3_next;
-		state4 = state4_next;
-		state5 = state5_next;
-		state6 = state6_next;
+		// Set state and reset
+		state     = stateNext;
+		stateNext = 0b00000000;
 
-		// Reset next state
-		state0_next = 0;
-		state1_next = 0;
-		state2_next = 0;
-		state3_next = 0;
-		state4_next = 0;
-		state5_next = 0;
-		state6_next = 0;
-
-		//printf("Current: %d %d %d %d %d %d %d\n", 
-		//		state0, state1, state2, state3, state4, state5, state6);
-
+		// Read input again
 		printf("Please enter an integer: ");
 		scanf("%d", &input);
 	}
@@ -141,72 +72,19 @@ int main() {
 
 	printf("Possible States: ");
 
-	// State 0
-	if (state0) {
-		printf("S0");
-		hasPrintOnce = 1;
-	}
+	for (int32_t i = 0; i < 7; i++) {
+		// Print if LSB is 1
+		if (state & 1) {
+			if (hasPrintOnce) {
+				printf(", ");
+			}
 
-	// State 1
-	if (state1) {
-		if (hasPrintOnce) {
-			printf(", ");
+			printf("S%hd", i);
+			hasPrintOnce = 1;
 		}
-
-		printf("S1");
-		hasPrintOnce = 1;
+		// Shift state
+		state >>= 1;
 	}
-
-	// State 2
-	if (state2) {
-		if (hasPrintOnce) {
-			printf(", ");
-		}
-
-		printf("S2");
-		hasPrintOnce = 1;
-	}
-
-	// State 3
-	if (state3) {
-		if (hasPrintOnce) {
-			printf(", ");
-		}
-
-		printf("S3");
-		hasPrintOnce = 1;
-	}
-
-	// State 4
-	if (state4) {
-		if (hasPrintOnce) {
-			printf(", ");
-		}
-
-		printf("S4");
-		hasPrintOnce = 1;
-	}
-
-	// State 5
-	if (state5) {
-		if (hasPrintOnce) {
-			printf(", ");
-		}
-
-		printf("S5");
-		hasPrintOnce = 1;
-	}
-
-	// State 6
-	if (state6) {
-		if (hasPrintOnce) {
-			printf(", ");
-		}
-
-		printf("S6");
-		hasPrintOnce = 1;
-	}
-
 	printf("\n");
 
 	return 0;

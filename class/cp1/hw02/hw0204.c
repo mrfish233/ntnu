@@ -38,25 +38,29 @@ int main() {
 	scanf("%lf", &annualRate);
 
 	// Error check
-	if ((initialInvest == 0 && monthInvest == 0) ||
-		 initialInvest  < 0 || monthInvest  < 0) {
-		printf("Error: incorrect investment\n");
+	if (initialInvest < 1 || initialInvest > 10000000) {
+		printf("Error: initial investment is out of range\n");
 		return 1;
 	}
 
-	if (startYear < 0 || startMonth < 0 || startMonth > 12 || 
-		endYear   < 0 || endMonth   < 0 || endMonth   > 12) {
-		printf("Error: incorrect date\n");
+	if (monthInvest < 0 || monthInvest > 10000000) {
+		printf("Error: recurring monthly investment is out of range\n");
 		return 1;
 	}
 
-	if (startYear > endYear || (startYear == endYear && startMonth > endMonth)) {
+	if (startYear < 1 || startYear > 10000 || startMonth < 1 || startMonth > 12 || 
+		endYear   < 1 || endYear   > 10000 || endMonth   < 1 || endMonth   > 12) {
+		printf("Error: incorrect date format\n");
+		return 1;
+	}
+
+	if (startYear > endYear || (startYear == endYear && startMonth >= endMonth)) {
 		printf("Error: incorrect date range\n");
 		return 1;
 	}
 
-	if (annualRate <= 0) {
-		printf("Error: incorrect annual rate\n");
+	if (annualRate < 1 || annualRate > 100) {
+		printf("Error: annual rate is out of range\n");
 		return 1;
 	}
 
@@ -85,11 +89,17 @@ int main() {
 	printf("--- Output ---\n");
 
 	// Print first month
-	printf("%d.%2d) %.0f/%.0f/%.0f/%.0f%%\n", 
-			year, month, totalInvest, futureValue, totalInterest, rateOfReturn);
+	if (month < 10) {
+		printf("%d.0%d) ", year, month);
+	} else {
+		printf("%d.%d) ",  year, month);
+	}
+	printf("%.0f/%.0f/%.0f/%.0f%%\n", 
+			totalInvest, futureValue, totalInterest, rateOfReturn);
 
 	// Loop month
-	while (!(year == endYear && month == endMonth)) {
+	while ( !((year == endYear     && month == endMonth - 1) ||
+			  (year == endYear - 1 && month == 12 && endMonth == 1)) ) {
 		// Move to next month
 		month += 1;
 		if (month > 12) {
@@ -106,8 +116,18 @@ int main() {
 		rateOfReturn  = totalInterest / futureValue * 100;
 
 		// Print the result
-		printf("%d.%2d) %.0f/%.0f/%.0f/%.2f%%\n", 
-				year, month, totalInvest, futureValue, totalInterest, rateOfReturn);
+		double max = 1000000000000000.0;
+		if (totalInvest >= max || totalInterest >= max || futureValue >= max) {
+			printf("*/*/*/*%%\n");
+		} else {
+			if (month < 10) {
+				printf("%d.0%d) ", year, month);
+			} else {
+				printf("%d.%d) ",  year, month);
+			}
+			printf("%d/%d/%d/%.2f%%\n", 
+					(int32_t) totalInvest, (int32_t) futureValue, (int32_t) totalInterest, rateOfReturn);
+		}
 	} // End while loop
 
 	return 0;

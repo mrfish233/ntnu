@@ -1,5 +1,5 @@
 all:
-	-cc hw0201.c -Wall -Wextra -o hw0201
+	-gcc hw0201.c -Wall -Wextra -o hw0201
 	-gcc hw0202.c -Wall -Wextra -o hw0202
 	-gcc hw0203.c -Wall -Wextra -o hw0203
 	-gcc hw0204.c -Wall -Wextra -o hw0204
