@@ -1,0 +1,10 @@
+Please enter the first  number: Please enter the second number:             9
+*)  1 2 3 4 5
+-------------
+          4 5
+        3 6
+      2 7
+    1 8
+    9
+-------------
+  1 1 1 1 0 5
