@@ -98,8 +98,11 @@ int main() {
 			totalInvest, futureValue, totalInterest, rateOfReturn);
 
 	// Loop month
-	while ( !((year == endYear     && month == endMonth - 1) ||
-			  (year == endYear - 1 && month == 12 && endMonth == 1)) ) {
+	// while ( !((year == endYear     && month == endMonth - 1) ||
+	// 		  (year == endYear - 1 && month == 12 && endMonth == 1)) ) {
+	int32_t start = startYear * 12 + startMonth;
+	int32_t end   = endYear   * 12 + endMonth;
+	for (int32_t i = start; i < end - 1; i++) {
 		// Move to next month
 		month += 1;
 		if (month > 12) {
@@ -107,9 +110,9 @@ int main() {
 			month -= 12;
 		}
 
-		// First calculate interest by last month's investment
-		monthInterest = totalInvest * monthRate;
-		
+		// First calculate interest by last month's future value
+		monthInterest  = futureValue * monthRate;
+
 		// Update total investment
 		totalInvest   += monthInvest;
 
@@ -120,23 +123,30 @@ int main() {
 		futureValue   += monthInvest + monthInterest;
 
 		// Calculate rate of return
-		rateOfReturn  = totalInterest / futureValue * 100;
+		rateOfReturn   = totalInterest / futureValue * 100;
 
 		// Print the result
 		double max = 1000000000000000.0;
 		if (totalInvest >= max || totalInterest >= max || futureValue >= max) {
 			printf("*/*/*/*%%\n");
 		} else {
-			// Print leading zero of month
-			if (month < 10) {
-				printf("%d.0%d) ", year, month);
-			} else {
-				printf("%d.%d) ",  year, month);
-			}
+			// Print year and month with leading zero
+			printf("%d.%02d) ",  year, month);
 
-			// Print result
-			printf("%ld/%ld/%ld/%.2g%%\n", 
-				(int64_t) totalInvest, (int64_t) futureValue, (int64_t) totalInterest, rateOfReturn);
+			// Print total investment, future value and total interest
+			printf("%ld/%ld/%ld/", 
+				(int64_t) totalInvest, (int64_t) futureValue, (int64_t) totalInterest);
+
+			// Print rate of return without trailing zero
+			int32_t precision = 0;
+			if (rateOfReturn >= 10.0) {
+				precision = 4;
+			} else if (rateOfReturn >= 1.0) {
+				precision = 3;
+			} else {
+				precision = 2;
+			}
+			printf("%.*g%%\n", precision, rateOfReturn);
 		}
 	} // End while loop
 
