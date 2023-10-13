@@ -27,8 +27,8 @@ void printSpace(int32_t len) {
 /* 
  * Calculate digit of number
  */
-uint64_t digitCount(uint64_t num) {
-	uint64_t digit = 1;
+int64_t digitCount(int64_t num) {
+	int64_t digit = 1;
 
 	while (num >= 10) {
 		num /= 10;
@@ -41,10 +41,10 @@ uint64_t digitCount(uint64_t num) {
 /* 
  * Calculate power of ten by digit
  */
-uint64_t powerOfTen(uint64_t digit) {
-	uint64_t power = 1;
+int64_t powerOfTen(int64_t digit) {
+	int64_t power = 1;
 
-	for (uint64_t i = 0; i < digit - 1; i++) {
+	for (int64_t i = 0; i < digit - 1; i++) {
 		power *= 10;
 	}
 
@@ -54,15 +54,15 @@ uint64_t powerOfTen(uint64_t digit) {
 /* 
  * Print number with given format
  */
-void printFormatNum(uint64_t num) {
-	uint64_t digit = digitCount(num);
-	uint64_t pow10 = powerOfTen(digit);
-	uint64_t currDigit = 0;
+void printFormatNum(int64_t num) {
+	int64_t digit = digitCount(num);
+	int64_t pow10 = powerOfTen(digit);
+	int64_t currDigit = 0;
 
-	for (uint64_t i = 0; i < digit; i++) {
+	for (int64_t i = 0; i < digit; i++) {
 		currDigit = num / pow10;
 
-		printf("%lu", currDigit);
+		printf("%ld", currDigit);
 		if (i != digit - 1) {
 			printSpace(1);
 		}
@@ -74,16 +74,16 @@ void printFormatNum(uint64_t num) {
 }
 
 int main() {
-	uint64_t num1  = 0, num2 = 0;
-	uint64_t total = 0;
+	int64_t num1  = 0, num2 = 0;
+	int64_t total = 0;
 
 	printf("Please enter the first  number: ");
-	scanf("%lu", &num1);
+	scanf("%ld", &num1);
 
 	printf("Please enter the second number: ");
-	scanf("%lu", &num2);
+	scanf("%ld", &num2);
 
-	if (num1 > UINT32_MAX || num2 > UINT32_MAX) {
+	if (num1 < 0 || num1 > INT32_MAX || num2 < 0 || num2 > INT32_MAX) {
 		printf("Error: number is out of range\n");
 		return 1;
 	}
@@ -95,14 +95,14 @@ int main() {
 	total = num1 * num2;
 
 	// Find digits
-	uint64_t num1Digit = 0, num2Digit = 0, totalDigit = 0;
+	int64_t num1Digit = 0, num2Digit = 0, totalDigit = 0;
 
 	num1Digit  = digitCount(num1);
 	num2Digit  = digitCount(num2);
 	totalDigit = digitCount(total);
 
 	// Find max digit
-	uint64_t maxDigit = 0;
+	int64_t maxDigit = 0;
 	if (num1Digit > num2Digit) {
 		maxDigit = num1Digit > totalDigit ? num1Digit : totalDigit;
 	} else {
@@ -110,7 +110,7 @@ int main() {
 	}
 
 	// Total width
-	uint64_t width = 2 * maxDigit + 1;
+	int64_t width = 2 * maxDigit + 1;
 
 	/* 
 	 * Print the result
@@ -130,10 +130,10 @@ int main() {
 
 	// Print the process
 	if (num2 >= 10 && total != 0) {
-		uint64_t tempNum2  = num2;
-		uint64_t tempTotal = 0, tempTotalDigit = 0;
+		int64_t tempNum2  = num2;
+		int64_t tempTotal = 0, tempTotalDigit = 0;
 
-		for (uint64_t i = 0; i < num2Digit; i++) {
+		for (int64_t i = 0; i < num2Digit; i++) {
 			tempTotal = num1 * (tempNum2 % 10);
 			tempTotalDigit = digitCount(tempTotal);
 			tempNum2 /= 10;

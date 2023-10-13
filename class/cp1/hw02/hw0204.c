@@ -107,12 +107,19 @@ int main() {
 			month -= 12;
 		}
 
+		// First calculate interest by last month's investment
 		monthInterest = totalInvest * monthRate;
 		
+		// Update total investment
 		totalInvest   += monthInvest;
+
+		// Update total interest
 		totalInterest += monthInterest;
+
+		// Update future value
 		futureValue   += monthInvest + monthInterest;
 
+		// Calculate rate of return
 		rateOfReturn  = totalInterest / futureValue * 100;
 
 		// Print the result
@@ -120,13 +127,16 @@ int main() {
 		if (totalInvest >= max || totalInterest >= max || futureValue >= max) {
 			printf("*/*/*/*%%\n");
 		} else {
+			// Print leading zero of month
 			if (month < 10) {
 				printf("%d.0%d) ", year, month);
 			} else {
 				printf("%d.%d) ",  year, month);
 			}
-			printf("%d/%d/%d/%.2f%%\n", 
-					(int32_t) totalInvest, (int32_t) futureValue, (int32_t) totalInterest, rateOfReturn);
+
+			// Print result
+			printf("%ld/%ld/%ld/%.2g%%\n", 
+				(int64_t) totalInvest, (int64_t) futureValue, (int64_t) totalInterest, rateOfReturn);
 		}
 	} // End while loop
 

@@ -13,7 +13,8 @@ int main() {
 	scanf("%d", &input);
 	while (input != 0) {
 		
-		isOddInput = (input % 2 == 1);
+		// Odd input
+		isOddInput = !(input % 2 == 0);
 
 		/*
 		 * Determine next state
