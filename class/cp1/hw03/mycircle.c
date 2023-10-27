@@ -64,5 +64,6 @@ double get_outer_regular_polygon_area(int32_t n) {
 		return -1;
 	}
 
-	return 0.5 * n * g_radius * g_radius * tan(PI / n);
+	// Using radius as apothem to calculate the area
+	return n * g_radius * g_radius * tan(PI / n);
 }

@@ -33,6 +33,7 @@ double get_tangent_area(double x);
 
 /**
  * Calculate the inner regular polygon area.
+ * In other words, the area of the polygon inscribed in the circle.
  * @param n The number of sides of the polygon.
  * @return The inner regular polygon area, -1 if the radius is not set or n < 3.
  */
@@ -40,6 +41,7 @@ double get_inner_regular_polygon_area(int32_t n);
 
 /**
  * Calculate the outer regular polygon area.
+ * In other words, the area of the polygon circumscribed about the circle.
  * @param n The number of sides of the polygon.
  * @return The outer regular polygon area, -1 if the radius is not set or n < 3.
  */

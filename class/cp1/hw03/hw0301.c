@@ -2,43 +2,107 @@
 #include <stdint.h>
 #include "mycircle.h"
 
-void testTangentArea(double r) {
-	printf("tangent area at x: %20lf = %20lf\n", r, get_tangent_area(r));
+void printMenu() {
+	printf("0. Exit\n");
+	printf("1. Set radius\n");
+	printf("2. Get circle circumference\n");
+	printf("3. Get circle area\n");
+	printf("4. Get tangent area\n");
+	printf("5. Get inner regular polygon area\n");
+	printf("6. Get outer regular polygon area\n");
 }
 
-void testPolygonArea(int32_t n) {
-	printf("inner regular polygon area = %20lf\n", get_inner_regular_polygon_area(n));
-	printf("outer regular polygon area = %20lf\n", get_outer_regular_polygon_area(n));
-}
+void handleMenuOption(int32_t menuOption) {
+	if (menuOption == 0) {
+		// Exit
+		printf("Bye!\n");
+	} else if (menuOption == 1) {
+		// Set the radius
+		double rad = 0;
+		printf("Enter the radius: ");
+		scanf("%lf", &rad);
 
-void testCircle(double r) {
-	printf("radius        = %lf, success = %d\n", r, set_radius(r));
-	printf("circumference = %lf\n", get_circle_circumference());
-	printf("area          = %lf\n", get_circle_area());
+		int32_t r = set_radius(rad);
 
-	printf("------------------------------------------------------------\n");
+		if (r == -1) {
+			printf("Invalid radius!\n");
+		} else {
+			printf("Radius set!\n");
+		}
+	} else if (menuOption == 2) {
+		// Get the circle circumference
+		double c = get_circle_circumference();
 
-	testTangentArea(r);
-	testTangentArea(r + 1.0);
-	testTangentArea(r - 1.0);
-	testTangentArea(r / 2.0);
-	testTangentArea(-r / 2.0);
-	testTangentArea(0.0);
+		if (c == -1) {
+			printf("The radius is not set!\n");
+		} else {
+			printf("The circumference is %lf\n", c);
+		}
+	} else if (menuOption == 3) {
+		// Get the circle area
+		double a = get_circle_area();
 
-	printf("------------------------------------------------------------\n");
+		if (a == -1) {
+			printf("The radius is not set!\n");
+		} else {
+			printf("The area is %lf\n", a);
+		}
+	} else if (menuOption == 4) {
+		// Get the tangent area
+		double x;
+		printf("Enter x: ");
+		scanf("%lf", &x);
 
-	testPolygonArea(3);
-	testPolygonArea(10);
-	testPolygonArea(100);
-	testPolygonArea(INT32_MAX);
+		double a = get_tangent_area(x);
 
-	printf("============================================================\n");
+		if (a == -1) {
+			printf("The radius is not set or x is not valid!\n");
+		} else {
+			printf("The area is %lf\n", a);
+		}
+	} else if (menuOption == 5) {
+		// Get the inner regular polygon area
+		int32_t n;
+		printf("Enter n: ");
+		scanf("%d", &n);
+
+		double a = get_inner_regular_polygon_area(n);
+
+		if (a == -1) {
+			printf("The radius is not set or n is not valid!\n");
+		} else {
+			printf("The area is %lf\n", a);
+		}
+	} else if (menuOption == 6) {
+		// Get the outer regular polygon area
+		int32_t n;
+		printf("Enter n: ");
+		scanf("%d", &n);
+
+		double a = get_outer_regular_polygon_area(n);
+
+		if (a == -1) {
+			printf("The radius is not set or n is not valid!\n");
+		} else {
+			printf("The area is %lf\n", a);
+		}
+	} else {
+		printf("Invalid option\n");
+	}
 }
 
 int main() {
-	testCircle(10.0);
-	testCircle(0);
-	testCircle(-10.0);
-	testCircle(123456789);
+	int32_t menuOption = -1;
+
+	printMenu();
+
+	while (menuOption != 0) {
+		printf("--------------------------------------\n");
+		printf("Enter your option: ");
+		scanf("%d", &menuOption);
+
+		handleMenuOption(menuOption);
+	}
+
 	return 0;
 }
