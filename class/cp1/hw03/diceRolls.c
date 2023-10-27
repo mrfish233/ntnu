@@ -16,22 +16,22 @@ static int32_t sumKeptDices = 0;
 static int32_t sumShift = 0;
 
 void clearDices() {
+	// Reset the dices array and the dice kept
+	for (int32_t i = 0; i < 15; i++) {
+		dices[i] = 0;
+		diceKept[i] = 0;
+	}
+
+	// Reset the dice count and the dice kept count
+	diceCount = 0;
+	diceKeptCount = 0;
+
 	// Reset the sum of dices and the sum of kept dices
 	sumDices  = 0;
 	sumKeptDices = 0;
 
 	// Reset the sum shift
 	sumShift = 0;
-
-	// Reset the dice count and the dice kept count
-	diceCount = 0;
-	diceKeptCount = 0;
-
-	// Reset the dices array and the dice kept
-	for (int32_t i = 0; i < 15; i++) {
-		dices[i] = 0;
-		diceKept[i] = 0;
-	}
 }
 
 void printDice(int32_t index) {
@@ -42,7 +42,19 @@ void printDice(int32_t index) {
 void printDices() {
 	// Print all dices
 	for (int32_t i = 0; i < diceCount; i++) {
+		// Print the kept dice with different color
+		if (diceKept[i] == 1) { // 1 is kept, green
+			printf("\e[0;32m");
+		} else if (diceKept[i] == 2) { // 2 is highest, red
+			printf("\e[0;31m");
+		} else if (diceKept[i] == 3) { // 3 is lowest, cyan
+			printf("\e[0;36m");
+		}
+
 		printf("[%3d] ", dices[i]);
+
+		// Reset the color
+		printf("\e[0m");
 
 		if (i % 5 == 4 && i != diceCount - 1) {
 			printf("\n");
@@ -54,9 +66,13 @@ void printDices() {
 void printDicesWithIndex() {
 	// Print all dices
 	for (int32_t i = 0; i < diceCount; i++) {
-		// Print the kept dice with green color
-		if (diceKept[i] == 1) {
+		// Print the kept dice with different color
+		if (diceKept[i] == 1) { // 1 is kept, green
 			printf("\e[0;32m");
+		} else if (diceKept[i] == 2) { // 2 is highest, red
+			printf("\e[0;31m");
+		} else if (diceKept[i] == 3) { // 3 is lowest, cyan
+			printf("\e[0;36m");
 		}
 
 		printf("%2d. [%3d] ", i + 1, dices[i]);
@@ -82,10 +98,14 @@ void printSum() {
 		printf("%d", dices[i]);
 	}
 
-	// Print sum shift if it is not zero
-	if (sumShift != 0) {
+	// Print sum shift if it is not zero with yellow color
+	printf("\e[0;33m");
+	if (sumShift < 0) {
+		printf(" - %d", -sumShift);
+	} else if (sumShift > 0) {
 		printf(" + %d", sumShift);
 	}
+	printf("\e[0m");
 
 	// Print the sum
 	if (diceCount > 1 || sumShift != 0) {
@@ -102,7 +122,7 @@ void printSumKept() {
 
 	// Print all dices kept
 	for (int32_t i = 0; i < diceCount; i++) {
-		if (diceKept[i] == 1) {
+		if (diceKept[i] != 0) {
 			if (isPlusPrinted != 0) {
 				printf(" + ");
 			}
@@ -117,12 +137,14 @@ void printSumKept() {
 		printf("0");
 	}
 
-	// Print sum shift if it is not zero
+	// Print sum shift if it is not zero with yellow color
+	printf("\e[0;33m");
 	if (sumShift < 0) {
 		printf(" - %d", -sumShift);
 	} else if (sumShift > 0) {
 		printf(" + %d", sumShift);
 	}
+	printf("\e[0m");
 
 	// Print the sum
 	if (diceKeptCount > 1 || sumShift != 0) {
@@ -137,8 +159,12 @@ int32_t rollDices(int32_t numDices, int32_t sides) {
 	srand(time(0));
 
 	// Check for invalid input
-	if (numDices < 0 || numDices > 10 || sides < 2 || sides > 100) {
+	if (numDices < 0 || numDices > 10) {
 		return -1;
+	} else if (numDices == 0) {
+		return -2;
+	} else if (sides < 2 || sides > 100) {
+		return -3;
 	}
 
 	// Reset the dices array and the sum
@@ -157,6 +183,10 @@ int32_t rollDices(int32_t numDices, int32_t sides) {
 	return sumDices;
 }
 
+int32_t getKeptDices() {
+	return diceKeptCount;
+}
+
 int32_t keepDice(int32_t index) {
 	// Check for invalid input
 	if (index < 0 || index >= diceCount) {
@@ -165,16 +195,12 @@ int32_t keepDice(int32_t index) {
 
 	// Check if the dice is already selected
 	if (diceKept[index] == 1) {
-		return -1;
+		return -2;
 	}
 
 	// Select the dice if it is not selected
 	diceKept[index] = 1;
 	diceKeptCount++;
-
-	/*
-	 * TODO: different color for kept dice
-	 */
 
 	// Add the dice to the sum of kept dices
 	sumKeptDices += dices[index];
@@ -184,13 +210,12 @@ int32_t keepDice(int32_t index) {
 
 int32_t keepHighestLowest(int32_t highest, int32_t lowest) {
 	// Check for invalid input
-	if (highest < 0 || highest > diceCount || lowest < 0 || lowest > diceCount) {
+	if (highest < 0 || highest > diceCount) {
 		return -1;
-	}
-	
-	// Check highest + lowest is less than the dice count
-	if (highest + lowest > diceCount) {
-		return -1;
+	} else if (lowest < 0 || lowest > diceCount) {
+		return -2;
+	} else if (highest + lowest > diceCount) {
+		return -3;
 	}
 
 	// Keep the highest dices
@@ -210,6 +235,9 @@ int32_t keepHighestLowest(int32_t highest, int32_t lowest) {
 
 		// Keep the highest dice
 		keepDice(highestIndex);
+
+		// Replace dice kept to 2 to print in red color
+		diceKept[highestIndex] = 2;
 	}
 
 	// Keep the lowest dices
@@ -229,7 +257,13 @@ int32_t keepHighestLowest(int32_t highest, int32_t lowest) {
 
 		// Keep the lowest dice
 		keepDice(lowestIndex);
+
+		// Replace dice kept to 3 to print in cyan color
+		diceKept[lowestIndex] = 3;
 	}
+
+	// Return 0 if success
+	return 0;
 }
 
 int32_t setSumShift(int32_t value) {

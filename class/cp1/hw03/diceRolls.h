@@ -41,13 +41,22 @@ void printSumKept();
  * @param numDices The number of dices to roll.
  * @param sides The number of sides on the die.
  * @return The sum of all rolled dices.
+ * @return -1 if invalid number of dices, -2 if number of dices is 0, 
+ * -3 if invalid number of sides.
  */
 int32_t rollDices(int32_t numDices, int32_t sides);
 
 /**
+ * Get the number of kept dices.
+ * @return The number of kept dices.
+ */
+int32_t getKeptDices();
+
+/**
  * Select dice to keep.
  * @param index The index of the dice to keep.
- * @return The value of the dice kept, -1 if invalid index.
+ * @return The value of the dice kept.
+ * @return -1 if invalid index, -2 if already kept.
  */
 int32_t keepDice(int32_t index);
 
@@ -55,7 +64,8 @@ int32_t keepDice(int32_t index);
  * Select and find the amount of highest and lowest dices to keep.
  * @param highest The amount of highest dices to keep.
  * @param lowest The amount of lowest dices to keep.
- * @return 0 if success, -1 if invalid index.
+ * @return 0 if success.
+ * @return -1 if invalid highest, -2 if invalid lowest, -3 if invalid sum.
  */
 int32_t keepHighestLowest(int32_t highest, int32_t lowest);
 

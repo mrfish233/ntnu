@@ -18,13 +18,21 @@ static const int32_t MENU_KEEP_HIGH_AND_LOW = 4;
 void printMenu() {
 	// Print the menu
 	printf("Welcome to the dice roller!\n");
+
+	printf("\n");
+
+	// dice in ASCII art
+	printf("  _______\n");
+
+	printf("\n");
+
 	printf("Please refer to README.md for more instructions.\n");
 	printf("0. Exit the roller\n");
 	printf("1. Roll a 6-sided dice\n");
 	printf("2. Roll given number of given-sided dices\n");
-	printf("3. Roll given number of given-sided dices, keep some of dices and set the value\n");
+	printf("3. Roll given number of given-sided dices, keep given dices and set the value\n");
 	printf("    to add to the sum\n");
-	printf("4. Roll given number of given-sided dices, keep some of the highest and lowest\n");
+	printf("4. Roll given number of given-sided dices, keep given, highest and lowest\n");
 	printf("    dices and set the value to add to the sum\n");
 }
 
@@ -87,8 +95,8 @@ int32_t handleChoice() {
 		// If set shift is valid
 		if (handle == 0) {
 			// Print the dices with index and the sum of kept dices
-			printf("\n==== \e[0;32mSelected dices\e[0m ====\n");
-			printDicesWithIndex();
+			printf("\n==== Selected dices ====\n");
+			printDices();
 			printSumKept();
 		}
 	} else if (gMenuChoice == MENU_KEEP_HIGH_AND_LOW) {
@@ -109,7 +117,7 @@ int32_t handleChoice() {
 		// If keep highest and lowest is valid
 		if (handle == 0) {
 			// Print the dices with index
-			printf("\n==== \e[0;32mSelected dices\e[0m ====\n");
+			printf("\n==== Selected dices ====\n");
 			printDicesWithIndex();
 
 			// Keep the dices
@@ -126,8 +134,8 @@ int32_t handleChoice() {
 		// If set shift is valid
 		if (handle == 0) {
 			// Print the dices with index and the sum of kept dices
-			printf("\n==== \e[0;32mSelected dices\e[0m ====\n");
-			printDicesWithIndex();
+			printf("\n==== Selected dices ====\n");
+			printDices();
 			printSumKept();
 		}
 	} else {
@@ -145,46 +153,55 @@ void callExit() {
 
 int32_t callRollGiven() {
 	// Read the number of dices and sides
-	printf("Roll AdX (A = number of dices (0<=A<=10), X = number of sides (2<=X<=100))\n");
-	printf("Number of dices(A): ");
+	printf("==== Roll the dice ====\n");
+	printf("Number of dices(0<=A<=10): ");
 	if (scanf("%d", &gNumDices) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
 		return -1;
 	}
-	printf("Number of sides(X): ");
+	printf("Number of sides(2<=X<=100): ");
 	if (scanf("%d", &gSides) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
 		return -1;
 	}
 
+	// Roll the dices
+	int32_t handleRollDices = rollDices(gNumDices, gSides);
+
 	// Check for invalid input
-	if (gNumDices < 0 || gNumDices > 10) {
+	if (handleRollDices == -1) { 
 		printf("Uh oh, the number of dices (A) is out of range (0~10).\n");
 		return -1;
-	} else if (gNumDices == 0) {
+	} else if (handleRollDices == -2) {
 		printf("Hmm, it's hard to roll 0 dices with %d sides.\n", gSides);
 		return -1;
-	} else if (gSides < 2 || gSides > 100) {
+	} else if (handleRollDices == -3) {
 		printf("Uh oh, the number of sides (X) is out of range (2~100).\n");
 		return -1;
 	}
-
-	// Roll the dices
-	rollDices(gNumDices, gSides);
 
 	// Return 0 if success
 	return 0;
 }
 
 int32_t callKeepDice() {
+	// Read the number of dices to keep
 	int32_t numKept = 0;
+
+	// Read the index of the dice to keep
 	int32_t index   = 0;
+
+	// Loop counter
 	int32_t loop    = 0;
 
+	// Maximum number of dices to keep
+	int32_t maxKept = gNumDices - getKeptDices();
+
 	// Read the number of dices to keep
-	printf("Select number of dices to keep (0<=Y<=%d): ", gNumDices);
+	printf("==== \e[0;32mKeep\e[0m the dice ====\n");
+	printf("Number of dices to \e[0;32mkeep\e[0m (0<=\e[0;32mY\e[0m<=%d): ", maxKept);
 	if (scanf("%d", &numKept) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
@@ -192,8 +209,8 @@ int32_t callKeepDice() {
 	}
 
 	// Check for invalid input
-	if (numKept < 0 || numKept > gNumDices) {
-		printf("Uh oh, the number of dices to keep (Y) is out of range (0~%d).\n", gNumDices);
+	if (numKept < 0 || numKept > maxKept) {
+		printf("Uh oh, the number of dices to \e[0;32mkeep\e[0m (\e[0;32mY\e[0m) is out of range (0~%d).\n", maxKept);
 		return -1;
 	}
 
@@ -207,14 +224,14 @@ int32_t callKeepDice() {
 			return -1;
 		}
 
+		// Select the dice at the given index
+		int32_t handleKeepDice = keepDice(index - 1);
+
 		// Check for invalid input
-		if (index < 1 || index > gNumDices) {
+		if (handleKeepDice == -1) {
 			printf("Uh oh, the index is out of range (1~%d).\n", gNumDices);
 			return -1;
-		}
-
-		// Select the dice at the given index
-		if (keepDice(index - 1) == -1) {
+		} else if (handleKeepDice == -2) {
 			printf("Uh oh, the index was selected. Please select again.\n");
 			continue;
 		}
@@ -233,7 +250,8 @@ int32_t callKeepHighestLowest() {
 	int32_t lowest  = 0;
 
 	// Read the number of highest and lowest dices to keep
-	printf("Select number of highest dices to keep (0<=H<=%d): ", gNumDices);
+	printf("==== Keep \e[0;31mhighest\e[0m and \e[0;36mlowest\e[0m dices ====\n");
+	printf("Number of \e[0;31mhighest\e[0m dices to keep (0<=\e[0;31mH\e[0m<=%d): ", gNumDices);
 	if (scanf("%d", &highest) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
@@ -241,28 +259,25 @@ int32_t callKeepHighestLowest() {
 	}
 
 	// Read the number of lowest dices to keep
-	printf("Select number of lowest dices to keep (0<=L<=%d): ", gNumDices);
+	printf("Number of  \e[0;36mlowest\e[0m dices to keep (0<=\e[0;36mL\e[0m<=%d): ", gNumDices);
 	if (scanf("%d", &lowest) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
 		return -1;
 	}
 
-	// Check for invalid input
-	if (highest < 0 || highest > gNumDices) {
-		printf("Uh oh, the number of highest dices to keep (H) is out of range (0~%d).\n", gNumDices);
-		return -1;
-	}
-
-	// Check for invalid input
-	if (lowest < 0 || lowest > gNumDices) {
-		printf("Uh oh, the number of lowest dices to keep (L) is out of range (0~%d).\n", gNumDices);
-		return -1;
-	}
-
 	// Keep the highest and lowest dices
-	if (keepHighestLowest(highest, lowest) == -1) {
-		printf("Uh oh, the number of highest and lowest dices to keep (H+L) is out of range (0~%d).\n", gNumDices);
+	int32_t handleKeepHighestLowest = keepHighestLowest(highest, lowest);
+
+	// Check for invalid input
+	if (handleKeepHighestLowest == -1) {
+		printf("Uh oh, the number of \e[0;31mhighest\e[0m dices to keep (\e[0;31mH\e[0m) is out of range (0~%d).\n", gNumDices);
+		return -1;
+	} else if (handleKeepHighestLowest == -2) {
+		printf("Uh oh, the number of \e[0;36mlowest\e[0m dices to keep (\e[0;36mL\e[0m) is out of range (0~%d).\n", gNumDices);
+		return -1;
+	} else if (handleKeepHighestLowest == -3) {
+		printf("Uh oh, the amount of dices to keep (\e[0;31mH\e[0m+\e[0;36mL\e[0m) is out of range (0~%d).\n", gNumDices);
 		return -1;
 	}
 
@@ -274,21 +289,22 @@ int32_t callSetSumShift() {
 	int32_t value = 0;
 
 	// Read the value of the sum shift
-	printf("Amount to add to the sum (-10<=B<=10): ");
+	printf("==== \e[0;33mAdd\e[0m number to sum ====\n");
+	printf("Number to \e[0;33madd\e[0m to the sum (-10<=\e[0;33mB\e[0m<=10): ");
 	if (scanf("%d", &value) != 1) {
 		printf("Uh oh, this is not a valid number.\n");
 		while (getchar() != '\n');
 		return -1;
 	}
 
+	// Set the sum shift
+	int32_t handleSetSumShift = setSumShift(value);
+
 	// Check for invalid input
-	if (value < -10 || value > 10) {
-		printf("Uh oh, the value of the sum shift (X) is out of range (-10~10).\n");
+	if (handleSetSumShift == -1) {
+		printf("Uh oh, the value to add to the sum (\e[0;33mB\e[0m) is out of range (-10~10).\n");
 		return -1;
 	}
-
-	// Set the sum shift
-	setSumShift(value);
 
 	// Return 0 if success
 	return 0;
