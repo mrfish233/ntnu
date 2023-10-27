@@ -1,7 +1,7 @@
 #include "mycircle.h"
 
 // Constant
-// static const long double M_PI = 3.14159265358979323846;
+static const long double PI = 3.14159265358979323846L;
 
 // Global variable
 static double g_radius = -1;
@@ -20,7 +20,7 @@ double get_circle_circumference() {
 		return -1;
 	}
 
-	return 2 * g_radius * M_PI;
+	return 2 * g_radius * PI;
 }
 
 double get_circle_area() {
@@ -28,7 +28,7 @@ double get_circle_area() {
 		return -1;
 	}
 
-	return g_radius * g_radius * M_PI;
+	return g_radius * g_radius * PI;
 }
 
 double get_tangent_area(double x) {
@@ -56,7 +56,7 @@ double get_inner_regular_polygon_area(int32_t n) {
 		return -1;
 	}
 
-	return 0.5 * n * g_radius * g_radius * sin(2.0 * M_PI / n);
+	return 0.5 * n * g_radius * g_radius * sin(2.0 * PI / n);
 }
 
 double get_outer_regular_polygon_area(int32_t n) {
@@ -64,5 +64,5 @@ double get_outer_regular_polygon_area(int32_t n) {
 		return -1;
 	}
 
-	return 0.5 * n * g_radius * g_radius * tan(M_PI / n);
+	return 0.5 * n * g_radius * g_radius * tan(PI / n);
 }

@@ -23,4 +23,4 @@ diceRolls: diceRolls.c diceMenu.c
 	-gcc -o diceMenu.o -c diceMenu.c -Wall -Werror
 
 clean:
-	rm -f hw0301 hw0303 hw0304 *.o
+	rm -f hw0301 hw0302 hw0303 hw0304-1 hw0304-2 hw0305 *.o

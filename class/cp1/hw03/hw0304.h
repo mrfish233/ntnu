@@ -5,9 +5,9 @@
 
 /**
  * Print the steps of tower of Hanoi.
- * n: the number of disks
- * source: the source rod
- * target: the target rod
- * spared: the spared rod
+ * @param n The number of disks
+ * @param source The source rod
+ * @param target The target rod
+ * @param spared The spared rod
  */
 void towerOfHanoi(int32_t n, int32_t source, int32_t target, int32_t spared);

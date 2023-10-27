@@ -3,7 +3,7 @@
 #include "mycontrol.h"
 
 // Constant
-// const long double M_PI = 3.14159265358979323846;
+const long double PI = 3.14159265358979323846L;
 
 void testControl(double x, double y, double a) {
 	// Setup the initial position to (x,y) and the moving direction.
@@ -15,12 +15,12 @@ void testControl(double x, double y, double a) {
 	print();
 
 	// Turn clockwise by the given angle.
-	clock_turn(0.5 * M_PI);
+	clock_turn(0.5 * PI);
 	forward(5.678);
 	print();
 
 	// Turn counterclockwise by the given angle.
-	counterclock_turn(M_PI);
+	counterclock_turn(PI);
 	forward(2.345);
 	print();
 
@@ -39,7 +39,7 @@ int main() {
 
 	// Test 3
 	printf("Test 3\n");
-	testControl(1.0, 2.0, 0.5 * M_PI);
+	testControl(1.0, 2.0, 0.5 * PI);
 
 	// Test 4
 	printf("Test 4\n");
@@ -47,7 +47,7 @@ int main() {
 
 	// Test 5
 	printf("Test 5\n");
-	testControl(123.456, 789.012, 1.5 * M_PI);
+	testControl(123.456, 789.012, 1.5 * PI);
 
 	return 0;
 }
