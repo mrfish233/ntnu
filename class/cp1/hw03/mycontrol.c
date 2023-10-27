@@ -67,7 +67,7 @@ int32_t clock_turn(double angle) {
 
 int32_t counterclock_turn(double angle) {
 	// Turn the character clockwise by -angle
-	clock_turn(-angle);
+	return clock_turn(-angle);
 }
 
 int32_t print(void) {
