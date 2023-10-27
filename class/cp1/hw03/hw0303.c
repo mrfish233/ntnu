@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
-
-/*
- * Print the binary form of the given 32-bit integer.
- * val: the given integer
- * pos: the position of the bit to be printed, MSB is 0, LSB is 31
- */
-void BinaryForm(uint32_t val, int32_t pos);
+#include "binaryForm.h"
 
 int main() {
 	int64_t n = 0;
+	const int32_t SIZE = 32;
 
 	// Read the number
 	printf("Please enter the number: ");
@@ -22,22 +17,8 @@ int main() {
 	}
 
 	// Print the binary form
-	BinaryForm(n, 31);
+	BinaryForm(n, SIZE);
 	printf("\n");
 
 	return 0;
-}
-
-void BinaryForm(uint32_t val, int32_t pos) {
-	if (pos == 0) {
-		printf("%u", val % 2);
-		return;
-	}
-
-	BinaryForm(val / 2, pos - 1);
-	printf("%u", val % 2);
-
-	if ((pos + 1) % 8 == 0) {
-		printf(" ");
-	}
 }
