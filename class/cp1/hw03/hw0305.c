@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdint.h>
-#include "diceRolls.h"
 #include "diceMenu.h"
 
 int main() {
