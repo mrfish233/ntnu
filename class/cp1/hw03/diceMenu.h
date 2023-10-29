@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "diceRolls.h"
+#include "rpgEvent.h"
 
 /**
  * Print the menu for the dice program.

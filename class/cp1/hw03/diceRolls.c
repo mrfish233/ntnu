@@ -21,6 +21,17 @@ static int32_t sumKeptDices = 0;
 // Shift of sum
 static int32_t sumShift = 0;
 
+// Random number generator initialization flag
+static int32_t initRandomFlag = 0;
+
+void initRandom() {
+	// Seed the random number generator with the current time
+	srand(time(NULL));
+
+	// Set the init random flag
+	initRandomFlag = 1;
+}
+
 void clearDices() {
 	// Reset the dices array and the dice kept
 	for (int32_t i = 0; i < 15; i++) {
@@ -42,7 +53,7 @@ void clearDices() {
 
 void printDice(int32_t index) {
 	// Print the dice at the given index
-	printf("[%d]\n", dices[index]);
+	printf("[%3d]\n", dices[index]);
 }
 
 void printDices() {
@@ -165,9 +176,23 @@ void printSumKept() {
 	}
 }
 
+int32_t getKeptDices() {
+	return diceKeptCount;
+}
+
+int32_t getSum() {
+	return sumDices;
+}
+
+int32_t getSumKept() {
+	return sumKeptDices;
+}
+
 int32_t rollDices(int32_t numDices, int32_t sides) {
-	// Seed the random number generator with the current time
-	srand(time(0));
+	// Initialize the random number generator if it is not initialized
+	if (initRandomFlag == 0) {
+		initRandom();
+	}
 
 	// Check for invalid input
 	if (numDices < 0 || numDices > 10) {
@@ -190,10 +215,6 @@ int32_t rollDices(int32_t numDices, int32_t sides) {
 
 	// Return the sum of the dices
 	return sumDices;
-}
-
-int32_t getKeptDices() {
-	return diceKeptCount;
 }
 
 int32_t keepDice(int32_t index) {

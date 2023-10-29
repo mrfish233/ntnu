@@ -37,6 +37,24 @@ void printSum();
 void printSumKept();
 
 /**
+ * Get the number of kept dices.
+ * @return The number of kept dices.
+ */
+int32_t getKeptDices();
+
+/**
+ * Get the sum of all dices rolled.
+ * @return The sum of all dices rolled.
+ */
+int32_t getSum();
+
+/**
+ * Get the sum of all kept dices.
+ * @return The sum of all kept dices.
+ */
+int32_t getSumKept();
+
+/**
  * Roll specified number of dices with specified number of sides.
  * @param numDices The number of dices to roll.
  * @param sides The number of sides on the die.
@@ -44,12 +62,6 @@ void printSumKept();
  * @return -1 if invalid number of dices, -2 if invalid number of sides.
  */
 int32_t rollDices(int32_t numDices, int32_t sides);
-
-/**
- * Get the number of kept dices.
- * @return The number of kept dices.
- */
-int32_t getKeptDices();
 
 /**
  * Select dice to keep.

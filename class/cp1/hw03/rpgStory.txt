@@ -1,0 +1,25 @@
+--- WEEK 01: HELLO, WORLD ---
+As you step into the Town of CPI, you feel a sense of excitement.
+Wow, a new town!
+
+You believe that you're going to face endless of possibilities.
+A new adventure is waiting for you.
+
+--- Options ---
+0. Show my stats
+1. (DEX) Look around the town
+2. (INT) Ask the townspeople about the town
+99. FORCE QUIT THE GAME
+&
+
+
+--- WEEK 02: VARIABLES ---
+You 
+
+--- Options ---
+0. Show my stats
+1. AAA
+2. BBB
+3. CCC
+99. FORCE QUIT THE GAME
+&

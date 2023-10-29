@@ -15,6 +15,7 @@ static const int32_t MENU_ROLL_GIVEN        = 2;
 static const int32_t MENU_KEEP_DICE         = 3;
 static const int32_t MENU_KEEP_HIGH_AND_LOW = 4;
 static const int32_t MENU_PRINT_MENU        = 9;
+static const int32_t MENU_PLAY_RPG          = 99;
 
 void printMenu() {
 	// Print the menu
@@ -28,6 +29,7 @@ void printMenu() {
 	printf("4. Roll given number of given-sided dices, keep given, highest and lowest\n");
 	printf("    dices and set the value to add to the sum\n");
 	printf("9. Print this menu\n");
+	printf("99. Say no more, let's play the game CPI-RPG!\n");
 }
 
 int32_t handleChoice() {
@@ -36,7 +38,7 @@ int32_t handleChoice() {
 
 	// Read the user's choice
 	printf("--------------------------------------------------------------------------------\n");
-	printf("Your choice: ");
+	printf("Menu choice: ");
 	if (scanf("%d", &gMenuChoice) != 1) {
 		printf("\nUh oh, this is not a valid choice.\n\n");
 		while (getchar() != '\n');
@@ -135,6 +137,9 @@ int32_t handleChoice() {
 	} else if (gMenuChoice == MENU_PRINT_MENU) {
 		// Print the menu
 		printMenu();
+	} else if (gMenuChoice == MENU_PLAY_RPG) {
+		// Start the game
+		rpgEventGameProcess();
 	} else {
 		printf("Uh oh, this is not a valid choice.\n");
 	} // End of handle the user's choice
