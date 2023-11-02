@@ -1,7 +1,7 @@
 #include "mycontrol.h"
 
 // Constant
-static const long double PI = 3.14159265358979323846L;
+static const double PI = 3.141592653589793;
 
 // Initialization flag
 static int32_t g_initialized = 0;
@@ -22,18 +22,17 @@ void initialize(double x, double y, double a) {
 
 	// Convert the angle range
 	convert_angle(g_a);
+
+	printf("The character is initialized!\n");
 }
 
 void convert_angle() {
 	// Convert the angle range
-	if (g_a < 0.0) {
-		while (g_a < 0.0) {
-			g_a += 2.0 * PI;
-		}
-	} else if (g_a >= 2.0 * PI) {
-		while (g_a >= 2.0 * PI) {
-			g_a -= 2.0 * PI;
-		}
+	while (g_a < 0.0) {
+		g_a += 2.0 * PI;
+	}
+	while (g_a >= 2.0 * PI) {
+		g_a -= 2.0 * PI;
 	}
 }
 
@@ -77,7 +76,7 @@ int32_t print(void) {
 	}
 
 	// Print the position and angle
-	printf("position: (%.2lf, %.2lf), angle: %.2Lf\n", g_x, g_y, g_a / PI);
+	printf("position: (%.2lf, %.2lf), angle: %.2lf\n", g_x, g_y, g_a / PI);
 
 	return 0;
 }
