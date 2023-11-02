@@ -14,22 +14,28 @@ static const int32_t MENU_ROLL_SIX          = 1;
 static const int32_t MENU_ROLL_GIVEN        = 2;
 static const int32_t MENU_KEEP_DICE         = 3;
 static const int32_t MENU_KEEP_HIGH_AND_LOW = 4;
-static const int32_t MENU_PRINT_MENU        = 9;
+static const int32_t MENU_PRINT_MENU        = 8;
+static const int32_t MENU_CLEAR_AND_PRINT   = 9;
 static const int32_t MENU_PLAY_RPG          = 99;
 
 void printMenu() {
 	// Print the menu
-	printf("Welcome to the DICE ROLLER!\n");
-	printf("Please refer to README.md for more instructions.\n");
+	printf("Welcome to the Dice Roll 3000!\n\n");
+
+	printf(" ____  _            _____ _____ _ _    ___ ___ ___ ___ \n");
+	printf("|    \\|_|___ ___   | __  |     | | |  |_  |   |   |   |\n");
+	printf("|  |  | |  _| -_|  |    -|  |  | | |  |_  | | | | | | |\n");
+	printf("|____/|_|___|___|  |__|__|_____|_|_|  |___|___|___|___|\n");
+
+	printf("\nPlease refer to README.md for more instructions.\n");
 	printf("0. Exit the roller\n");
 	printf("1. Roll a 6-sided dice\n");
 	printf("2. Roll given number of given-sided dices\n");
-	printf("3. Roll given number of given-sided dices, keep given dices and set the value\n");
-	printf("    to add to the sum\n");
-	printf("4. Roll given number of given-sided dices, keep given, highest and lowest\n");
-	printf("    dices and set the value to add to the sum\n");
-	printf("9. Print this menu\n");
-	printf("99. Say no more, let's play the game CPI-RPG!\n");
+	printf("3. Roll given number of given-sided dices, keep given dices and set the value to add to the sum\n");
+	printf("4. Roll given number of given-sided dices, keep given, highest and lowest dices and set the value to add to the sum\n");
+	printf("8. Print this menu\n");
+	printf("9. Clear the screen and print this menu\n");
+	printf("99. Let's play the game CPI-RPG!\n");
 }
 
 int32_t handleChoice() {
@@ -37,7 +43,7 @@ int32_t handleChoice() {
 	int32_t handle = -1;
 
 	// Read the user's choice
-	printf("--------------------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------------\n");
 	printf("Menu choice: ");
 	if (scanf("%d", &gMenuChoice) != 1) {
 		printf("\nUh oh, this is not a valid choice.\n\n");
@@ -78,7 +84,6 @@ int32_t handleChoice() {
 			printDicesWithIndex();
 
 			// Keep the dices
-			printf("\n");
 			handle = callKeepDice();
 		}
 
@@ -106,7 +111,6 @@ int32_t handleChoice() {
 			printDicesWithIndex();
 
 			// Keep the highest and lowest dices
-			printf("\n");
 			handle = callKeepHighestLowest();
 		}
 
@@ -117,7 +121,6 @@ int32_t handleChoice() {
 			printDicesWithIndex();
 
 			// Keep the dices
-			printf("\n");
 			handle = callKeepDice();
 		}
 
@@ -137,7 +140,16 @@ int32_t handleChoice() {
 	} else if (gMenuChoice == MENU_PRINT_MENU) {
 		// Print the menu
 		printMenu();
+	} else if (gMenuChoice == MENU_CLEAR_AND_PRINT) {
+		// Clear the screen
+		system("clear");
+
+		// Print the menu
+		printMenu();
 	} else if (gMenuChoice == MENU_PLAY_RPG) {
+		// Clear the screen
+		system("clear");
+
 		// Start the game
 		rpgEventGameProcess();
 	} else {
@@ -198,6 +210,11 @@ int32_t callKeepDice() {
 	// Maximum number of dices to keep
 	int32_t maxKept = gNumDices - getKeptDices();
 
+	// Skip if no dices to keep
+	if (maxKept == 0) {
+		return 0;
+	}
+
 	// Read the number of dices to keep
 	printf("==== Keep the \e[0;32mselected\e[0m dices ====\n");
 	printf("Number of \e[0;32mselected\e[0m dices (0<=\e[0;32mY\e[0m<=%d): ", maxKept);
@@ -211,6 +228,15 @@ int32_t callKeepDice() {
 	if (numKept < 0 || numKept > maxKept) {
 		printf("Uh oh, the number of \e[0;32mselected\e[0m dices (\e[0;32mY\e[0m) is out of range (0~%d).\n", maxKept);
 		return -1;
+	}
+
+	// Keep all dices if numKept is maximum
+	if (numKept == maxKept) {
+		for (int32_t i = 0; i < gNumDices; i++) {
+			keepDice(i);
+		}
+		printf("\n");
+		return 0;
 	}
 
 	// Loop number of keep times
@@ -264,6 +290,11 @@ int32_t callKeepHighestLowest() {
 	if (handleKeepHighest == -1) {
 		printf("Uh oh, the number of \e[0;31mhighest\e[0m dices to keep (\e[0;31mH\e[0m) is out of range (0~%d).\n", gNumDices);
 		return -1;
+	}
+
+	// Skip if no dices to keep
+	if (gNumDices - getKeptDices() == 0) {
+		return 0;
 	}
 
 	// Read the number of lowest dices to keep
