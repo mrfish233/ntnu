@@ -1,7 +1,7 @@
 #include "mycircle.h"
 
 // Constant
-static const long double PI = 3.14159265358979323846L;
+static const double PI = 3.141592653589793;
 
 // Global variable
 static double g_radius = -1;
@@ -41,12 +41,17 @@ double get_tangent_area(double x) {
 		return -1;
 	}
 
+	// Calculate the tangent line's slope
 	double y = sqrt(g_radius * g_radius - x * x);
-	double area = 0.5 * x * y;
+	double m = -x / y;
 
-	if (area < 0) {
-		area = -area;
-	}
+	// Calculate the tangent line's x-intercept and y-intercept
+	// Y - y = m(X - x), Y = 0; X = 0
+	double x_intercept = x - y / m;
+	double y_intercept = y - m * x;
+
+	// Calculate the area bounded by the tangent line, x-axis and y-axis
+	double area = 0.5 * x_intercept * y_intercept;
 
 	return area;
 }
