@@ -15,9 +15,3 @@ void rpgEventStartGame();
  * Handle the process of the game
  */
 void rpgEventGameProcess();
-
-/**
- * Handle the end of the game
- * @param type The type of the end
- */
-void rpgEventGameEnd();

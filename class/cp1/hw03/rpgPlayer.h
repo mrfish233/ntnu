@@ -73,52 +73,49 @@ int32_t getPlayerInventory(uint64_t index);
 /**
  * Set the player's STR.
  * @param newSTR The STR to set.
- * @return 0 if the STR is set successfully, -1 otherwise.
  */
 void setPlayerSTR(int32_t newSTR);
 
 /**
  * Set the player's INT.
  * @param newINT The INT to set.
- * @return 0 if the INT is set successfully, -1 otherwise.
  */
 void setPlayerINT(int32_t newINT);
 
 /**
  * Set the player's DEX.
  * @param newDEX The DEX to set.
- * @return 0 if the DEX is set successfully, -1 otherwise.
  */
 void setPlayerDEX(int32_t newDEX);
 
 /**
  * Set the player's health.
  * @param newHealth The health to set.
- * @return 0 if the health is set successfully, -1 otherwise.
  */
 void setPlayerHealth(int32_t newHealth);
 
 /**
  * Set the player's sanity.
  * @param newSanity The sanity to set.
- * @return 0 if the sanity is set successfully, -1 otherwise.
  */
 void setPlayerSanity(int32_t newSanity);
 
 /**
  * Set the player's luck.
  * @param newLuck The luck to set.
- * @return 0 if the luck is set successfully, -1 otherwise.
  */
 void setPlayerLuck(int32_t newLuck);
 
 /**
  * Set the player's inventory.
- * @param index The index of the item.
- * @param value The value to set.
- * @return 0 if the inventory is set successfully, -1 otherwise.
+ * @param index    The index of the item.
+ * @param newValue The value to set.
+ * @return 1 if the item is added successfully, 0 if the item is removed successfully.
+ * @return -1 if the index is invalid.
+ * @return -2 if the item is not in the inventory.
+ * @return -3 if the item is already in the inventory.
  */
-void setPlayerInventory(uint64_t index, int32_t value);
+int32_t setPlayerInventory(uint64_t index, int32_t newValue);
 
 /**
  * Roll the stats.

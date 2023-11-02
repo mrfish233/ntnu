@@ -20,6 +20,8 @@ static struct Player {
 		int32_t book_c;
 		int32_t book_coupon;
 		int32_t map;
+		int32_t i_pass;
+		int32_t o_pass;
 	} inventory;
 } gPlayer;
 
@@ -56,7 +58,7 @@ void initPlayer(enum PlayerClass class) {
 
 	// Print STR dice rolls
 	if (class == CLASS_WARRIOR) {
-		printf("==== STR (4d6k\e[0;31mh3\e[0m+3) ====\n");
+		printf("==== STR (4d6k\e[0;31mh3\e[0m+4) ====\n");
 	} else {
 		printf("==== STR (4d6k\e[0;31mh3\e[0m) ====\n");
 	}
@@ -66,7 +68,7 @@ void initPlayer(enum PlayerClass class) {
 
 	// Print INT dice rolls
 	if (class == CLASS_MAGE) {
-		printf("==== INT (4d6k\e[0;31mh3\e[0m+3) ====\n");
+		printf("==== INT (4d6k\e[0;31mh3\e[0m+4) ====\n");
 	} else {
 		printf("==== INT (4d6k\e[0;31mh3\e[0m) ====\n");
 	}
@@ -76,16 +78,16 @@ void initPlayer(enum PlayerClass class) {
 
 	// Print DEX dice rolls
 	if (class == CLASS_ROGUE) {
-		printf("==== DEX (4d6k\e[0;31mh3\e[0m+3) ====\n");
+		printf("==== DEX (4d6k\e[0;31mh3\e[0m+4) ====\n");
 	} else {
 		printf("==== DEX (4d6k\e[0;31mh3\e[0m) ====\n");
 	}
 	printDices();
 
 	// Set the health, sanity, and luck based on the attributes
-	gPlayer.health = 4 + gPlayer.STR / 2;
-	gPlayer.sanity = 4 + gPlayer.INT / 2;
-	gPlayer.luck   = 4 + gPlayer.DEX / 2;
+	gPlayer.health = gPlayer.DEX / 2 + gPlayer.STR / 2;
+	gPlayer.sanity = gPlayer.STR / 2 + gPlayer.INT / 2;
+	gPlayer.luck   = gPlayer.INT / 2 + gPlayer.DEX / 2;
 
 	// Set the max health and sanity
 	gPlayer.maxHealth = gPlayer.health;
@@ -93,28 +95,28 @@ void initPlayer(enum PlayerClass class) {
 
 	// Different classes have different bonuses
 	if (class == CLASS_WARRIOR) {
-		gPlayer.STR += 5;
+		gPlayer.STR += 4;
 		if (gPlayer.STR > 18) {
 			gPlayer.STR = 18;
 		}
 
-		gPlayer.health += 4;
-		gPlayer.maxHealth += 4;
+		gPlayer.health += 3;
+		gPlayer.maxHealth += 3;
 	} else if (class == CLASS_MAGE) {
-		gPlayer.INT += 5;
+		gPlayer.INT += 4;
 		if (gPlayer.INT > 18) {
 			gPlayer.INT = 18;
 		}
 
-		gPlayer.sanity += 4;
-		gPlayer.maxSanity += 4;
+		gPlayer.sanity += 3;
+		gPlayer.maxSanity += 3;
 	} else if (class == CLASS_ROGUE) {
-		gPlayer.DEX += 5;
+		gPlayer.DEX += 4;
 		if (gPlayer.DEX > 18) {
 			gPlayer.DEX = 18;
 		}
 
-		gPlayer.luck += 4;
+		gPlayer.luck += 3;
 	}
 }
 
@@ -176,13 +178,20 @@ void printPlayer() {
 			if (inventory[i] != 0) {
 				printf("|   %2d. ", counter);
 				if (i == 1) {
-					printf("Book \'C\'                     |");
+					printf("Book 'C'                     |");
 				} else if (i == 2) {
 					printf("Book Coupon                  |");
 				} else if (i == 3) {
 					printf("CPI Town Map                 |");
+				} else if (i == 4) {
+					printf("\"I Pass\" Card                |");
+				} else if (i == 5) {
+					printf("Food \"O Pass\"                |");
 				}
 				printf("\n");
+
+				// Increase the counter
+				counter++;
 			}
 		}
 	}
@@ -287,24 +296,37 @@ void setPlayerLuck(int32_t newLuck) {
 	gPlayer.luck = newLuck;
 }
 
-void setPlayerInventory(uint64_t index, int32_t value) {
+int32_t setPlayerInventory(uint64_t index, int32_t newValue) {
 	// Check if the index is valid (index 0 is total)
 	if (index >= sizeof(gPlayer.inventory) / sizeof(int32_t)) {
-		return;
+		return -1;
 	}
 
 	// Get the inventory
 	int32_t *inventory = (int32_t *)&gPlayer.inventory;
 
+	// Check if the item is not in the inventory
+	if (inventory[index] == 0 && newValue == 0) {
+		return -2;
+	}
+
+	// Check if the item is already in the inventory
+	if (inventory[index] == 1 && newValue == 1) {
+		return -3;
+	}
+
 	// Update total
-	if (value == 0 && inventory[index] == 1) {
+	if (newValue == 0 && inventory[index] == 1) {
 		gPlayer.inventory.total--;
-	} else if (value == 1 && inventory[index] == 0) {
+	} else if (newValue == 1 && inventory[index] == 0) {
 		gPlayer.inventory.total++;
 	}
 
 	// Set the item
-	inventory[index] = value;
+	inventory[index] = newValue;
+
+	// Return 1 if the item is added successfully, 0 if the item is removed successfully
+	return newValue;
 }
 
 int32_t rollPlayerStat(int32_t numDice, int32_t numSides, int32_t highest) {

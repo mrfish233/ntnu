@@ -2,22 +2,17 @@
 
 void rpgEventStartGame() {
 	// Print the welcome message
-	printf("Welcome to CPI-RPG!\n");
+	printf("Welcome to CPI-SRPG (Simple RPG)!\n\n");
 
-	// CPI RPG Logo
-	printf("    +-------+\n");
-	printf("    |   C   |\n");
-	printf("    |  RPG  |\n");
-	printf("    |   I   |\n");
-	printf("    +-------+\n");
+	// CPI SRPG Logo
+	printf(" _____ _____ _____    _____ _____ _____ _____\n");
+	printf("|     |  _  |     |  |   __| __  |  _  |   __|\n");
+	printf("|   --|   __|-   -|  |__   |    -|   __|  |  |\n");
+	printf("|_____|__|  |_____|  |_____|__|__|__|  |_____|\n");
 
 	// Introduction
-	printf("--- Introduction ---\n");
-	printf("You are a new player at CPI Town.\n");
-	printf("You are excited to start your new life here.\n");
-	printf("You are going to live in this town.\n");
-	printf("You will have to make many decisions.\n");
-	printf("Now, let's start your journey!\n");
+	printf("\n--- Introduction ---\n");
+	printf("You are a new adventurer at CPI Town. You are excited to start your new life here. You will have to make many decisions in your future. Now, let's start your journey!\n");
 	printf("\n");
 
 	// Select the class
@@ -31,12 +26,17 @@ void rpgEventStartGame() {
 	// Get the class
 	int32_t class = 0;
 	while (class < 1 || class > 3) {
-		printf("Select your class: ");
-		scanf("%d", &class);
+		printf("\033[33mSelect your class: ");
+		if (scanf("%d", &class) != 1) {
+			printf("Uh oh, that's not a valid class, please select again.\033[0m\n");
+			while (getchar() != '\n');
+			continue;
+		}
+		printf("\033[0m");
 
 		// Check if the input is valid
 		if (class < 1 || class > 3) {
-			printf("Uh oh, that's not a valid class, please select again.\n");
+			printf("\033[33mUh oh, that's not a valid class, please select again.\033[0m\n");
 		}
 	}
 	printf("\n");
@@ -52,7 +52,7 @@ void rpgEventStartGame() {
 
 	// Start the game
 	printf("Let's play the game!\n");
-	printf("--- Game Start ---\n");
+	// printf("--- Game Start ---\n");
 }
 
 void rpgEventGameProcess() {
@@ -65,14 +65,18 @@ void rpgEventGameProcess() {
 	}
 
 	// Handle the week
-	int32_t week = 1;
+	int32_t week = 5;
 	while (rpgStoryWeek(week) == 0) {
 		// Handle the option
 		int32_t option = 0, handleOption = -1;
 		while (handleOption == -1) {
 			// Get the option
 			printf("\033[33m> Select your option: ");
-			scanf("%d", &option);
+			if (scanf("%d", &option) != 1) {
+				printf("Uh oh, that's not a valid option, please select again.\033[0m\n");
+				while (getchar() != '\n');
+				continue;
+			}
 			printf("\033[0m\n");
 
 			// Handle the option
@@ -89,7 +93,7 @@ void rpgEventGameProcess() {
 				continue;
 			} else if (handleOption == -1) {
 				// If the option is invalid, reinput the option
-				printf("Uh oh, that's not a valid option, please select again.\n");
+				printf("\033[33mUh oh, that's not a valid option, please select again.\033[0m\n");
 			} else if (handleOption == 0 || handleOption == -3) {
 				// If the option is 0 or -3, the game is over
 				break;
@@ -101,10 +105,10 @@ void rpgEventGameProcess() {
 
 		// Check if the game is over
 		if (handleOption == 0) {
-			printf("The game is over.\n");
+			printf("GAME OVER.\n");
 			break;
 		} else if (handleOption == -3) {
-			printf("The game is ended by the player.\n");
+			printf("The game is ended by the user.\n");
 			break;
 		}
 	}
