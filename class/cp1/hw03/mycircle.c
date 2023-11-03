@@ -53,7 +53,7 @@ double get_tangent_area(double x) {
 	// Calculate the area bounded by the tangent line, x-axis and y-axis
 	double area = 0.5 * x_intercept * y_intercept;
 
-	return area;
+	return (area < 0) ? -area : area;
 }
 
 double get_inner_regular_polygon_area(int32_t n) {
