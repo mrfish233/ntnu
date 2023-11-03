@@ -76,7 +76,7 @@ int32_t print(void) {
 	}
 
 	// Print the position and angle
-	printf("position: (%.2lf, %.2lf), angle: %.2lf\n", g_x, g_y, g_a / PI);
+	printf("position: (%.2lf,%.2lf), angle: %.2lf\n", g_x, g_y, g_a / PI);
 
 	return 0;
 }
