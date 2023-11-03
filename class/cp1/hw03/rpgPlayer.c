@@ -237,8 +237,8 @@ int32_t getPlayerInventory(uint64_t index) {
 }
 
 void setPlayerSTR(int32_t newSTR) {
-	if (newSTR < 0) {
-		newSTR = 0;
+	if (newSTR < 6) {
+		newSTR = 6;
 	} else if (newSTR > 18) {
 		newSTR = 18;
 	}
@@ -247,8 +247,8 @@ void setPlayerSTR(int32_t newSTR) {
 }
 
 void setPlayerINT(int32_t newINT) {
-	if (newINT < 0) {
-		newINT = 0;
+	if (newINT < 6) {
+		newINT = 6;
 	} else if (newINT > 18) {
 		newINT = 18;
 	}
@@ -257,8 +257,8 @@ void setPlayerINT(int32_t newINT) {
 }
 
 void setPlayerDEX(int32_t newDEX) {
-	if (newDEX < 0) {
-		newDEX = 0;
+	if (newDEX < 6) {
+		newDEX = 6;
 	} else if (newDEX > 18) {
 		newDEX = 18;
 	}

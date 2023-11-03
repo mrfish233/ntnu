@@ -65,7 +65,7 @@ void rpgEventGameProcess() {
 	}
 
 	// Handle the week
-	int32_t week = 5;
+	int32_t week = 1;
 	while (rpgStoryWeek(week) == 0) {
 		// Handle the option
 		int32_t option = 0, handleOption = -1;

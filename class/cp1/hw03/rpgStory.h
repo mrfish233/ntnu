@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "rpgPlayer.h"
+#include "rpgBoss.h"
 
 /**
  * Initialize the file.

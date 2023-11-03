@@ -103,12 +103,13 @@ When you woke up, you saw nothing. You knew that this was not a regular place yo
 
 
 
---- WEEK ??: FIGHT OR RUN ---
-
+--- WEEK 08: FIGHT() ---
+The boss "Teek Non" appeared. You had no choice but to fight the boss. Did you strong enough to fight the boss? Were you able to defeat the boss? There was only one way to answer those questions. FIGHT!
 
 --- Options ---
 0. Show my stats
-1. AAA
-2. BBB
+1. ATTACK!
+2. DODGE!
+3. ESCAPE?
 99. FORCE QUIT THE GAME
 &

@@ -35,7 +35,7 @@ void printMenu() {
 	printf("4. Roll given number of given-sided dices, keep given, highest and lowest dices and set the value to add to the sum\n");
 	printf("8. Print this menu\n");
 	printf("9. Clear the screen and print this menu\n");
-	printf("99. Let's play the game CPI-RPG!\n");
+	printf("99. Let's play the game CPI-SRPG!\n");
 }
 
 int32_t handleChoice() {

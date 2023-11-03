@@ -87,15 +87,6 @@ int32_t keepHighest(int32_t highest);
  */
 int32_t keepLowest(int32_t lowest);
 
-// /**
-//  * Select and find the amount of highest and lowest dices to keep.
-//  * @param highest The amount of highest dices to keep.
-//  * @param lowest The amount of lowest dices to keep.
-//  * @return 0 if success.
-//  * @return -1 if invalid highest, -2 if invalid lowest, -3 if invalid sum.
-//  */
-// int32_t keepHighestLowest(int32_t highest, int32_t lowest);
-
 /**
  * Set shift value of sum for dice with range -10 to 10.
  * @param value The shift value.
