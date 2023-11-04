@@ -54,8 +54,10 @@ void clearDices() {
 }
 
 void printDice(int32_t index) {
-	// Print the dice at the given index
-	// printf("[%3d]\n", dices[index]);
+	// Check for invalid input
+	if (index < 0 || index >= diceCount) {
+		return;
+	}
 
 	printf("  *---*\n");
 	printf(" /     \\\n");
@@ -64,9 +66,19 @@ void printDice(int32_t index) {
 	printf("  *---*\n");
 }
 
+void printSimpleDice(int32_t index) {
+	// Check for invalid input
+	if (index < 0 || index >= diceCount) {
+		return;
+	}
+
+	// Print the dice at the given index
+	printf("[%3d]\n", dices[index]);
+}
+
 void printDices() {
 	if (diceCount == 0) {
-		printf("\e[38;5;237mI don't know what do i need to print for 0 dices.\e[0m\n\n");
+		printf("\e[38;5;237mI don't know why I need to print for 0 dices.\e[0m\n\n");
 		return;
 	}
 
@@ -107,9 +119,40 @@ void printDices() {
 	printf("\n");
 }
 
+void printSimpleDices() {
+	if (diceCount == 0) {
+		printf("\e[38;5;237mI don't know why I need to print for 0 dices.\e[0m\n\n");
+		return;
+	}
+
+	// Print all dices
+	for (int32_t i = 0; i < diceCount; i++) {
+
+		// Print the kept dice with different color
+		if (diceKept[i] == 1) { // 1 is kept, green
+			printf("\e[0;32m");
+		} else if (diceKept[i] == 2) { // 2 is highest, red
+			printf("\e[0;31m");
+		} else if (diceKept[i] == 3) { // 3 is lowest, cyan
+			printf("\e[0;36m");
+		}
+
+		printf("[%3d] ", dices[i]);
+
+		// Reset the color
+		printf("\e[0m");
+
+		// Change line every 5 dices
+		if ((i + 1) % 5 == 0 && i != diceCount - 1) {
+			printf("\n");
+		}
+	}
+	printf("\n");
+}
+
 void printDicesWithIndex() {
 	if (diceCount == 0) {
-		printf("\e[38;5;237mI don't know what do i need to print for 0 dices.\e[0m\n\n");
+		printf("\e[38;5;237mI don't know why I need to print for 0 dices.\e[0m\n\n");
 		return;
 	}
 

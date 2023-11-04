@@ -57,32 +57,35 @@ void initPlayer(enum PlayerClass class) {
 	gPlayer.STR = rollPlayerStat(4, 6, 3);
 
 	// Print STR dice rolls
-	if (class == CLASS_WARRIOR) {
-		printf("==== STR (4d6k\e[0;31mh3\e[0m+4) ====\n");
-	} else {
-		printf("==== STR (4d6k\e[0;31mh3\e[0m) ====\n");
-	}
-	printDices();
+	// if (class == CLASS_WARRIOR) {
+	// 	printf("==== STR (4d6k\e[0;31mh3\e[0m+4) ====\n");
+	// } else {
+	// 	printf("==== STR (4d6k\e[0;31mh3\e[0m) ====\n");
+	// }
+	printf("STR Roll: ");
+	printSimpleDices();
 
 	gPlayer.INT = rollPlayerStat(4, 6, 3);
 
 	// Print INT dice rolls
-	if (class == CLASS_MAGE) {
-		printf("==== INT (4d6k\e[0;31mh3\e[0m+4) ====\n");
-	} else {
-		printf("==== INT (4d6k\e[0;31mh3\e[0m) ====\n");
-	}
-	printDices();
+	// if (class == CLASS_MAGE) {
+	// 	printf("==== INT (4d6k\e[0;31mh3\e[0m+4) ====\n");
+	// } else {
+	// 	printf("==== INT (4d6k\e[0;31mh3\e[0m) ====\n");
+	// }
+	printf("INT Roll: ");
+	printSimpleDices();
 
 	gPlayer.DEX = rollPlayerStat(4, 6, 3);
 
 	// Print DEX dice rolls
-	if (class == CLASS_ROGUE) {
-		printf("==== DEX (4d6k\e[0;31mh3\e[0m+4) ====\n");
-	} else {
-		printf("==== DEX (4d6k\e[0;31mh3\e[0m) ====\n");
-	}
-	printDices();
+	// if (class == CLASS_ROGUE) {
+	// 	printf("==== DEX (4d6k\e[0;31mh3\e[0m+4) ====\n");
+	// } else {
+	// 	printf("==== DEX (4d6k\e[0;31mh3\e[0m) ====\n");
+	// }
+	printf("DEX Roll: ");
+	printSimpleDices();
 
 	// Set the health, sanity, and luck based on the attributes
 	gPlayer.health = gPlayer.DEX / 2 + gPlayer.STR / 2;
@@ -93,30 +96,32 @@ void initPlayer(enum PlayerClass class) {
 	gPlayer.maxHealth = gPlayer.health;
 	gPlayer.maxSanity = gPlayer.sanity;
 
+	int32_t bonus = 3;
+
 	// Different classes have different bonuses
 	if (class == CLASS_WARRIOR) {
-		gPlayer.STR += 4;
+		gPlayer.STR += bonus;
 		if (gPlayer.STR > 18) {
 			gPlayer.STR = 18;
 		}
 
-		gPlayer.health += 3;
-		gPlayer.maxHealth += 3;
+		gPlayer.health += bonus;
+		gPlayer.maxHealth += bonus;
 	} else if (class == CLASS_MAGE) {
-		gPlayer.INT += 4;
+		gPlayer.INT += bonus;
 		if (gPlayer.INT > 18) {
 			gPlayer.INT = 18;
 		}
 
-		gPlayer.sanity += 3;
-		gPlayer.maxSanity += 3;
+		gPlayer.sanity += bonus;
+		gPlayer.maxSanity += bonus;
 	} else if (class == CLASS_ROGUE) {
-		gPlayer.DEX += 4;
+		gPlayer.DEX += bonus;
 		if (gPlayer.DEX > 18) {
 			gPlayer.DEX = 18;
 		}
 
-		gPlayer.luck += 3;
+		gPlayer.luck += bonus;
 	}
 }
 

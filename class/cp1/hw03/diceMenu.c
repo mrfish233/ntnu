@@ -8,15 +8,16 @@ static int32_t gMenuChoice = -1;
 static int32_t gNumDices = 0;
 static int32_t gSides    = 0;
 
-// Constants
-static const int32_t MENU_EXIT	            = 0;
-static const int32_t MENU_ROLL_SIX          = 1;
-static const int32_t MENU_ROLL_GIVEN        = 2;
-static const int32_t MENU_KEEP_DICE         = 3;
-static const int32_t MENU_KEEP_HIGH_AND_LOW = 4;
-static const int32_t MENU_PRINT_MENU        = 8;
-static const int32_t MENU_CLEAR_AND_PRINT   = 9;
-static const int32_t MENU_PLAY_RPG          = 99;
+#ifndef DICE_MENU_CONSTANT
+#define MENU_EXIT              0
+#define MENU_ROLL_SIX          1
+#define MENU_ROLL_GIVEN        2
+#define MENU_KEEP_DICE         3
+#define MENU_KEEP_HIGH_AND_LOW 4
+#define MENU_PRINT_MENU        8
+#define MENU_CLEAR_AND_PRINT   9
+#define MENU_PLAY_RPG          99
+#endif // DICE_MENU_CONSTANT
 
 void printMenu() {
 	// Print the menu

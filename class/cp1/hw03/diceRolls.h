@@ -17,9 +17,20 @@ void clearDices();
 void printDice(int32_t index);
 
 /**
+ * Print a simple dice from array.
+ * @param index The index of the dice to print.
+ */
+void printSimpleDice(int32_t index);
+
+/**
  * Print all dices rolled.
  */
 void printDices();
+
+/**
+ * Print all dices rolled in simple format.
+ */
+void printSimpleDices();
 
 /**
  * Print all dices with index.

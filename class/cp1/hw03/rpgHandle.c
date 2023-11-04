@@ -19,7 +19,7 @@
 
 int32_t rpgHandleStatus() {
 	// Return -1 if the player is dead or insane
-	if (getPlayerHealth() == 0 || getPlayerSanity() == 0) {
+	if (getPlayerHealth() <= 0 || getPlayerSanity() <= 0) {
 		return -1;
 	}
 
@@ -38,7 +38,7 @@ int32_t rpgHandleHealth(int32_t numDices, int32_t sides, int32_t value) {
 		} else {
 			healthChange += rollDices(numDices, sides);
 		}
-		printf("\033[33m");
+		printf("\e[33m");
 		if (value < 0) {
 			printf("> Roll %dd%d+%d: \n", numDices, sides, -value);
 		} else if (value == 0) {
@@ -46,8 +46,8 @@ int32_t rpgHandleHealth(int32_t numDices, int32_t sides, int32_t value) {
 		} else {
 			printf("> Roll %dd%d+%d: \n", numDices, sides, value);
 		}
-		printDice(0);
-		printf("\033[0m");
+		printSimpleDice(0);
+		printf("\e[0m");
 	}
 
 	// Add value to sum
@@ -62,16 +62,17 @@ int32_t rpgHandleHealth(int32_t numDices, int32_t sides, int32_t value) {
 
 	// Check the health change
 	if (newHealth > oldHealth) {
-		printf("\033[33m> You gained %d HP.\033[0m\n", newHealth - oldHealth);
+		printf("\e[33m> You gained %d HP.\e[0m\n", newHealth - oldHealth);
 	} else if (newHealth < oldHealth) {
-		printf("\033[33m> You lost %d HP.\033[0m\n", oldHealth - newHealth);
+		printf("\e[33m> You lost %d HP.\e[0m\n", oldHealth - newHealth);
 	} else {
-		printf("\033[33m> Your HP remained unchanged.\033[0m\n");
+		printf("\e[33m> Your HP remained unchanged.\e[0m\n");
 	}
 
 	// Check if the player is dead
 	if (getPlayerHealth() == 0) {
-		printf("\033[33m> You died.\033[0m\n");
+		printf("You were dead.\n");;
+		printf("\e[33m> #03 DEAD END: You died.\e[0m\n");
 	}
 
 	// Handle the status
@@ -89,7 +90,7 @@ int32_t rpgHandleSanity(int32_t numDices, int32_t sides, int32_t value) {
 		} else {
 			sanChange += rollDices(numDices, sides);
 		}
-		printf("\033[33m");
+		printf("\e[33m");
 		if (value < 0) {
 			printf("> Roll %dd%d+%d: \n", numDices, sides, -value);
 		} else if (value == 0) {
@@ -97,8 +98,8 @@ int32_t rpgHandleSanity(int32_t numDices, int32_t sides, int32_t value) {
 		} else {
 			printf("> Roll %dd%d+%d: \n", numDices, sides, value);
 		}
-		printDice(0);
-		printf("\033[0m");
+		printSimpleDice(0);
+		printf("\e[0m");
 	}
 
 	// Add value to sum
@@ -113,16 +114,17 @@ int32_t rpgHandleSanity(int32_t numDices, int32_t sides, int32_t value) {
 
 	// Check the sanity change
 	if (newSanity > oldSanity) {
-		printf("\033[33m> You gained %d SAN.\033[0m\n", newSanity - oldSanity);
+		printf("\e[33m> You gained %d SAN.\e[0m\n", newSanity - oldSanity);
 	} else if (newSanity < oldSanity) {
-		printf("\033[33m> You lost %d SAN.\033[0m\n", oldSanity - newSanity);
+		printf("\e[33m> You lost %d SAN.\e[0m\n", oldSanity - newSanity);
 	} else {
-		printf("\033[33m> Your SAN remained changed.\033[0m\n");
+		printf("\e[33m> Your SAN remained changed.\e[0m\n");
 	}
 
 	// Check if the player is insane
 	if (getPlayerSanity() == 0) {
-		printf("\033[33m> You went insane.\033[0m\n");
+		printf("You went insane.\n");
+		printf("\e[33m> #04 INSANE END: You went insane.\e[0m\n");
 	}
 
 	// Handle the status
@@ -143,11 +145,11 @@ void rpgHandleAttribute(int32_t attribute, int32_t value) {
 
 		// Compare the old value and the new value
 		if (newAttribute > oldAttribute) {
-			printf("\033[33m> You gained %d STR.\033[0m\n", newAttribute - oldAttribute);
+			printf("\e[33m> You gained %d STR.\e[0m\n", newAttribute - oldAttribute);
 		} else if (newAttribute < oldAttribute) {
-			printf("\033[33m> You lost %d STR.\033[0m\n", oldAttribute - newAttribute);
+			printf("\e[33m> You lost %d STR.\e[0m\n", oldAttribute - newAttribute);
 		} else {
-			printf("\033[33m> Your STR remained unchanged.\033[0m\n");
+			printf("\e[33m> Your STR remained unchanged.\e[0m\n");
 		}
 	} else if (attribute == ATTRIBUTE_INT) {
 		// Get the old value
@@ -159,11 +161,11 @@ void rpgHandleAttribute(int32_t attribute, int32_t value) {
 
 		// Compare the old value and the new value
 		if (newAttribute > oldAttribute) {
-			printf("\033[33m> You gained %d INT.\033[0m\n", newAttribute - oldAttribute);
+			printf("\e[33m> You gained %d INT.\e[0m\n", newAttribute - oldAttribute);
 		} else if (newAttribute < oldAttribute) {
-			printf("\033[33m> You lost %d INT.\033[0m\n", oldAttribute - newAttribute);
+			printf("\e[33m> You lost %d INT.\e[0m\n", oldAttribute - newAttribute);
 		} else {
-			printf("\033[33m> Your INT remained unchanged.\033[0m\n");
+			printf("\e[33m> Your INT remained unchanged.\e[0m\n");
 		}
 	} else if (attribute == ATTRIBUTE_DEX) {
 		// Get the old value
@@ -175,14 +177,14 @@ void rpgHandleAttribute(int32_t attribute, int32_t value) {
 
 		// Compare the old value and the new value
 		if (newAttribute > oldAttribute) {
-			printf("\033[33m> You gained %d DEX.\033[0m\n", newAttribute - oldAttribute);
+			printf("\e[33m> You gained %d DEX.\e[0m\n", newAttribute - oldAttribute);
 		} else if (newAttribute < oldAttribute) {
-			printf("\033[33m> You lost %d DEX.\033[0m\n", oldAttribute - newAttribute);
+			printf("\e[33m> You lost %d DEX.\e[0m\n", oldAttribute - newAttribute);
 		} else {
-			printf("\033[33m> Your DEX remained unchanged.\033[0m\n");
+			printf("\e[33m> Your DEX remained unchanged.\e[0m\n");
 		}
 	} else {
-		printf("\033[33m> Unknown attribute.\033[0m\n");
+		printf("\e[33m> Unknown attribute.\e[0m\n");
 	}
 }
 
@@ -198,7 +200,7 @@ void rpgHandleInventory(int32_t index, int32_t value) {
 	};
 
 	// Handle the inventory
-	printf("\033[33m> ");
+	printf("\e[33m> ");
 	if (handler == -2) {
 		printf("The item %s is not in the inventory.", item[index - 1]);
 	} else if (handler == -3) {
@@ -208,7 +210,7 @@ void rpgHandleInventory(int32_t index, int32_t value) {
 	} else if (handler == 0) {
 		printf("Item removed: %s", item[index - 1]);
 	} else {
-		printf("Unknown error.\033[0m\n");
+		printf("Unknown error.\e[0m\n");
 	}
-	printf("\033[0m\n");
+	printf("\e[0m\n");
 }

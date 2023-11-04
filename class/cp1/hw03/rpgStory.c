@@ -20,15 +20,6 @@
 FILE *gStoryFile = NULL;
 char gStoryFileName[256] = "rpgStory.txt";
 
-// static void printSystemMessageLine(char *str);
-
-// static int32_t rpgStoryHandlePlayerStatus();
-
-// static void rpgStoryHandleHealth(int32_t numDices, int32_t sides, int32_t value);
-// static void rpgStoryHandleSanity(int32_t numDices, int32_t sides, int32_t value);
-// static void rpgStoryHandleInventory(char *itemName, int32_t index, int32_t value);
-// static void rpgStoryHandleAttribute(int32_t attribute, int32_t value);
-
 static int32_t week1(int32_t option);
 static int32_t week2(int32_t option);
 static int32_t week3(int32_t option);
@@ -37,6 +28,10 @@ static int32_t week5(int32_t option);
 static int32_t week6(int32_t option);
 static int32_t week7(int32_t option);
 static int32_t week8(int32_t option);
+
+static void printSeparateLine() {
+	printf("\n**********************************************************************\n\n");
+}
 
 int32_t rpgStoryInit() {
 	// Open the file
@@ -135,11 +130,11 @@ int32_t rpgStoryRollCheck(int32_t check, char *str) {
 	int32_t result = 0;
 
 	// Print in yellow color
-	printf("\033[33m> %s: \n", str);
+	printf("\e[33m> %s: ", str);
 
 	// Roll a d20
 	int32_t roll = rollDices(1, 20);
-	printDice(0);
+	printSimpleDice(0);
 
 	printf("> ");
 	if (roll == 1) {
@@ -157,7 +152,7 @@ int32_t rpgStoryRollCheck(int32_t check, char *str) {
 	}
 
 	// Reset the color
-	printf("\033[0m\n");
+	printf("\e[0m\n");
 
 	// Return the result
 	return result;
@@ -192,175 +187,6 @@ int32_t rpgStoryOptionHandle(int32_t week, int32_t option) {
 	// Return -1 if the option is invalid
 	return -1;
 }
-
-// static void printSystemMessageLine(char *str) {
-// 	// Print in yellow color
-// 	printf("\033[33m> %s\033[0m\n", str);
-// }
-
-// static int32_t rpgStoryHandlePlayerStatus() {
-// 	// Return -1 if the player is dead or insane
-// 	if (getPlayerHealth() <= 0) {
-// 		printSystemMessageLine("You died.");
-// 		return -1;
-// 	} else if (getPlayerSanity() <= 0) {
-// 		printSystemMessageLine("You went insane.");
-// 		return -1;
-// 	}
-
-// 	// Return 0 if the player is alive
-// 	return 0;
-// }
-
-// static void rpgStoryHandleHealth(int32_t numDices, int32_t sides, int32_t value) {
-// 	int32_t healthChange = 0;
-
-// 	// Roll dices
-// 	if (numDices != 0) {
-// 		if (numDices < 0) {
-// 			numDices = -numDices;
-// 			healthChange += -rollDices(numDices, sides);
-// 		} else {
-// 			healthChange += rollDices(numDices, sides);
-// 		}
-// 		printf("\033[33m");
-// 		if (value < 0) {
-// 			printf("> Roll %dd%d+%d: \n", numDices, sides, -value);
-// 		} else if (value == 0) {
-// 			printf("> Roll %dd%d: \n", numDices, sides);
-// 		} else {
-// 			printf("> Roll %dd%d+%d: \n", numDices, sides, value);
-// 		}
-// 		printDice(0);
-// 		printf("\033[0m");
-// 	}
-
-// 	// Add value to sum
-// 	healthChange += value;
-
-// 	// Set the healtn
-// 	setPlayerHealth(getPlayerHealth() + healthChange);
-
-// 	// Check if the value is positive
-// 	if (healthChange < 0) {
-// 		printf("\033[33m> You lost %d HP.\033[0m\n", -healthChange);
-// 	} else if (healthChange > 0) {
-// 		printf("\033[33m> You gained %d HP.\033[0m\n", healthChange);
-// 	} else {
-// 		printf("\033[33m> Your HP remained unchanged.\033[0m\n");
-// 	}
-// }
-
-// static void rpgStoryHandleSanity(int32_t numDices, int32_t sides, int32_t value) {
-// 	int32_t sanChange = 0;
-
-// 	// Roll dices
-// 	if (numDices != 0) {
-// 		if (numDices < 0) {
-// 			numDices = -numDices;
-// 			sanChange += -rollDices(numDices, sides);
-// 		} else {
-// 			sanChange += rollDices(numDices, sides);
-// 		}
-// 		printf("\033[33m");
-// 		if (value < 0) {
-// 			printf("> Roll %dd%d+%d: \n", numDices, sides, -value);
-// 		} else if (value == 0) {
-// 			printf("> Roll %dd%d: \n", numDices, sides);
-// 		} else {
-// 			printf("> Roll %dd%d+%d: \n", numDices, sides, value);
-// 		}
-// 		printDice(0);
-// 		printf("\033[0m");
-// 	}
-
-// 	// Add value to sum
-// 	sanChange += value;
-
-// 	// Set the sanity
-// 	setPlayerSanity(getPlayerSanity() + sanChange);
-
-// 	// Check if the value is positive
-// 	if (sanChange < 0) {
-// 		printf("\033[33m> You lost %d SAN.\033[0m\n", -sanChange);
-// 	} else if (sanChange > 0) {
-// 		printf("\033[33m> You gained %d SAN.\033[0m\n", sanChange);
-// 	} else {
-// 		printf("\033[33m> Your SAN remained changed.\033[0m\n");
-// 	}
-// }
-
-// static void rpgStoryHandleInventory(char *itemName, int32_t index, int32_t value) {
-// 	int32_t handler = setPlayerInventory(index, value);
-
-// 	// Handle the inventory
-// 	printf("\033[33m> ");
-// 	if (handler == -2) {
-// 		printf("The item %s is not in the inventory.", itemName);
-// 	} else if (handler == -3) {
-// 		printf("The item %s is already in the inventory.", itemName);
-// 	} else if (handler == 1) {
-// 		printf("Item added: %s", itemName);
-// 	} else if (handler == 0) {
-// 		printf("Item removed: %s", itemName);
-// 	} else {
-// 		printf("Unknown error.\033[0m\n");
-// 	}
-// 	printf("\033[0m\n");
-// }
-
-// static void rpgStoryHandleAttribute(int32_t attribute, int32_t value) {
-// 	int32_t oldValue = 0;
-
-// 	if (attribute == ATTRIBUTE_STR) {
-// 		// Get the old value
-// 		oldValue = getPlayerSTR();
-
-// 		// Set the new value
-// 		setPlayerSTR(getPlayerSTR() + value);
-
-// 		// Compare the old value and the new value
-// 		if (getPlayerSTR() > oldValue) {
-// 			printf("\033[33m> You gained %d STR.\033[0m\n", getPlayerSTR() - oldValue);
-// 		} else if (getPlayerSTR() < oldValue) {
-// 			printf("\033[33m> You lost %d STR.\033[0m\n", oldValue - getPlayerSTR());
-// 		} else {
-// 			printf("\033[33m> Your STR remained unchanged.\033[0m\n");
-// 		}
-// 	} else if (attribute == ATTRIBUTE_INT) {
-// 		// Get the old value
-// 		oldValue = getPlayerINT();
-
-// 		// Set the new value
-// 		setPlayerINT(getPlayerINT() + value);
-
-// 		// Compare the old value and the new value
-// 		if (getPlayerINT() > oldValue) {
-// 			printf("\033[33m> You gained %d INT.\033[0m\n", getPlayerINT() - oldValue);
-// 		} else if (getPlayerINT() < oldValue) {
-// 			printf("\033[33m> You lost %d INT.\033[0m\n", oldValue - getPlayerINT());
-// 		} else {
-// 			printf("\033[33m> Your INT remained unchanged.\033[0m\n");
-// 		}
-// 	} else if (attribute == ATTRIBUTE_DEX) {
-// 		// Get the old value
-// 		oldValue = getPlayerDEX();
-
-// 		// Set the new value
-// 		setPlayerDEX(getPlayerDEX() + value);
-
-// 		// Compare the old value and the new value
-// 		if (getPlayerDEX() > oldValue) {
-// 			printf("\033[33m> You gained %d DEX.\033[0m\n", getPlayerDEX() - oldValue);
-// 		} else if (getPlayerDEX() < oldValue) {
-// 			printf("\033[33m> You lost %d DEX.\033[0m\n", oldValue - getPlayerDEX());
-// 		} else {
-// 			printf("\033[33m> Your DEX remained unchanged.\033[0m\n");
-// 		}
-// 	} else {
-// 		printf("\033[33m> Unknown attribute.\033[0m\n");
-// 	}
-// }
 
 static int32_t week1(int32_t option) {
 	int32_t rollCheck = 0;
@@ -406,7 +232,7 @@ static int32_t week1(int32_t option) {
 		printf("From the conversation, you learned that the town has a festival every year. The festival is called \"CPI Town Festival\". The festival will be held in the other village next week. You decided to go to the festival.\n");
 	}
 
-	printf("\n");
+	printSeparateLine();
 
 	// Go to week 2
 	return 2;
@@ -422,7 +248,7 @@ static int32_t week2(int32_t option) {
 	if (option == 1) {
 		printf("You went to the show. The show was held at the center of the village. The show just started when you arrived. From the show, you learned that the show was called \"LET ME PASS\". Around 60 people performed in the show and everyone looked scary. Suddenly, they started to run towards you. You felt scared.\n");
 
-		// Make a SAN check
+		// Make a SAN check 0/1
 		rollCheck = rpgStoryRollCheck(getPlayerSanity(), "SAN Check 0/1");
 
 		if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
@@ -439,7 +265,7 @@ static int32_t week2(int32_t option) {
 
 		// Check the player status
 		if (rpgHandleStatus() == -1) {
-			return -1;
+			return 0;
 		}
 
 		printf("After the show, a person came to you. His name is A.A.Klat and watched the show. From the conversation, you knew that the show was inspired by a card. The card is called \"I Pass\". He gave you one.\n");
@@ -457,7 +283,7 @@ static int32_t week2(int32_t option) {
 		printf("The food can be used to pass village II. The food was important to intel people in the village. You kept that in mind.\n");
 	}
 
-	printf("\n");
+	printSeparateLine();
 
 	// Go to week 3
 	return 3;
@@ -473,8 +299,7 @@ static int32_t week3(int32_t option) {
 	if (option == 1) {
 		printf("You talked to the shop keeper H.K.Snogy.\n");
 
-		// If the player has the book
-		if (getPlayerInventory(ITEM_BOOK) == 1) {
+		if (getPlayerInventory(ITEM_BOOK) == 1) { // If the player has the book
 			printf("You showed the book 'C' to the shop keeper. The shop keeper was surprised and told you that the book is very important. You learned more about the book.\n");
 
 			// Increase INT by 1
@@ -487,7 +312,7 @@ static int32_t week3(int32_t option) {
 
 			// Add the book to the inventory
 			rpgHandleInventory(ITEM_BOOK, 1);
-		} else { // If the player has nothing
+		} else { // If the player has none of the above
 			printf("You asked the shop keeper about this place. The shop keeper told you that this place is called \"Village I\".\n");
 
 			// Make a INT check
@@ -532,13 +357,14 @@ static int32_t week3(int32_t option) {
 
 		// Check the player status
 		if (rpgHandleStatus() == -1) {
-			return -1;
+			return 0;
 		}
 
 		printf("His name is B.J.Linaco and he fought the boss before. He attacked you because he wanted to test your strength.\n");
 	}
 
-	printf("From the conversation, you learned that there's a boss in this village and the boss will come after 5 weeks. The book 'C' is the key item to defeat the boss. You also learned that the map of the town was also useful when fighting boss. As fighting boss is not an easy task, you decided to improve yourself before the boss come.\n\n");
+	printf("From the conversation, you learned that there's a boss in this village and the boss will come after 5 weeks. The book 'C' is the key item to defeat the boss. You also learned that the map of the town was also useful when fighting boss. As fighting boss is not an easy task, you decided to improve yourself before the boss come.\n");
+	printSeparateLine();
 
 	// Go to week 4
 	return 4;
@@ -571,7 +397,7 @@ static int32_t week4(int32_t option) {
 
 		// Check the player status
 		if (rpgHandleStatus() == -1) {
-			return -1;
+			return 0;
 		}
 
 		printf("You heard a voice from the guy. He told you that he needed 10 seconds to cast his ultimate spell. You protected him for 10 seconds. The monster tried to attack you.\n");
@@ -592,6 +418,11 @@ static int32_t week4(int32_t option) {
 
 			// Decrease the HP by 1d3+1
 			rpgHandleHealth(-1, 3, -1);
+		}
+
+		// Check the player status
+		if (rpgHandleStatus() == -1) {
+			return 0;
 		}
 
 		printf("\"SWITCH!\" The guy shouted. You switched position with the guy. He casted a spell and the monster was killed.\n");
@@ -615,7 +446,7 @@ static int32_t week4(int32_t option) {
 
 		// Check the player status
 		if (rpgHandleStatus() == -1) {
-			return -1;
+			return 0;
 		}
 
 		printf("You found a chance to backstab the monster. You tried to backstab the monster.\n");
@@ -633,7 +464,7 @@ static int32_t week4(int32_t option) {
 
 			// Check the player status
 			if (rpgHandleStatus() == -1) {
-				return -1;
+				return 0;
 			}
 
 			printf("Although you were hit by the monster, you distracted the monster for 10 seconds \"SWITCH!\" The guy shouted. The guy casted a spell and the monster was killed.\n");
@@ -645,14 +476,15 @@ static int32_t week4(int32_t option) {
 
 			// Check the player status
 			if (rpgHandleStatus() == -1) {
-				return -1;
+				return 0;
 			}
 
 			printf("Although you were hit by the monster, you distracted the monster for 10 seconds. \"SWITCH!\" The guy shouted. The guy casted a spell and the monster was killed.\n");
 		}
 	}
 
-	printf("The guy thanked you for helping him.\n\n");
+	printf("The guy thanked you for helping him.\n");
+	printSeparateLine();
 
 	// Go to week 5
 	return 5;
@@ -697,7 +529,7 @@ static int32_t week5(int32_t option) {
 
 			// Check the player status
 			if (rpgHandleStatus() == -1) {
-				return -1;
+				return 0;
 			}
 		}
 	} else if (option == 2) {
@@ -732,7 +564,7 @@ static int32_t week5(int32_t option) {
 
 				// Check the player status
 				if (rpgHandleStatus() == -1) {
-					return -1;
+					return 0;
 				}
 			}
 		}
@@ -768,12 +600,13 @@ static int32_t week5(int32_t option) {
 
 			// Check the player status
 			if (rpgHandleStatus() == -1) {
-				return -1;
+				return 0;
 			}
 		}
 	}
 
-	printf("You suddenly found yourself in a dark room. You saw nothing. You heard nothing. You felt you were dead. You felt you were insane. You felt you were nothing. You felt this is the end. Or is it?\n\n");
+	printf("You suddenly found yourself in a dark room. You saw nothing. You heard nothing. You felt you were dead. You felt you were insane. You felt you were nothing. You felt this is the end. Or is it?\n");
+	printSeparateLine();
 
 	// Go to week 6
 	return 6;
@@ -798,13 +631,14 @@ static int32_t week6(int32_t option) {
 		// Increase HP by 1
 		rpgHandleHealth(0, 0, 1);
 	} else if (option == 3) {
-		printf("You opened the blue glass door and entered the room. You felt better. You had no time to think what was going on and you felt asleep.\n");
+		printf("You opened the red wooden door and entered the room. You felt better. You had no time to think what was going on and you felt asleep.\n");
 
 		// Increase SAN by 1d3
 		rpgHandleSanity(1, 3, 0);
 	}
 
-	printf("You suddenly found yourself in a dark room. You saw nothing. You heard nothing. You felt you were dead. You felt you were insane. You felt you were nothing. You felt this is the end. Or is it?\n\n");
+	printf("You suddenly found yourself in a dark room. You saw nothing. You heard nothing. You felt you were dead. You felt you were insane. You felt you were nothing. You felt this is the end. Or is it?\n");
+	printSeparateLine();
 
 	// Go to week 7
 	return 7;
@@ -817,15 +651,19 @@ static int32_t week7(int32_t option) {
 		return -1;
 	}
 
-	printf("You opened the blue iron door and entered the room. As stepping into the room, a strong feeling hit you.\n");
-
 	if (option == 1) {
+		printf("You opened the blue iron door and entered the room. As stepping into the room, a strong feeling hit you.\n");
+
 		// Make a STR check
 		rollCheck = rpgStoryRollCheck(getPlayerSTR(), "STR Check");
 	} else if (option == 2) {
+		printf("You opened the red glass door and entered the room. As stepping into the room, a strong feeling hit you.\n");
+
 		// Make a DEX check
 		rollCheck = rpgStoryRollCheck(getPlayerDEX(), "DEX Check");
 	} else if (option == 3) {
+		printf("You opened the green wooden door and entered the room. As stepping into the room, a strong feeling hit you.\n");
+
 		// Make a INT check
 		rollCheck = rpgStoryRollCheck(getPlayerINT(), "INT Check");
 	}
@@ -901,6 +739,8 @@ static int32_t week7(int32_t option) {
 		printf("She then left the village.\n");
 	}
 
+	printSeparateLine();
+
 	// Go to week 8
 	return 8;
 }
@@ -916,8 +756,21 @@ static int32_t week8(int32_t option) {
 
 	if (option == 1) {
 		printf("You tried to attack the boss.\n");
-		printf("\e[33m> Rule of \"successful check\": get 2 points in 3 attribute checks\n");
+		printf("\e[33m> Rule of \"successful check\": get 3 points in 3 attribute checks\n");
 		printf("\e[33m> Critical Success/Success/Failure/Critical Failure gets 2/1/0/-1 points\n");
+		printf("\e[33m> A free point is given if you have the book 'C'.\e[0m\n\n");
+
+		int32_t requiredCheck = 3;
+
+		// Reset check
+		successfulCheck = 0;
+
+		// If the player has the book
+		if (getPlayerInventory(ITEM_BOOK) == 1) {
+			printf("\e[33m> You had the book 'C'. You could dealt damage easier.\e[0m\n");
+
+			successfulCheck += 1;
+		}
 
 		// Make a STR check
 		rollCheck = rpgStoryRollCheck(getPlayerSTR(), "STR Check");
@@ -952,26 +805,32 @@ static int32_t week8(int32_t option) {
 			successfulCheck -= 1;
 		}
 
-		printf("\e[33m> Successful check (2/1/0/-1): %d/2\e[0m\n", successfulCheck);
+		printf("\e[33m> Successful check (2/1/0/-1): %d/%d\e[0m\n", successfulCheck, requiredCheck);
 
-		if (successfulCheck >= 2) {
-			printf("You successfully attacked the boss!\n");
+		if (successfulCheck >= requiredCheck) {
+			printf("YOU HIT THE BOSS!\n");
 
 			// Update boss health
 			rpgBossUpdateHealth(rpgBossGetHealth() - 1);
 
 			// Check boss health
 			if (rpgBossGetHealth() == 0) {
-				printf("Boss defeated!\n");
+				printf("Boss defeated!\n\n");
+
+				printf("=== WEEK 09: RETURN ===\n");
+				printf("You defeated the boss last week. You know that this is not the end. You still need to defeat the boss once. The boss will appear again after 7 weeks. At that time, the boss will be stronger and harder. Are you ready to defeat the boss again?\n");
+				printf("\e[33m> #01 GOOD END: You defeated the boss.\e[0m\n");
 
 				rpgBossEnd();
 
 				return 0;
-			} else if (rpgBossGetHealth() <= 2) {
-				printf("Boss looked weak now.\n");
 			}
 		} else {
-			printf("Fail to attack the boss\n");
+			printf("YOU DIDN'T HIT THE BOSS!\n");
+		}
+
+		if (rpgBossGetHealth() <= 2) {
+			printf("THE BOSS LOOKED WEAK NOW.\n");
 		}
 	} else if (option == 2) {
 		printf("You're ready to dodge.\n");
@@ -979,12 +838,44 @@ static int32_t week8(int32_t option) {
 		dodgeReady = 1;
 	} else if (option == 3) {
 		if (rpgBossGetHealth() > 2) {
-			printf("You can't escape from boss!\n");
+			printf("\"Escape? What a coward!\" The boss said. The boss pulled you back using his magic.\n");
+
+			// Make a SAN check 1/1d3
+			rollCheck = rpgStoryRollCheck(getPlayerSanity(), "SAN Check 1/1d3");
+
+			if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
+				printf("You were not scared by the boss.\n");
+
+				// Decrease the SAN by 1
+				rpgHandleSanity(0, 0, -1);
+			} else { // if (rollCheck == FAILURE || rollCheck == BIG_FAILURE) {
+				printf("You were scared by the boss.\n");
+
+				// Decrease the SAN by 1d3
+				rpgHandleSanity(-1, 3, 0);
+			}
+
+			// Check the player status
+			if (rpgHandleStatus() == -1) {
+				return 0;
+			}
 		} else {
 			printf("You tried to escape from boss.\n");
+			printf("\e[33m> Rule of \"successful check\": get 4 points in 3 attribute checks\n");
+			printf("\e[33m> Critical Success/Success/Failure/Critical Failure gets 2/1/0/-1 points\n");
+			printf("\e[33m> A free point is given if you have the map.\e[0m\n\n");
+
+			int32_t requiredCheck = 4;
 
 			// Reset check
 			successfulCheck = 0;
+
+			// If the player has the map
+			if (getPlayerInventory(ITEM_MAP) == 1) {
+				printf("\e[33m> You had the map. You could escape easier.\e[0m\n");
+
+				successfulCheck += 1;
+			}
 
 			// Make a STR check
 			rollCheck = rpgStoryRollCheck(getPlayerSTR(), "STR Check");
@@ -1019,28 +910,60 @@ static int32_t week8(int32_t option) {
 				successfulCheck -= 1;
 			}
 
-			printf("\e[33m> Successful check (2/1/0/-1): %d/2\e[0m\n", successfulCheck);
+			printf("\e[33m> Successful check (2/1/0/-1): %d/%d\e[0m\n", successfulCheck, requiredCheck);
 
-			if (successfulCheck >= 2) {
-				printf("You successfully escaped from the boss!\n");
+			if (successfulCheck >= requiredCheck) {
+				printf("You successfully escaped from the boss!\n\n");
+
+				printf("=== WEEK xx: RETURN ===\n");
+				printf("You escaped from the boss few weeks ago. What now? You still need to defeat the boss once. You can only defeat the boss next year. Why don't you choose to defeat him this time? That's not really hard.\n");
+				printf("\e[33m> #02 BAD END: You escaped from the boss.\e[0m\n");
 
 				rpgBossEnd();
 
 				return 0;
 			} else {
-				printf("Fail to escape from the boss\n");
+				printf("\"You could never escape from me!\" The boss said. The boss pulled you back using his magic.\n");
+
+				// Make a SAN check 1/1d6
+				rollCheck = rpgStoryRollCheck(getPlayerSanity(), "SAN Check 2/2d3");
+
+				if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
+					printf("You were not scared by the boss.\n");
+
+					// Decrease the SAN by 1
+					rpgHandleSanity(0, 0, -1);
+				} else { // if (rollCheck == FAILURE || rollCheck == BIG_FAILURE) {
+					printf("You were scared by the boss.\n");
+
+					// Decrease the SAN by 1d6
+					rpgHandleSanity(-1, 6, 0);
+				}
+
+				// Check the player status
+				if (rpgHandleStatus() == -1) {
+					return 0;
+				}
 			}
 		}
 	}
 
-	printf("\"It's my turn now!\" Said the boss.\n");
+	printf("\n\"It's my turn now!\" Said the boss.\n");
 
 	if (rpgBossGetAction() == 0) {
-		printf("\"A free round for you,\" said the boss.\n");
+		printf("\"A free round for you.\" The boss didn't do anything.\n");
+
+		if (dodgeReady) {
+			printf("You were ready to dodge, but the boss didn't attack you.\n");
+		}
 	} else if (rpgBossGetAction() == 1) {
 		printf("\"KA-ME-HA-ME...\" The boss was preparing to attack you.\n");
+
+		if (dodgeReady) {
+			printf("You were ready to dodge, but the boss didn't attack you.\n");
+		}
 	} else if (rpgBossGetAction() == 2) {
-		printf("\"HAAAAAAAAAAAAAAA!\"\n");
+		printf("\"HAAAAAAAAAAAAAAA!\" The boss attacked you!\n");
 
 		if (dodgeReady) {
 			printf("As you were ready to dodge, you only received half of the damage.\n");
@@ -1056,21 +979,32 @@ static int32_t week8(int32_t option) {
 
 		// Check the player status
 		if (rpgHandleStatus() == -1) {
-			return -1;
+			return 0;
 		}
+
+		printf("The boss was preparing to attack you again.\n");
 	} else if (rpgBossGetAction() == 3) {
+		printf("\"Eat my magic!\" The boss used magic!\n");
+
+		if (dodgeReady) {
+			printf("You were ready to dodge, but magic was not dodgeable.\n");
+		}
+
 		printf("\"Sterengeo Spirergio!\" The boss used STR magic!\n");
 
 		// Make a STR check
 		rollCheck = rpgStoryRollCheck(getPlayerSTR(), "STR Check");
 
 		if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
-			printf("You resisted STR magic!\n");
-		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
-			printf("You were hit by the STR magic!\n");
+			printf("You resisted a portion of the STR magic!\n");
 
 			// Decrease STR by 1
 			rpgHandleAttribute(ATTRIBUTE_STR, -1);
+		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
+			printf("You were hit directly by the STR magic!\n");
+
+			// Decrease STR by 2
+			rpgHandleAttribute(ATTRIBUTE_STR, -2);
 		}
 
 		printf("\"Dexterigeo Demarmus!\" The boss used DEX magic!\n");
@@ -1079,12 +1013,15 @@ static int32_t week8(int32_t option) {
 		rollCheck = rpgStoryRollCheck(getPlayerDEX(), "DEX Check");
 
 		if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
-			printf("You resisted DEX magic!\n");
-		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
-			printf("You were hit by the DEX magic!\n");
+			printf("You resisted a portion of the DEX magic!\n");
 
 			// Decrease DEX by 1
 			rpgHandleAttribute(ATTRIBUTE_DEX, -1);
+		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
+			printf("You were hit directly by the DEX magic!\n");
+
+			// Decrease DEX by 2
+			rpgHandleAttribute(ATTRIBUTE_DEX, -2);
 		}
 
 		printf("\"Intelligeno Imperfaro!\" The boss used INT magic!\n");
@@ -1093,28 +1030,24 @@ static int32_t week8(int32_t option) {
 		rollCheck = rpgStoryRollCheck(getPlayerINT(), "INT Check");
 
 		if (rollCheck == BIG_SUCCESS || rollCheck == SUCCESS) {
-			printf("You resisted INT magic!\n");
-		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
-			printf("You were hit by the INT magic!\n");
+			printf("You resisted a portion of the INT magic!\n");
 
 			// Decrease INT by 1
 			rpgHandleAttribute(ATTRIBUTE_INT, -1);
+		} else { //if (rollCheck == BIG_FAILURE || rollCheck == FAILURE) {
+			printf("You were hit directly by the INT magic!\n");
+
+			// Decrease INT by 2
+			rpgHandleAttribute(ATTRIBUTE_INT, -2);
 		}
+
+		printf("The boss took a rest.\n");
 	}
 
 	// Update boss action
 	rpgBossUpdateAction();
 
-	printf("\n");
+	printSeparateLine();
 
 	return 8;
 }
-
-/**
- * TODO:
- * [x] Move handle function to new file
- * [] Add more story to boss fight
- * [] Add Book 'C' and map usage in boss fight
- * [] typo fix
- * [] Change dice pattern for rpg game
-*/
