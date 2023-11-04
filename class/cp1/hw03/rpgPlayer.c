@@ -161,7 +161,7 @@ void printPlayer() {
 		gPlayer.luck);
 
 	// Print the attributes
-	printf("| STR: %2d     INT: %2d     DEX:  %2d   |\n",
+	printf("| STR: %02d     INT: %02d     DEX:  %02d   |\n",
 		gPlayer.STR, gPlayer.INT, gPlayer.DEX);
 	printf("|                                    |\n");
 

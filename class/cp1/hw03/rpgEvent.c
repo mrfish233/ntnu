@@ -51,8 +51,7 @@ void rpgEventStartGame() {
 	printf("\n");
 
 	// Start the game
-	printf("Let's play the game!\n");
-	// printf("--- Game Start ---\n");
+	printf("Let's play the game!\n\n");
 }
 
 void rpgEventGameProcess() {

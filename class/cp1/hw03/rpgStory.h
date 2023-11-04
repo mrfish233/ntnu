@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "rpgPlayer.h"
 #include "rpgBoss.h"
+#include "rpgHandle.h"
 
 /**
  * Initialize the file.
