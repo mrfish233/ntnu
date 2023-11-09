@@ -1,0 +1,52 @@
+Initialize(x, y, a):  
+Initialize: 
+Forward(x):  
+Forward: 0
+Print():  
+position : (55.33,29.12), angle : 1.81
+Print: 0
+Forward(x):  
+Forward: 0
+Print():  
+position : (69.44,19.82), angle : 1.81
+Print: 0
+Initialize(x, y, a):  
+Initialize: 
+Print():  
+position : (3.10,13.17), angle : 1.17
+Print: 0
+Clock_turn(a):  
+Clock_turn: 0
+Print():  
+position : (3.10,13.17), angle : 1.12
+Print: 0
+Initialize(x, y, a):  
+Initialize: 
+Print():  
+position : (45.40,44.07), angle : 0.36
+Print: 0
+Clock_turn(a):  
+Clock_turn: 0
+Print():  
+position : (45.40,44.07), angle : 0.38
+Print: 0
+Initialize(x, y, a):  
+Initialize: 
+Print():  
+position : (32.42,20.99), angle : 0.16
+Print: 0
+Initialize(x, y, a):  
+Initialize: 
+Print():  
+position : (50.46,6.15), angle : 0.34
+Print: 0
+Forward(x):  
+Forward: 0
+Print():  
+position : (65.77,34.19), angle : 0.34
+Print: 0
+Forward(x):  
+Forward: 0
+Print():  
+position : (97.41,92.11), angle : 0.34
+Print: 0

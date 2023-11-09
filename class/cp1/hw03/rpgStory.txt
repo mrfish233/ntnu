@@ -1,0 +1,115 @@
+=== WEEK 01: HELLO, WORLD ===
+You were in front of the CPI Town. The town was a historical place. As you step into the Town of CPI, you felt a sense of excitement. You believe that you're going to face endless of possibilities. A new adventure is waiting for you.
+
+--- Options ---
+0. Show my stats
+1. Look around the town
+2. Ask the townspeople about the town
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+
+=== WEEK 02: VARIABLES ===
+CPI Town Festival, the most important festival in this village. The festival held for 3 days. It's the last day of the festival. You looked at the manual of the festival and found something you were interested.
+"FAMOUS SHOW" - 1800 to 2000
+"FOOD FES"    - 1800 to 2000
+Looks like you didn't have enough time to go to both of them. You selected one of them.
+
+--- Options ---
+0. Show my stats
+1. Watch the "FAMOUS SHOW"
+2. Get foods from "FOOD FES"
+99. FORCE QUIT THE GAME
+&
+
+
+
+=== WEEK 03: IF...ELSE? ===
+You found a bookstore in the village. It is a 100*100*100 meter cube in size. You had never seen such tremendous building. The foundation, framing, flooring, landscaping, construction and all the other process, how did they built it. When stepping in the bookstore, a giant sculpture rised in front of you. You then saw a lot of people inside the bookstore. You decided to talk to one of them to find out more about this place.
+
+--- Options ---
+0. Show my stats
+1. Talk to the shopkeeper
+2. Talk to a random person
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+
+=== WEEK 04: SWITCH! ===
+Walking on the street after a full-day training, thinking about all the things happened at this place, and suddenly you heard a noise. You knew that someone was fighthing at someplace. Following the source of the noise, you found a guy who was battling with something. You knew the guy needed a help.
+
+--- Options ---
+0. Show my stats
+1. Help him without hesitation
+2. Observe before help him
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+
+=== WEEK 05: FOR EVER? ===
+When you woke up, you saw nothing. You knew that this was not a regular place you lived. Looking around, searching for something you're familiar, but you could only see 3 doors stood on a white wall. You felt that you had come this place before. You then selected one of the doors.
+
+--- Options ---
+0. Show my stats
+1. Select red iron door
+2. Select green glass door
+3. Select blue wooden door
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+=== WEEK 0?: FOR EVER? ===
+When you woke up, you saw nothing. You knew that this was not a regular place you lived. Looking around, searching for something you're familiar, but you could only see 3 doors on a white wall. You felt that you had come this place before. You then selected one of the doors.
+
+--- Options ---
+0. Show my stats
+1. Select green iron door
+2. Select blue glass door
+3. Select red wooden door
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+=== WEEK ??: FOR EVER? ===
+When you woke up, you saw nothing. You knew that this was not a regular place you lived. Looking around, searching for something you're familiar, but you could only see 3 doors on a white wall. You felt that you had come this place before. You then selected one of the doors.
+
+--- Options ---
+0. Show my stats
+1. Select blue iron door
+2. Select red glass door
+3. Select green wooden door
+99. FORCE QUIT THE GAME
+&
+
+
+
+
+
+=== WEEK 08: FIGHT() ===
+The boss "Teek Non" appeared. You had no choice but to fight the boss. Did you strong enough to fight the boss? Were you able to defeat the boss? There was only one way to answer those questions. FIGHT!
+
+--- Options ---
+0. Show my stats
+1. ATTACK!
+2. DODGE!
+3. ESCAPE?
+99. FORCE QUIT THE GAME
+&
