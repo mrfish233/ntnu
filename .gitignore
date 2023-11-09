@@ -17,3 +17,6 @@
 
 # Ignore .vscode
 .vscode
+
+# Ignore markdownlint
+.markdownlint.json
