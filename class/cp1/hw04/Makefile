@@ -1,23 +1,31 @@
 # REFERENCE: https://stackoverflow.com/questions/52034997/how-to-make-makefile-recompile-when-a-header-file-is-changed
 
-source := $(wildcard *.c)
-depend := $(patsubst %.c,%.d,$(source))
-target = hw0401 hw0402
+# EDIT HERE
+target := hw0401 hw0402 hw0403
 
-# link flags
+source := $(wildcard *.c)
+depend := $(source:.c=.d)
+object := $(source:.c=.o)
+
+# compile variables
 CC = -gcc
 CFLAGS = -Wall -Wextra -MMD -MP
+
+# link variables
 LDFLAGS = -Wall -Wextra
+LDLIBS  = -lm
 
 # .PHONY means these rules get executed even if files of those names exist
 .PHONY: all clean
 
 all: $(target)
 
+# EDIT HERE
 hw0401: hw0401.o mysort.o
-hw0402: hw0402.o differential.o
+hw0402: hw0402.o derivative.o
+hw0403: hw0403.o gsat_calculate.o
 
 -include $(depend)
 
 clean:
-	rm *.o *.d $(target)
+	rm -f $(object) $(depend) $(target)
