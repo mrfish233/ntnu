@@ -30,49 +30,71 @@ int main() {
 		return 1;
 	}
 
-	printEquation(F_FUNCTION, eqn1, deg1);
-	printEquation(G_FUNCTION, eqn2, deg2);
-
-	// Differentiated Equation
+	// Calculate f'(x) and g'(x)
 
 	int64_t *difEqn1 = differentiate(eqn1, deg1);
-	int64_t *difEqn2 = differentiate(eqn2, deg2);
 	int64_t  difDeg1 = newDegree(deg1 - 1);
+
+	int64_t *difEqn2 = differentiate(eqn2, deg2);
 	int64_t  difDeg2 = newDegree(deg2 - 1);
 
 	// printf("\n");
-	// printEquation("f'(x)", difEqn1, difDeg1);
-	// printEquation("g'(x)", difEqn2, difDeg2);
+	// printf("f'(x): ");
+	// printEquation(difEqn1, difDeg1);
+	// printf("g'(x): ");
+	// printEquation(difEqn2, difDeg2);
 
 	// Calculate (f(x)g(x))' = f(x)g'(x) + f'(x)g(x)
 
 	int64_t *proEqn1 = productEquation(eqn1, deg1, difEqn2, difDeg2);
-	int64_t *proEqn2 = productEquation(eqn2, deg2, difEqn1, difDeg1);
 	int64_t  proDeg1 = newDegree(deg1 + difDeg2);
+
+	int64_t *proEqn2 = productEquation(eqn2, deg2, difEqn1, difDeg1);
 	int64_t  proDeg2 = newDegree(deg2 + difDeg1);
 
 	// printf("\n");
-	// printEquation("f(x)g'(x)", proEqn1, proDeg1);
-	// printEquation("f'(x)g(x)", proEqn2, proDeg2);
+	// printf("f(x)g'(x): ");
+	// printEquation(proEqn1, proDeg1);
+	// printf("f'(x)g(x): ");
+	// printEquation(proEqn2, proDeg2);
 
 	int64_t *sumEqn = sumEquation(proEqn1, proDeg1, proEqn2, proDeg2);
 	int64_t  sumDeg = newDegree(proDeg1 > proDeg2 ? proDeg1 : proDeg2);
-
-	printf("\n");
-	printEquation("(f(x)g(x))'", sumEqn, sumDeg);
 
 	// Calculate (f(x)/g(x))' = (f'(x)g(x) - f(x)g'(x)) / g^2(x)
 
 	int64_t *subEqn = subtractEquation(proEqn2, proDeg2, proEqn1, proDeg1);
 	int64_t  subDeg = newDegree(sumDeg);
 
-	printf("\n");
-	printEquation("f'(x)g(x)-f(x)g'(x)", subEqn, subDeg);
-
 	int64_t *proEqn3 = productEquation(eqn2, deg2, eqn2, deg2);
 	int64_t  proDeg3 = newDegree(deg2 + deg2);
 
-	printEquation("g^2(x)", proEqn3, proDeg3);
+	int64_t len1 = lengthOfEquation(subEqn, subDeg);
+	int64_t len2 = lengthOfEquation(proEqn3, proDeg3);
+	int64_t barLength = len1 > len2 ? len1 : len2;
+
+	// Print the result
+
+	printf(F_FUNCTION ": ");
+	printEquation(eqn1, deg1);
+
+	printf(G_FUNCTION ": ");
+	printEquation(eqn2, deg2);
+
+	printf("(f(x)g(x))': ");
+	printEquation(sumEqn, sumDeg);
+
+	printf(" f(x)    ");
+	printEquation(subEqn, subDeg);
+
+	printf("(----)': ");
+	for (int32_t i = 0; i < barLength; i++) {
+		printf("-");
+	}
+	printf("\n");
+
+	printf(" g(x)    ");
+	printEquation(proEqn3, proDeg3);
 
 	/**
 	 * TODO: simplify the result of (f(x)/g(x))'

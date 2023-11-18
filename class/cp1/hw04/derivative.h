@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <math.h>
 
 /**
  * Gives new degree of a equation.
@@ -73,11 +74,18 @@ int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg
 
 /**
  * Print the equation form.
- * @param str The function name
  * @param equation The coefficient array of equation
  * @param degree The degree of equation
  */
-void printEquation(char *str, int64_t *equation, int64_t degree);
+void printEquation(int64_t *equation, int64_t degree);
+
+/**
+ * Give the length of the equation.
+ * @param equation The coefficient array of equation
+ * @param degree The degree of equation
+ * @return The length of the equation.
+ */
+int64_t lengthOfEquation(int64_t *equation, int64_t degree);
 
 /**
  * Free the equation.

@@ -147,10 +147,8 @@ int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg
 	return productEquation;
 }
 
-void printEquation(char *str, int64_t *equation, int64_t degree) {
+void printEquation(int64_t *equation, int64_t degree) {
 	int32_t printOnce = 0;
-
-	printf("%s: ", str);
 
 	if (degree == 0) {
 		printf("%ld\n", equation[0]);
@@ -173,6 +171,10 @@ void printEquation(char *str, int64_t *equation, int64_t degree) {
 			printf("+");
 		}
 
+		if (num == -1 && i != degree) {
+			printf("-");
+		}
+
 		// Skip the number if it is 1 or -1, except constant term
 		if ((num != 1 && num != -1) || i == degree) {
 			printf("%ld", num);
@@ -187,6 +189,53 @@ void printEquation(char *str, int64_t *equation, int64_t degree) {
 		printOnce = 1;
 	}
 	printf("\n");
+}
+
+int64_t lengthOfEquation(int64_t *equation, int64_t degree) {
+	if (equation == NULL) {
+		return 0;
+	}
+
+	if (degree == 0 && equation[0] == 0) {
+		return 1;
+	}
+
+	int64_t totalLength = 0;
+	
+	for (int64_t i = 0; i < degree + 1; i++) {
+		int64_t num = equation[i];
+
+		// Skip the degree
+		if (num == 0) {
+			continue;
+		}
+
+		// Sign length
+		totalLength += 1;
+
+		// Coefficient length
+		totalLength += (int64_t) log10(labs(num));
+		if ((num != 1 && num != -1) || i == degree) {
+			totalLength += 1;
+		}
+
+		// "x"
+		if (i != degree) {
+			totalLength += 1;
+
+			// "^n"
+			if (i != degree - 1) {
+				totalLength += (int64_t) log10(degree - i) + 2;
+			}
+		}
+
+		// First positive coefficient has no sign
+		if (i == 0 && num > 0) {
+			totalLength -= 1;
+		}
+	}
+
+	return totalLength;
 }
 
 void clearEquation(int64_t *equation) {
