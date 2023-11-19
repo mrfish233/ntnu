@@ -40,6 +40,20 @@ int32_t checkmate(int32_t board[BOARD_X][BOARD_Y]);
 int32_t isValidPos(int32_t x, int32_t y);
 
 /**
+ * Check if it is red piece.
+ * @param piece The given piece.
+ * @return 1 if red, 0 otherwise.
+ */
+int32_t isRedPiece(int32_t piece);
+
+/**
+ * Check if it is black piece.
+ * @param piece The given piece.
+ * @return 1 if black, 0 otherwise.
+ */
+int32_t isBlackPiece(int32_t piece);
+
+/**
  * Check the amount of piece.
  * @param piece The given piece.
  * @param amount The amount of the piece.
@@ -61,17 +75,17 @@ int32_t isValidPiecePosition(int32_t piece, int32_t x, int32_t y);
  * @param board The given board.
  * @return 1 if valid, 0 if invalid.
  */
-int32_t isValidBoard(int32_t board[BOARD_X][BOARD_Y]);
+int32_t isValidBoard(const int32_t board[BOARD_X][BOARD_Y]);
 
 /**
  * Check if the RED piece checkmates.
  * @param board The given board.
  * @param piece The given piece.
- * @param x The position x of the piece.
- * @param y The position y of the piece.
+ * @param newX The position x of the piece.
+ * @param newY The position y of the piece.
  * @return 1 if able to checkmate, 0 otherwise.
  */
-int32_t canCheckmate(int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t x, int32_t y);
+int32_t canCheckmate(const int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t newX, int32_t newY);
 
 /**
  * Find and print the checkmate moves for given RED pieces (Consider only moved piece).
@@ -81,4 +95,4 @@ int32_t canCheckmate(int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t x, 
  * @param x The position x of the piece.
  * @param y The position y of the piece.
  */
-void findCheckmateMoves(int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t x, int32_t y);
+void findCheckmateMoves(const int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t x, int32_t y);
