@@ -82,20 +82,20 @@ int64_t *sumEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2) {
 		return NULL;
 	}
 
-	int64_t sumDegree = newDegree(deg1 > deg2 ? deg1 : deg2);
-	int64_t *sumEquation = newEquation(sumDegree);
+	int64_t  sumDeg = newDegree(deg1 > deg2 ? deg1 : deg2);
+	int64_t *sumEqn = newEquation(sumDeg);
 
-	for (int64_t i = sumDegree; i >= 0; i--) {
+	for (int64_t i = sumDeg; i >= 0; i--) {
 		if (deg1 >= 0) {
-			sumEquation[i] += eqn1[deg1--];
+			sumEqn[i] += eqn1[deg1--];
 		}
 
 		if (deg2 >= 0) {
-			sumEquation[i] += eqn2[deg2--];
+			sumEqn[i] += eqn2[deg2--];
 		}
 	}
 
-	return sumEquation;
+	return sumEqn;
 }
 
 int64_t *subtractEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2) {
@@ -103,20 +103,20 @@ int64_t *subtractEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t de
 		return NULL;
 	}
 
-	int64_t subtractDegree = newDegree(deg1 > deg2 ? deg1 : deg2);
-	int64_t *subtractEquation = newEquation(subtractDegree);
+	int64_t  subDeg = newDegree(deg1 > deg2 ? deg1 : deg2);
+	int64_t *subEqn = newEquation(subDeg);
 
-	for (int64_t i = subtractDegree; i >= 0; i--) {
+	for (int64_t i = subDeg; i >= 0; i--) {
 		if (deg1 >= 0) {
-			subtractEquation[i] += eqn1[deg1--];
+			subEqn[i] += eqn1[deg1--];
 		}
 
 		if (deg2 >= 0) {
-			subtractEquation[i] -= eqn2[deg2--];
+			subEqn[i] -= eqn2[deg2--];
 		}
 	}
 
-	return subtractEquation;
+	return subEqn;
 }
 
 int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2) {
@@ -124,8 +124,8 @@ int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg
 		return NULL;
 	}
 
-	int64_t productDegree = newDegree(deg1 + deg2);
-	int64_t *productEquation = newEquation(productDegree);
+	int64_t  proDeg = newDegree(deg1 + deg2);
+	int64_t *proEqn = newEquation(proDeg);
 
 	for (int64_t i = 0; i < deg1 + 1; i++) {
 		if (eqn1[i] == 0) {
@@ -138,13 +138,34 @@ int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg
 			}
 
 			int64_t tempCoeff  = eqn1[i] * eqn2[j];
-			int64_t tempDegree = productDegree - ((deg1 - i) + (deg2 - j));
+			int64_t tempDegree = proDeg - ((deg1 - i) + (deg2 - j));
 
-			productEquation[tempDegree] += tempCoeff;
+			proEqn[tempDegree] += tempCoeff;
 		}
 	}
 	
-	return productEquation;
+	return proEqn;
+}
+
+int64_t *simplifyEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2) {
+	if (eqn1 == NULL || eqn2 == NULL || deg1 < 0 || deg2 < 0) {
+		return NULL;
+	}
+
+	int64_t simDeg = newDegree(deg1);
+
+	while (eqn1[simDeg] == 0 && eqn2[deg2] == 0) {
+		simDeg--;
+		deg2--;
+	}
+
+	int64_t *simEqn = newEquation(simDeg);
+
+	for (int64_t i = 0; i < simDeg + 1; i++) {
+		simEqn[i] = eqn1[i];
+	}
+
+	return simEqn;
 }
 
 void printEquation(int64_t *equation, int64_t degree) {

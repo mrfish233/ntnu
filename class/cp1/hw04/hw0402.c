@@ -69,8 +69,21 @@ int main() {
 	int64_t *proEqn3 = productEquation(eqn2, deg2, eqn2, deg2);
 	int64_t  proDeg3 = newDegree(deg2 + deg2);
 
-	int64_t len1 = lengthOfEquation(subEqn, subDeg);
-	int64_t len2 = lengthOfEquation(proEqn3, proDeg3);
+	// Simplify (f(x)/g(x))'
+
+	int64_t *simEqn1 = simplifyEquation(subEqn, subDeg, proEqn3, proDeg3);
+	int64_t  simDeg1 = subDeg;
+
+	int64_t *simEqn2 = simplifyEquation(proEqn3, proDeg3, subEqn, subDeg);
+	int64_t  simDeg2 = proDeg3;
+
+	while (subEqn[simDeg1] == 0 && proEqn3[simDeg2] == 0) {
+		simDeg1--;
+		simDeg2--;
+	}
+
+	int64_t len1 = lengthOfEquation(simEqn1, simDeg1);
+	int64_t len2 = lengthOfEquation(simEqn2, simDeg2);
 	int64_t barLength = len1 > len2 ? len1 : len2;
 
 	// Print the result
@@ -85,7 +98,7 @@ int main() {
 	printEquation(sumEqn, sumDeg);
 
 	printf(" f(x)    ");
-	printEquation(subEqn, subDeg);
+	printEquation(simEqn1, simDeg1);
 
 	printf("(----)': ");
 	for (int32_t i = 0; i < barLength; i++) {
@@ -94,11 +107,7 @@ int main() {
 	printf("\n");
 
 	printf(" g(x)    ");
-	printEquation(proEqn3, proDeg3);
-
-	/**
-	 * TODO: simplify the result of (f(x)/g(x))'
-	*/
+	printEquation(simEqn2, simDeg2);
 
 	clearEquation(eqn1);
 	clearEquation(eqn2);
@@ -108,6 +117,9 @@ int main() {
 	clearEquation(proEqn2);
 	clearEquation(sumEqn);
 	clearEquation(subEqn);
+	clearEquation(proEqn3);
+	clearEquation(simEqn1);
+	clearEquation(simEqn2);
 
 	return 0;
 }

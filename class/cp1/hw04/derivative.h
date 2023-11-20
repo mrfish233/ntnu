@@ -73,6 +73,16 @@ int64_t *subtractEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t de
 int64_t *productEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2);
 
 /**
+ * Simplify the equation.
+ * @param eqn1 The coefficient array of equation 1
+ * @param deg1 The degree of equation 1
+ * @param eqn2 The coefficient array of equation 2
+ * @param deg2 The degree of equation 2
+ * @return The simplified equation 1.
+ */
+int64_t *simplifyEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t deg2);
+
+/**
  * Print the equation form.
  * @param equation The coefficient array of equation
  * @param degree The degree of equation
