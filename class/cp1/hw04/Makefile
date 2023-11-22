@@ -1,7 +1,7 @@
 # REFERENCE: https://stackoverflow.com/questions/52034997/how-to-make-makefile-recompile-when-a-header-file-is-changed
 
 # EDIT HERE
-target := hw0401 hw0402 hw0403 hw0404
+target := hw0401 hw0402 hw0403 hw0404 hw0405
 
 source := $(wildcard *.c)
 depend := $(source:.c=.d)
@@ -25,6 +25,7 @@ hw0401: hw0401.o mysort.o
 hw0402: hw0402.o derivative.o
 hw0403: hw0403.o gsat_calculate.o
 hw0404: hw0404.o mychess.o
+hw0405: hw0405.o mahjong.o mahjong_yaku.o
 
 -include $(depend)
 
