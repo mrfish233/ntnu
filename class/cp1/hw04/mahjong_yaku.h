@@ -29,24 +29,73 @@ int32_t isTripletOrKanMeld(int32_t *tiles, int32_t count);
 
 /**
  * Check if the meld is special meld.
+ * @param mahjong The mahjong struct.
  * @param count The amount of tiles.
  * @return 1 if special, 0 otherwise.
  */
-int32_t isSpecialMeld(int32_t count);
+int32_t isSpecialMeld(myMahjong mahjong, int32_t count);
 
 /**
- * Handle yakuman hand.
+ * Handle yakuman. Yakuman follows 2 rules to print:
+ * amount of yakuman decreasingly, then lexicographical order.
  * @param mahjong The mahjong struct.
- * @return total yakuman, 0 if no yakuman.
+ * @return Total yakuman.
  */
 int32_t handleYakuman(myMahjong mahjong);
 
 /**
- * Handle all required yaku.
+ * Handle yaku. Han follows 2 rules to print:
+ * amount of han decreasingly, then lexicographical order.
  * @param mahjong The mahjong struct.
- * @return total han.
+ * @return Total han.
  */
 int32_t handleYaku(myMahjong mahjong);
+
+/**
+ * 2 Yakuman: Big four wind
+ * 1 Yakuman: Little four wind
+ * @param mahjong The mahjong struct.
+ * @return 2 yakuman if valid, 0 otherwise.
+ */
+int32_t isFourWinds(myMahjong mahjong);
+
+/**
+ * 2 Yakuman: Four concealed triplets single wait;
+ * 1 Yakuman: Four concealed triplets
+ * @param mahjong The mahjong struct.
+ * @return 2 yakuman if 1 wait, 1 yakuman if 2 waits, 0 otherwise.
+ */
+int32_t isFourConcealedTriplets(myMahjong mahjong);
+
+/**
+ * 2 Yakuman: Nine gates nine waits;
+ * 1 Yakuman: Nine gates
+ * @param mahjong The mahjong struct.
+ * @return 2 yakuman if 9 waits, 1 yakuman if 1 wait, 0 otherwise.
+ */
+int32_t isNineGates(myMahjong mahjong);
+
+/**
+ * 2 Yakuman: Thirteen orphans 13 waits;
+ * 1 Yakuman: Thirteen orphans
+ * @param mahjong The mahjong struct.
+ * @return 2 yakuman if 13 wait, 1 yakuman if 1 wait, 0 otherwise.
+ */
+int32_t isThirteenOrphans(myMahjong mahjong);
+
+/**
+ * 1 Yakuman: All green
+ * @param mahjong The mahjong struct.
+ * @return 1 yakuman if all green, 0 otherwise.
+ */
+int32_t isAllGreen(myMahjong mahjong);
+
+/**
+ * 2 Han: seven pairs check
+ * @param mahjong The mahjong struct.
+ * @return 2 han if valid, 0 otherwise.
+ */
+int32_t isSevenPairs(myMahjong mahjong);
 
 /**
  * Print yaku of the tiles.

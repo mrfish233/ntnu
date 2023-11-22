@@ -1,7 +1,16 @@
 #include "mahjong.h"
 
-int32_t isValidTile(int32_t tile) {
-	return (tile >= 1 && tile <= 34);
+int32_t isValidNewTile(myMahjong mahjong, int32_t tile) {
+	// return (tile >= 1 && tile <= 34);
+	if (tile < 1 || tile > 34) {
+		return 0;
+	}
+
+	if (mahjong.tilesAmount[tile] == 4) {
+		return 0;
+	}
+
+	return 1;
 }
 
 int32_t isValidAmountOfTiles(myMahjong mahjong) {
@@ -44,11 +53,12 @@ int32_t isValidMeld(myMahjong mahjong, int32_t meld) {
 	}
 	// printf("\n");
 
-	if (isStraightMeld(meldTiles, tiles) ||
-		isTripletOrKanMeld(meldTiles, tiles) ||
-		isSpecialMeld(tiles)) {
-		// printf("Valid meld!\n");
+	if (isStraightMeld(meldTiles, tiles) || isTripletOrKanMeld(meldTiles, tiles)) {
 		return 1;
+	}
+
+	if (isSpecialMeld(mahjong, tiles)) {
+		return 2;
 	}
 
 	// printf("Current meld in meldTiles: ");
@@ -63,18 +73,10 @@ int32_t isValidMeld(myMahjong mahjong, int32_t meld) {
 }
 
 int32_t isValidPair(int32_t tile1, int32_t tile2) {
-	if (!isValidTile(tile1) || !isValidTile(tile2)) {
-		return 0;
-	}
-
 	return (tile1 == tile2);
 }
 
 int32_t isValidWinningTile(myMahjong mahjong, int32_t tile) {
-	if (!isValidTile(tile)) {
-		return 0;
-	}
-
 	for (int32_t i = 0; i < mahjong.totalTiles; i++) {
 		if (mahjong.tiles[i] == tile) {
 			return 1;
@@ -89,17 +91,22 @@ int32_t isValidWind(int32_t wind) {
 }
 
 void calculateHan(myMahjong mahjong) {
-	int32_t totalHan = 0;
+	int32_t result = 0;
 
 	printf("The Score is...\n");
 
 	if (mahjong.totalMelds == -1) {
-		printYaku(-1);
-		printf("Total: %d Han\n", totalHan);
+		printYaku(ERROR_YAKU);
+		printf("Total: 0 Han\n");
 		return;
 	}
 
-	totalHan = 0;
+	result = handleYakuman(mahjong);
 
-	printf("Total: %d Han\n", totalHan);
+	if (result != 0) {
+		printf("Total: %d Yakuman\n", result);
+		return;
+	}
+
+	printf("Total: %d Han\n", result);
 }

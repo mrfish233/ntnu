@@ -1,10 +1,13 @@
 #pragma once
 
+#include<stdint.h>
+
 /**
  * Mahjong Struct
  */
 typedef struct MyMahjong {
 	int32_t tiles[20];
+	int32_t tilesAmount[35];
 	int32_t melds[4][2];
 	int32_t totalTiles;
 	int32_t totalMelds;
@@ -16,6 +19,8 @@ typedef struct MyMahjong {
 
 #define MELD_TILES 0
 #define MELD_OPEN  1
+
+#define TILE_TYPE 34
 
 #define PIN_1 1
 #define PIN_2 2
@@ -55,3 +60,63 @@ typedef struct MyMahjong {
 #define WHITE 32
 #define GREEN 33
 #define RED   34
+
+#define ERROR_YAKU -1
+
+#define ONE_YAKUMAN 1
+#define TWO_YAKUMAN 2
+
+#define ONE_HAN   1
+#define TWO_HAN   2
+#define THREE_HAN 3
+#define FOUR_HAN  4
+#define FIVE_HAN  5
+#define SIX_HAN   6
+
+#define BIG_FOUR_WINDS                      2001
+#define FOUR_CONCEALED_TRIPLETS_SINGLE_WAIT 2002
+#define NINE_GATES_NINE_WAIT                2003
+#define THIRTEEN_ORPHANS_13_WAIT            2004
+
+#define ALL_GREEN                           1001
+#define ALL_HONORS                          1002
+#define ALL_TERMINALS                       1003
+#define BIG_THREE_DRAGONS                   1004
+#define FOUR_CONCEALED_TRIPLETS             1005
+#define FOUR_KANS                           1006
+#define LITTLE_FOUR_WINDS                   1007
+#define NINE_GATES                          1008
+#define THIRTEEN_ORPHANS                    1009
+
+#define FLUSH                               601
+
+#define FLUSH_OPEN                          501
+
+#define HALF_FLUSH                          301
+#define TERMINAL_IN_EACH_SET                302
+
+#define ALL_TERMINALS_AND_HONORS            201
+#define ALL_TRIPLETS                        202
+#define HALF_FLUSH_OPEN                     203
+#define LITTLE_THREE_DRAGONS                204
+#define SEVEN_PAIRS                         205
+#define STRAIGHT                            206
+#define TERMINAL_IN_EACH_SET_OPEN           207
+#define TERMINAL_OR_HONOR_IN_EACH_SET       208
+#define THREE_COLOUR_STRAIGHTS              209
+#define THREE_COLOUR_TRIPLETS               210
+#define THREE_CONCEALED_TRIPLETS            211
+#define THREE_KANS                          212
+#define TWO_SETS_OF_IDENTICAL_SEQUENCES     213
+
+#define ALL_SIMPLES                         101
+#define HONER_GREEN                         102
+#define HONER_PLAYER_WIND                   103
+#define HONER_PREVAILING_WIND               104
+#define HONER_RED                           105
+#define HONER_WHITE                         106
+#define NO_POINTS_HAND                      107
+#define ONE_SET_OF_IDENTICAL_SEQUENCES      108
+#define STRAIGHT_OPEN                       109
+#define TERMINAL_OR_HONOR_IN_EACH_SET_OPEN  110
+#define THREE_COLOUR_STRAIGHTS_OPEN         111

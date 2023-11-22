@@ -8,10 +8,11 @@
 
 /**
  * Check if the tile is valid.
+ * @param mahjong The mahjong struct.
  * @param tile The given tile.
  * @return 1 if valid, 0 if invalid.
  */
-int32_t isValidTile(int32_t tile);
+int32_t isValidNewTile(myMahjong mahjong, int32_t tile);
 
 /**
  * Check if the amount of tiles are valid.
@@ -24,7 +25,7 @@ int32_t isValidAmountOfTiles(myMahjong mahjong);
  * Check if the meld is valid.
  * @param mahjong The mahjong struct.
  * @param meld The meld index to check.
- * @return 1 if valid, 0 if invalid.
+ * @return 2 if special, 1 if valid, 0 if invalid.
  */
 int32_t isValidMeld(myMahjong mahjong, int32_t meld);
 
