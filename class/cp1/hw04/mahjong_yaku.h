@@ -36,6 +36,13 @@ int32_t isTripletOrKanMeld(int32_t *tiles, int32_t count);
 int32_t isSpecialMeld(myMahjong mahjong, int32_t count);
 
 /**
+ * Check if the hand is closed hand.
+ * @param mahjong The mahjong struct.
+ * @return 1 if closed hand, 0 otherwise.
+ */
+int32_t isClosedHand(myMahjong mahjong);
+
+/**
  * Handle yakuman. Yakuman follows 2 rules to print:
  * amount of yakuman decreasingly, then lexicographical order.
  * @param mahjong The mahjong struct.
@@ -44,15 +51,7 @@ int32_t isSpecialMeld(myMahjong mahjong, int32_t count);
 int32_t handleYakuman(myMahjong mahjong);
 
 /**
- * Handle yaku. Han follows 2 rules to print:
- * amount of han decreasingly, then lexicographical order.
- * @param mahjong The mahjong struct.
- * @return Total han.
- */
-int32_t handleYaku(myMahjong mahjong);
-
-/**
- * 2 Yakuman: Big four wind
+ * 2 Yakuman: Big four wind;
  * 1 Yakuman: Little four wind
  * @param mahjong The mahjong struct.
  * @return 2 yakuman if valid, 0 otherwise.
@@ -89,6 +88,42 @@ int32_t isThirteenOrphans(myMahjong mahjong);
  * @return 1 yakuman if all green, 0 otherwise.
  */
 int32_t isAllGreen(myMahjong mahjong);
+
+/**
+ * 1 Yakuman: All honors
+ * @param mahjong The mahjong struct.
+ * @return 1 yakuman if all honors, 0 otherwise.
+ */
+int32_t isAllHonors(myMahjong mahjong);
+
+/**
+ * 1 Yakuman: All terminals
+ * @param mahjong The mahjong struct.
+ * @return 1 yakuman if all terminals, 0 otherwise.
+ */
+int32_t isAllTerminals(myMahjong mahjong);
+
+/**
+ * 1 Yakuman: Big three dragons
+ * @param mahjong The mahjong struct.
+ * @return 1 yakuman if big dragons, 0 otherwise.
+ */
+int32_t isBigThreeDragons(myMahjong mahjong);
+
+/**
+ * 1 Yakuman: Four kans
+ * @param mahjong The mahjong struct.
+ * @return 1 yakuman if four kans, 0 otherwise.
+ */
+int32_t isFourKans(myMahjong mahjong);
+
+/**
+ * Handle yaku. Han follows 2 rules to print:
+ * amount of han decreasingly, then lexicographical order.
+ * @param mahjong The mahjong struct.
+ * @return Total han.
+ */
+int32_t handleYaku(myMahjong mahjong);
 
 /**
  * 2 Han: seven pairs check

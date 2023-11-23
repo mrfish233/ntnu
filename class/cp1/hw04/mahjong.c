@@ -104,7 +104,7 @@ void calculateHan(myMahjong mahjong) {
 	result = handleYakuman(mahjong);
 
 	if (result != 0) {
-		printf("Total: %d Yakuman\n", result);
+		printf("Total: %d Yakuman\n", result / 100);
 		return;
 	}
 

@@ -69,6 +69,16 @@ int32_t isSpecialMeld(myMahjong mahjong, int32_t count) {
 	return 1;
 }
 
+int32_t isClosedHand(myMahjong mahjong) {
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (mahjong.melds[i][MELD_OPEN] == 1) {
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
 int32_t handleYakuman(myMahjong mahjong) {
 	int32_t total = 0;
 
@@ -101,12 +111,30 @@ int32_t handleYakuman(myMahjong mahjong) {
 		total += ONE_YAKUMAN;
 	}
 
+	if (isAllHonors(mahjong) == ONE_YAKUMAN) {
+		printYaku(ALL_HONORS);
+		total += ONE_YAKUMAN;
+	}
+
+	if (isAllTerminals(mahjong) == ONE_YAKUMAN) {
+		printYaku(ALL_TERMINALS);
+		total += ONE_YAKUMAN;
+	}
+
+	if (isBigThreeDragons(mahjong) == ONE_YAKUMAN) {
+		printYaku(BIG_THREE_DRAGONS);
+		total += ONE_YAKUMAN;
+	}
+
 	if (isFourConcealedTriplets(mahjong) == ONE_YAKUMAN) {
 		printYaku(FOUR_CONCEALED_TRIPLETS);
 		total += ONE_YAKUMAN;
 	}
 
-
+	if (isFourKans(mahjong) == ONE_YAKUMAN) {
+		printYaku(FOUR_KANS);
+		total += ONE_YAKUMAN;
+	}
 
 	if (isFourWinds(mahjong) == ONE_YAKUMAN) {
 		printYaku(LITTLE_FOUR_WINDS);
@@ -147,7 +175,7 @@ int32_t isFourWinds(myMahjong mahjong) {
 }
 
 int32_t isFourConcealedTriplets(myMahjong mahjong) {
-	int32_t triplet = 0, pair = 0, close = 0;
+	int32_t triplet = 0, pair = 0;
 
 	for (int32_t i = 1; i <= TILE_TYPE; i++) {
 		int32_t tile = mahjong.tilesAmount[i];
@@ -159,20 +187,23 @@ int32_t isFourConcealedTriplets(myMahjong mahjong) {
 		}
 	}
 
-	for (int32_t i = 0; i < 4; i++) {
-		if (mahjong.melds[i][MELD_OPEN] == 0) {
-			close++;
+	if (triplet == 4 && isClosedHand(mahjong)) {
+		if (pair == 1) {
+			return TWO_YAKUMAN;
+		} else if (mahjong.selfDrawn == 1) {
+			return ONE_YAKUMAN;
 		}
-	}
-
-	if (triplet == 4 && close == 4) {
-		return (pair == 1) ? TWO_YAKUMAN : ONE_YAKUMAN;
+		// return (pair == 1) ? TWO_YAKUMAN : ONE_YAKUMAN;
 	}
 
 	return 0;
 }
 
 int32_t isNineGates(myMahjong mahjong) {
+	if (!isClosedHand(mahjong)) {
+		return 0;
+	}
+
 	for (int32_t i = 0; i < 3; i++) {
 		int32_t check = 0, nineWait = 0;
 
@@ -230,13 +261,67 @@ int32_t isAllGreen(myMahjong mahjong) {
 	int32_t so6   = mahjong.tilesAmount[SO_6];
 	int32_t so8   = mahjong.tilesAmount[SO_8];
 	int32_t green = mahjong.tilesAmount[GREEN];
+	int32_t total = so2 + so3 + so4 + so6 + so8 + green;
 
-	// printf("total=%d\n", (so2 + so3 + so4 + so6 + so8 + green));
+	if (total == mahjong.totalTiles) {
+		return ONE_YAKUMAN;
+	}
 
-	return ((so2 + so3 + so4 + so6 + so8 + green) == mahjong.totalTiles);
+	return 0;
 }
 
+int32_t isAllHonors(myMahjong mahjong) {
+	int32_t east  = mahjong.tilesAmount[EAST];
+	int32_t south = mahjong.tilesAmount[SOUTH];
+	int32_t west  = mahjong.tilesAmount[WEST];
+	int32_t north = mahjong.tilesAmount[NORTH];
+	int32_t white = mahjong.tilesAmount[WHITE];
+	int32_t green = mahjong.tilesAmount[GREEN];
+	int32_t red   = mahjong.tilesAmount[RED];
+	int32_t total = east + south + west + north + white + green + red;
 
+	if (total == mahjong.totalTiles) {
+		return ONE_YAKUMAN;
+	}
+
+	return 0;
+}
+
+int32_t isAllTerminals(myMahjong mahjong) {
+	int32_t pin1  = mahjong.tilesAmount[PIN_1];
+	int32_t pin9  = mahjong.tilesAmount[PIN_9];
+	int32_t so1   = mahjong.tilesAmount[SO_1];
+	int32_t so9   = mahjong.tilesAmount[SO_9];
+	int32_t man1  = mahjong.tilesAmount[MAN_1];
+	int32_t man9  = mahjong.tilesAmount[MAN_9];
+	int32_t total = pin1 + pin9 + so1 + so9 + man1 + man9;
+
+	if (total == mahjong.totalTiles) {
+		return ONE_YAKUMAN;
+	}
+
+	return 0;
+}
+
+int32_t isBigThreeDragons(myMahjong mahjong) {
+	int32_t white = mahjong.tilesAmount[WHITE];
+	int32_t green = mahjong.tilesAmount[GREEN];
+	int32_t red   = mahjong.tilesAmount[RED];
+
+	if (white >= 3 && green >= 3 && red >= 3) {
+		return ONE_YAKUMAN;
+	}
+
+	return 0;
+}
+
+int32_t isFourKans(myMahjong mahjong) {
+	if (mahjong.totalTiles == 18) {
+		return ONE_YAKUMAN;
+	}
+
+	return 0;
+}
 
 int32_t isSevenPairs(myMahjong mahjong) {
 	int32_t check = 0;
