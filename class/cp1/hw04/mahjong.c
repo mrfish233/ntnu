@@ -34,32 +34,40 @@ int32_t isValidMeld(myMahjong mahjong, int32_t meld) {
 		return 0;
 	}
 
-	int32_t head  = (meld == 0) ? 0 : mahjong.melds[meld-1][MELD_TILES];
-	int32_t tail  = mahjong.melds[meld][MELD_TILES];
-	int32_t tiles = tail - head;
-
-	// printf("tiles=%d, tail=%d, head=%d\n", tiles, tail, head);
-
-	if (tiles != 3 && tiles != 4 && tiles != 14) {
-		return 0;
-	}
-
-	int32_t *meldTiles = calloc(tiles, sizeof(int32_t));
-
-	// printf("Current meld: ");
-	for (int32_t i = head; i < tail; i++) {
-		// printf("%d ", mahjong.tiles[i]);
-		meldTiles[i - head] = mahjong.tiles[i]; 
-	}
-	// printf("\n");
-
-	if (isStraightMeld(meldTiles, tiles) || isTripletOrKanMeld(meldTiles, tiles)) {
+	if (isStraightMeld(mahjong, meld) || isTripletOrKanMeld(mahjong, meld)) {
 		return 1;
 	}
 
-	if (isSpecialMeld(mahjong, tiles)) {
+	if (isSpecialMeld(mahjong, meld)) {
 		return 2;
 	}
+
+	// int32_t head  = (meld == 0) ? 0 : mahjong.melds[meld-1][MELD_TILES];
+	// int32_t tail  = mahjong.melds[meld][MELD_TILES];
+	// int32_t tiles = tail - head;
+
+	// // printf("tiles=%d, tail=%d, head=%d\n", tiles, tail, head);
+
+	// if (tiles != 3 && tiles != 4 && tiles != 14) {
+	// 	return 0;
+	// }
+
+	// int32_t *meldTiles = calloc(tiles, sizeof(int32_t));
+
+	// // printf("Current meld: ");
+	// for (int32_t i = head; i < tail; i++) {
+	// 	// printf("%d ", mahjong.tiles[i]);
+	// 	meldTiles[i - head] = mahjong.tiles[i]; 
+	// }
+	// // printf("\n");
+
+	// if (isStraightMeld(meldTiles, tiles) || isTripletOrKanMeld(meldTiles, tiles)) {
+	// 	return 1;
+	// }
+
+	// if (isSpecialMeld(mahjong, tiles)) {
+	// 	return 2;
+	// }
 
 	// printf("Current meld in meldTiles: ");
 	// for (int32_t i = 0; i < tiles; i++) {
@@ -67,7 +75,7 @@ int32_t isValidMeld(myMahjong mahjong, int32_t meld) {
 	// }
 	// printf("\n");
 
-	free(meldTiles);
+	// free(meldTiles);
 
 	return 0;
 }
@@ -108,5 +116,11 @@ void calculateHan(myMahjong mahjong) {
 		return;
 	}
 
-	printf("Total: %d Han\n", result);
+	result = handleYaku(mahjong);
+
+	printf("Total: %d Han", result);
+	if (result >= 13) {
+		printf(" (Kazoe-yakuman)");
+	}
+	printf("\n");
 }
