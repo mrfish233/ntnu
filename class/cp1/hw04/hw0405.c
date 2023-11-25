@@ -5,6 +5,8 @@
 int main() {
 	myMahjong mahjong = { {0}, {0}, { {0},{0} }, 0, 0, 0, 0, 0, 0 };
 
+	// Hand input
+
 	int32_t meld = 0, validHand = 1;
 	while (meld != 4) {
 		printf("Please input meld: ");
@@ -49,14 +51,9 @@ int main() {
 		meld++;
 	}
 
-	// mahjong.totalTiles = tiles;
 	mahjong.totalMelds = meld;
 
-	// printf("meld=%d\n", meld);
-
-	// if (!isValidAmountOfTiles(mahjong)) {
-	// 	mahjong.totalMelds = -1;
-	// }
+	// Pair input
 
 	if (validHand && meld != 1) {
 		printf("Please input pair: ");
@@ -84,21 +81,7 @@ int main() {
 		}
 	}
 
-	// if (validHand) {
-	// 	int32_t pair1 = 0, pair2 = 0;
-
-	// 	if (scanf("%d%d", &pair1, &pair2) != 2 || !isValidPair(pair1, pair2)) {
-	// 		// printf("Invalid pair!\n");
-	// 		validHand = 0;
-	// 	}
-
-	// 	mahjong.tiles[mahjong.totalTiles++] = pair1;
-	// 	mahjong.tiles[mahjong.totalTiles++] = pair2;
-
-	// 	if (!isValidAmountOfTiles(mahjong)) {
-	// 		validHand = 0;
-	// 	}
-	// }
+	// Winning tile input
 
 	if (validHand) {
 		int32_t tile = 0;
@@ -112,17 +95,21 @@ int main() {
 		mahjong.winningTile = tile;
 	}
 
+	// Self drawn input
+
 	if (validHand) {
 		int32_t selfDrawn = 0;
 		printf("Is Self-drawn win?(1: YES 0: NO): ");
 
-		if (scanf("%d", &selfDrawn) != 1 || (selfDrawn != 0 && selfDrawn != 1)) {
+		if (scanf("%d", &selfDrawn) != 1 || !isValidDrawn(mahjong, selfDrawn)) {
 			// printf("Invalid self drawn!\n");
 			validHand = 0;
 		}
 
 		mahjong.selfDrawn = selfDrawn;
 	}
+
+	// Wind input
 
 	if (validHand) {
 		int32_t playerWind = 0;
@@ -163,9 +150,7 @@ int main() {
 		mahjong.totalMelds = -1;
 	}
 
-	// printf("wt=%d sd=%d plw=%d, prw=%d\n", mahjong.winningTile, mahjong.selfDrawn, mahjong.playerWind, mahjong.prevailingWind);
-
-	printf("\n");
+	// printf("\n");
 	calculateHan(mahjong);
 
 	return 0;

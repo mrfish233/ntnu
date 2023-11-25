@@ -1,5 +1,12 @@
 #include "mahjong_yaku.h"
 
+int32_t isHonorTile(int32_t tile) {
+	return (tile == EAST  || tile == SOUTH ||
+			tile == WEST  || tile == NORTH ||
+			tile == WHITE || tile == GREEN ||
+			tile == RED);
+}
+
 int32_t isYaochuTile(int32_t tile) {
 	return (tile == PIN_1 || tile == PIN_9 ||
 			tile == SO_1  || tile == SO_9  ||
@@ -390,14 +397,111 @@ int32_t handleYaku(myMahjong mahjong) {
 		total += TWO_HAN;
 	}
 
+	if (isLittleThreeDragons(mahjong) == TWO_HAN) {
+		printYaku(LITTLE_THREE_DRAGONS);
+		total += TWO_HAN;
+	}
 
+	if (isSevenPairs(mahjong) == TWO_HAN) {
+		printYaku(SEVEN_PAIRS);
+		total += TWO_HAN;
+	}
 
-
-
+	if (isStraight(mahjong) == TWO_HAN) {
+		printYaku(STRAIGHT);
+		total += TWO_HAN;
+	}
 
 	if (isTerminalInEachSet(mahjong) == TWO_HAN) {
 		printYaku(TERMINAL_IN_EACH_SET_OPEN);
 		total += TWO_HAN;
+	}
+
+	if (isTerminalOrHonorInEachSet(mahjong) == TWO_HAN) {
+		printYaku(TERMINAL_OR_HONOR_IN_EACH_SET);
+		total += TWO_HAN;
+	}
+
+	if (isThreeColourStraights(mahjong) == TWO_HAN) {
+		printYaku(THREE_COLOUR_STRAIGHTS);
+		total += TWO_HAN;
+	}
+
+	if (isThreeColourTriplets(mahjong) == TWO_HAN) {
+		printYaku(THREE_COLOUR_TRIPLETS);
+		total += TWO_HAN;
+	}
+
+	if (isThreeConcealedTriplets(mahjong) == TWO_HAN) {
+		printYaku(THREE_CONCEALED_TRIPLETS);
+		total += TWO_HAN;
+	}
+
+	if (isThreeKans(mahjong) == TWO_HAN) {
+		printYaku(THREE_KANS);
+		total += TWO_HAN;
+	}
+
+	if (isIdenticalSequences(mahjong) == TWO_HAN) {
+		printYaku(TWO_SETS_OF_IDENTICAL_SEQUENCES);
+		total += TWO_HAN;
+	}
+
+	// 1 Han
+
+	if (isAllSimples(mahjong) == ONE_HAN) {
+		printYaku(ALL_SIMPLES);
+		total += ONE_HAN;
+	}
+
+	if (hasHonerGreen(mahjong) == ONE_HAN) {
+		printYaku(HONER_GREEN);
+		total += ONE_HAN;
+	}
+
+	if (hasHonerPlayerWind(mahjong) == ONE_HAN) {
+		printYaku(HONER_PLAYER_WIND);
+		total += ONE_HAN;
+	}
+
+	if (hasHonerPrevailingWind(mahjong) == ONE_HAN) {
+		printYaku(HONER_PREVAILING_WIND);
+		total += ONE_HAN;
+	}
+
+	if (hasHonerRed(mahjong) == ONE_HAN) {
+		printYaku(HONER_RED);
+		total += ONE_HAN;
+	}
+
+	if (hasHonerWhite(mahjong) == ONE_HAN) {
+		printYaku(HONER_WHITE);
+		total += ONE_HAN;
+	}
+
+	if (hasNoPointsHand(mahjong) == ONE_HAN) {
+		printYaku(NO_POINTS_HAND);
+		total += ONE_HAN;
+	}
+
+	if (isIdenticalSequences(mahjong) == ONE_HAN) {
+		printYaku(ONE_SET_OF_IDENTICAL_SEQUENCES);
+		total += ONE_HAN;
+	}
+
+	if (isStraight(mahjong) == ONE_HAN) {
+		printYaku(STRAIGHT_OPEN);
+		total += ONE_HAN;
+	}
+
+	if (isTerminalOrHonorInEachSet(mahjong) == ONE_HAN) {
+		printYaku(TERMINAL_OR_HONOR_IN_EACH_SET_OPEN);
+		total += ONE_HAN;
+	}
+
+	if (isThreeColourStraights(mahjong) == ONE_HAN) {
+		printYaku(THREE_COLOUR_STRAIGHTS_OPEN);
+		total += ONE_HAN;
 	}
 
 	return total;
@@ -501,19 +605,373 @@ int32_t isAllTriplets(myMahjong mahjong) {
 	return 0;
 }
 
+int32_t isLittleThreeDragons(myMahjong mahjong) {
+	int32_t triplet = 0, pair = 0;
+
+	for (int32_t i = WHITE; i <= RED; i++) {
+		if (mahjong.tilesAmount[i] >= 3) {
+			triplet++;
+		} else if (mahjong.tilesAmount[i] == 2) {
+			pair = 1;
+		}
+	}
+
+	if (triplet == 2 && pair == 1) {
+		return TWO_HAN;
+	}
+
+	return 0;
+}
+
 int32_t isSevenPairs(myMahjong mahjong) {
-	int32_t check = 0;
+	int32_t pair = 0;
 
 	for (int32_t i = 1; i <= TILE_TYPE; i++) {
 		if (mahjong.tilesAmount[i] == 2) {
-			check++;
+			pair++;
 		} else if (mahjong.tilesAmount[i] != 0) {
 			return 0;
 		}
 	}
 
-	if (check == 7) {
-		return 2;
+	if (pair == 7 && mahjong.totalMelds != 4) {
+		return TWO_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isStraight(myMahjong mahjong) {
+	int32_t check123[3] = {0}, check456[3] = {0}, check789[3] = {0};
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isStraightMeld(mahjong, i)) {
+			continue;
+		}
+
+		// printf("is straight!\n");
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tail = mahjong.melds[i][MELD_TILES];
+		int32_t check[9] = {0};
+
+		for (int32_t j = head; j < tail; j++) {
+			int32_t num  = (mahjong.tiles[j] - 1) % 9;
+			int32_t type = (mahjong.tiles[j] - 1) / 9 + 1;
+
+			check[num] = type;
+		}
+
+		// printf("check: ");
+		// for(int32_t j = 0; j < 9; j++) {
+		// 	printf("%d ", check[j]);
+		// }
+		// printf("\n");
+
+		if (check[0] && (check[0] == check[1]) && (check[0] == check[2])) {
+			check123[check[0] - 1]++;
+		}
+
+		if (check[3] && (check[3] == check[4]) && (check[3] == check[5])) {
+			check456[check[3] - 1]++;
+		}
+
+		if (check[6] && (check[6] == check[7]) && (check[6] == check[8])) {
+			check789[check[6] - 1]++;
+		}
+	}
+
+	// for (int32_t i = 0; i < 3; i++) {
+	// 	printf("i=%d: %d %d %d\n", i+1, check123[i], check456[i], check789[i]);
+	// }
+
+	if ((check123[0] && check456[0] && check789[0]) ||
+		(check123[1] && check456[1] && check789[1]) ||
+		(check123[2] && check456[2] && check789[2])) {
+		return (isClosedHand(mahjong)) ? TWO_HAN : ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isTerminalOrHonorInEachSet(myMahjong mahjong) {
+	if (amountOfHonors(mahjong) == 0) {
+		return 0;
+	}
+
+	int32_t straight = 0, yaochu = 0;
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (isStraightMeld(mahjong, i)) {
+			straight++;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tail = mahjong.melds[i][MELD_TILES];
+
+		for (int32_t i = head; i < tail; i++) {
+			if (isYaochuTile(mahjong.tiles[i])) {
+				yaochu++;
+				break;
+			}
+		}
+	}
+
+	if (isYaochuTile(mahjong.tiles[mahjong.totalTiles-1])) {
+		yaochu++;
+	}
+
+	if (straight && (yaochu == mahjong.totalMelds + 1)) {
+		return (isClosedHand(mahjong)) ? TWO_HAN : ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isThreeColourStraights(myMahjong mahjong) {
+	int32_t result[7][3] = {0};
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isStraightMeld(mahjong, i)) {
+			continue;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tail = mahjong.melds[i][MELD_TILES];
+		int32_t check[9] = {0};
+
+		for (int32_t j = head; j < tail; j++) {
+			int32_t num  = (mahjong.tiles[j] - 1) % 9;
+			int32_t type = (mahjong.tiles[j] - 1) / 9 + 1;
+			check[num] = type;
+		}
+
+		for (int32_t j = 0; j < 7; j++) {
+			if (check[j] && (check[j] == check[j+1]) && (check[j] == check[j+2])) {
+				result[j][check[j] - 1]++;
+			}
+		}
+	}
+
+	// printf("     P S M\n");
+	// for (int32_t i = 0; i < 7; i++) {
+	// 	printf("%d%d%d: ", i+1,i+2,i+3);
+	// 	for (int32_t j = 0; j < 3; j++) {
+	// 		printf("%d ", result[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
+
+	for (int32_t i = 0; i < 7; i++) {
+		if (result[i][0] && result[i][1] && result[i][2]) {
+			return (isClosedHand(mahjong)) ? TWO_HAN : ONE_HAN;
+		}
+	}
+
+	return 0;
+}
+
+int32_t isThreeColourTriplets(myMahjong mahjong) {
+	int32_t result[9][3] = {0};
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isTripletOrKanMeld(mahjong, i)) {
+			continue;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tile = mahjong.tiles[head];
+
+		if (isHonorTile(tile)) {
+			continue;
+		}
+
+		result[(tile - 1) % 9][(tile - 1) / 9]++;
+	}
+
+	// printf("   P S M\n");
+	// for (int32_t i = 0; i < 9; i++) {
+	// 	printf("%d: ", i+1);
+	// 	for (int32_t j = 0; j < 3; j++) {
+	// 		printf("%d ", result[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
+
+	for (int32_t i = 0; i < 9; i++) {
+		if (result[i][0] && result[i][1] && result[i][2]) {
+			return TWO_HAN;
+		}
+	}
+
+	return 0;
+}
+
+int32_t isThreeConcealedTriplets(myMahjong mahjong) {
+	int32_t close = 0;
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isTripletOrKanMeld(mahjong, i)) {
+			continue;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tile = mahjong.tiles[head];
+
+		if (mahjong.melds[i][MELD_OPEN] == 0 && tile != mahjong.winningTile) {
+			close++;
+		}
+	}
+
+	if (close == 3) {
+		return TWO_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isThreeKans(myMahjong mahjong) {
+	if (mahjong.totalTiles == 17) {
+		return TWO_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isIdenticalSequences(myMahjong mahjong) {
+	if (!isClosedHand(mahjong)) {
+		return 0;
+	}
+
+	int32_t result[7][3] = {0};
+	
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isStraightMeld(mahjong, i)) {
+			continue;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tail = mahjong.melds[i][MELD_TILES];
+		int32_t check[9] = {0};
+
+		for (int32_t j = head; j < tail; j++) {
+			int32_t num  = (mahjong.tiles[j] - 1) % 9;
+			int32_t type = (mahjong.tiles[j] - 1) / 9 + 1;
+			check[num] = type;
+		}
+
+		for (int32_t j = 0; j < 7; j++) {
+			if (check[j] && (check[j] == check[j+1]) && (check[j] == check[j+2])) {
+				result[j][check[j] - 1]++;
+			}
+		}
+	}
+
+	int32_t identical = 0;
+
+	for (int32_t i = 0; i < 7; i++) {
+		for (int32_t j = 0; j < 3; j++) {
+			if (result[i][j] == 2) {
+				identical++;
+			}
+		}
+	}
+
+	if (identical == 2) {
+		return TWO_HAN;
+	} else if (identical == 1) {
+		return ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t isAllSimples(myMahjong mahjong) {
+	for (int32_t i = 0; i < mahjong.totalTiles; i++) {
+		if (isYaochuTile(mahjong.tiles[i])) {
+			return 0;
+		}
+	}
+
+	return ONE_HAN;
+}
+
+int32_t hasHonerGreen(myMahjong mahjong) {
+	if (mahjong.tilesAmount[GREEN] >= 3) {
+		return ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t hasHonerPlayerWind(myMahjong mahjong) {
+	for (int32_t i = EAST; i <= NORTH; i++) {
+		if (mahjong.tilesAmount[i] >= 3 && (mahjong.playerWind + EAST == i)) {
+			return ONE_HAN;
+		}
+	}
+
+	return 0;
+}
+
+int32_t hasHonerPrevailingWind(myMahjong mahjong) {
+	for (int32_t i = EAST; i <= NORTH; i++) {
+		if (mahjong.tilesAmount[i] >= 3 && (mahjong.prevailingWind + EAST == i)) {
+			return ONE_HAN;
+		}
+	}
+
+	return 0;
+}
+
+int32_t hasHonerRed(myMahjong mahjong) {
+	if (mahjong.tilesAmount[RED] >= 3) {
+		return ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t hasHonerWhite(myMahjong mahjong) {
+	if (mahjong.tilesAmount[WHITE] >= 3) {
+		return ONE_HAN;
+	}
+
+	return 0;
+}
+
+int32_t hasNoPointsHand(myMahjong mahjong) {
+	int32_t noPointsHand = 0;
+
+	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
+		if (!isStraightMeld(mahjong, i)) {
+			return 0;
+		}
+
+		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
+		int32_t tail = mahjong.melds[i][MELD_TILES];
+		int32_t check[9] = {0};
+
+		for (int32_t j = head; j < tail; j++) {
+			int32_t num = (mahjong.tiles[j] - 1) % 9;
+			check[num] = mahjong.tiles[j];
+		}
+
+		for (int32_t j = 0; j < 7; j++) {
+			if ((check[j] && check[j+1] == mahjong.winningTile) ||
+				(j == 6 && check[j] == mahjong.winningTile) ||
+				(j == 0 && check[j+2] == mahjong.winningTile)) {
+				break;
+			} else if (check[j] == mahjong.winningTile || 
+					(check[j] && check[j+2] == mahjong.winningTile)) {
+				noPointsHand++;
+				break;
+			}
+		}
+	}
+
+	if (noPointsHand) {
+		return ONE_HAN;
 	}
 
 	return 0;
@@ -623,7 +1081,7 @@ void printYaku(int32_t yaku) {
 		printf("Three kans (2 Han)\n"); break;
 
 		case TWO_SETS_OF_IDENTICAL_SEQUENCES:
-		printf("Two sets of same sequences (2 Han)\n"); break;
+		printf("Two sets of identical sequences (2 Han)\n"); break;
 
 		// 1 Han
 

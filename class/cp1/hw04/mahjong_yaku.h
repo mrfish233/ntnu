@@ -5,6 +5,13 @@
 #include "mahjong_var.h"
 
 /**
+ * Check the tile is honors.
+ * @param tile The given tile.
+ * @return 1 if honor, 0 otherwise.
+ */
+int32_t isHonorTile(int32_t tile);
+
+/**
  * Check the tile is Yaochu (1, 9, or honors).
  * @param tile The given tile.
  * @return 1 if Yaochu, 0 otherwise.
@@ -178,11 +185,120 @@ int32_t isAllTerminalsAndHonors(myMahjong mahjong);
 int32_t isAllTriplets(myMahjong mahjong);
 
 /**
+ * 2 Han: Little three dragons
+ * @param mahjong The mahjong struct.
+ * @return 2 han if condition met, 0 otherwise.
+ */
+int32_t isLittleThreeDragons(myMahjong mahjong);
+
+/**
  * 2 Han: Seven pairs
  * @param mahjong The mahjong struct.
  * @return 2 han if condition met, 0 otherwise.
  */
 int32_t isSevenPairs(myMahjong mahjong);
+
+/**
+ * 2 Han: Straight
+ * 1 Han: Straight with open meld
+ * @param mahjong The mahjong struct.
+ * @return 2 or 1 han if condition met, 0 otherwise.
+ */
+int32_t isStraight(myMahjong mahjong);
+
+/**
+ * 2 Han: Terminal or honor in each set
+ * 1 Han: Terminal or honor in each set with open meld
+ * @param mahjong The mahjong struct.
+ * @return 2 or 1 han if condition met, 0 otherwise.
+ */
+int32_t isTerminalOrHonorInEachSet(myMahjong mahjong);
+
+/**
+ * 2 Han: Three colour straights
+ * 1 Han: Three colour straights with open meld
+ * @param mahjong The mahjong struct.
+ * @return 2 or 1 han if condition met, 0 otherwise.
+ */
+int32_t isThreeColourStraights(myMahjong mahjong);
+
+/**
+ * 2 Han: Three colour triplets
+ * @param mahjong The mahjong struct.
+ * @return 2 han if condition met, 0 otherwise.
+ */
+int32_t isThreeColourTriplets(myMahjong mahjong);
+
+/**
+ * 2 Han: Three concealed triplets
+ * @param mahjong The mahjong struct.
+ * @return 2 han if condition met, 0 otherwise.
+ */
+int32_t isThreeConcealedTriplets(myMahjong mahjong);
+
+/**
+ * 2 Han: Three kans
+ * @param mahjong The mahjong struct.
+ * @return 2 han if condition met, 0 otherwise.
+ */
+int32_t isThreeKans(myMahjong mahjong);
+
+/**
+ * 2 Han: Two sets of identical sequences
+ * 1 Han: One set of identical sequences
+ * @param mahjong The mahjong struct.
+ * @return 2 or 1 han if condition met, 0 otherwise.
+ */
+int32_t isIdenticalSequences(myMahjong mahjong);
+
+/**
+ * 1 Han: All simples
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t isAllSimples(myMahjong mahjong);
+
+/**
+ * 1 Han: Honer green
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasHonerGreen(myMahjong mahjong);
+
+/**
+ * 1 Han: Honer player's wind
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasHonerPlayerWind(myMahjong mahjong);
+
+/**
+ * 1 Han: Honer prevailing wind
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasHonerPrevailingWind(myMahjong mahjong);
+
+/**
+ * 1 Han: Honer red
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasHonerRed(myMahjong mahjong);
+
+/**
+ * 1 Han: Honer white
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasHonerWhite(myMahjong mahjong);
+
+/**
+ * 1 Han: No points hand
+ * @param mahjong The mahjong struct.
+ * @return 1 han if condition met, 0 otherwise.
+ */
+int32_t hasNoPointsHand(myMahjong mahjong);
 
 /**
  * Print yaku of the tiles.
