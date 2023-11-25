@@ -130,6 +130,10 @@ void calculateHan(myMahjong mahjong) {
 
 	result = handleYaku(mahjong);
 
+	if (result == 0) {
+		printYaku(NO_YAKU);
+	}
+
 	printf("Total: %d Han", result);
 	if (result >= 13) {
 		printf(" (Kazoe-yakuman)");

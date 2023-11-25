@@ -34,7 +34,7 @@ int64_t initDegree(char *str) {
 		return -1;
 	}
 
-	if (degree < 0 || degree > UINT32_MAX) {
+	if (degree < 0 || degree > UINT8_MAX) {
 		printf("Error: degree is out of range\n");
 		return -1;
 	}

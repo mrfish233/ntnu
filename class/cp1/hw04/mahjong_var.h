@@ -62,6 +62,7 @@ typedef struct MyMahjong {
 #define RED   34
 
 #define ERROR_YAKU -1
+#define NO_YAKU 0
 
 #define ONE_YAKUMAN 100
 #define TWO_YAKUMAN 200

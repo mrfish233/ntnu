@@ -1118,6 +1118,9 @@ void printYaku(int32_t yaku) {
 		case THREE_COLOUR_STRAIGHTS_OPEN:
 		printf("Three colour straights (1 Han)\n"); break;
 
+		case NO_YAKU:
+		printf("No Yaku\n"); break;
+
 		// Error
 
 		case ERROR_YAKU:
