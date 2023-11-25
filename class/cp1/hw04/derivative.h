@@ -6,6 +6,14 @@
 #include <math.h>
 
 /**
+ * Find GCD of two numbers.
+ * @param a first number
+ * @param b second number
+ * @return The GCD of a and b, -1 if invalid.
+ */
+int32_t gcd(int32_t a, int32_t b);
+
+/**
  * Gives new degree of a equation.
  * @param degree The new degree
  * @return The degree, -1 if invalid.

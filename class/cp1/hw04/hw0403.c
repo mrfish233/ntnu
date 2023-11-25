@@ -10,7 +10,7 @@ int main() {
 		findSubjectGrade(subjectsGrade[i], i, score, STUDENT_NUMBER);
 	}
 
-	printf("\tCHINESE | ENGLISH | MATH_A  | MATH_B  | SOCIAL  | SCIENCE\n");
+	printf("        CHINESE | ENGLISH | MATH_A  | MATH_B  | SOCIAL  | SCIENCE\n");
 
 	for (int32_t i = 0; i < GRADE_NUM; i++) {
 		switch (i) {

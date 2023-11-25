@@ -1,30 +1,20 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <time.h>
 #include "mysort.h"
 
-int main() {
-	srand(time(0));
-
-	int32_t size   = (rand() % 30) + 11;
-	int32_t *array = malloc(sizeof(int32_t) * size);
-
-	// int32_t array[SIZE] = {0};
-
-	for (int32_t i = 0; i < size; i++) {
-		array[i] = rand() % 1000;
-	}
-
-	printf("Before sort: \n");
-	myprint(array, size);
-
-	mysort(array, size);
-
-	printf("After sort: \n");
-	myprint(array, size);
-
-	free(array);
-
-	return 0;
+int main()
+{
+    int32_t n;
+    printf("Please input the number of integers: ");
+    scanf("%d",&n);
+    int32_t a[n];
+    printf("Please input %d integers: ",n);
+    for(int32_t i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Before sorting:\n");
+    myprint(a,n);
+    mysort(a,n);
+    printf("After sorting:\n");
+    myprint(a,n);
+    return 0;
 }

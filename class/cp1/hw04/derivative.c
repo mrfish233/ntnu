@@ -1,5 +1,16 @@
 #include "derivative.h"
 
+int32_t gcd(int32_t a, int32_t b) {
+	if (a < 0) a = -a;
+	if (b < 0) b = -b;
+ 
+	if (b == 0) {
+		return a;
+	}
+
+	return gcd(b, a % b);
+}
+
 int64_t newDegree(int64_t degree) {
 	return degree < 0 ? 0 : degree;
 }
@@ -153,10 +164,11 @@ int64_t *simplifyEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t de
 	}
 
 	int64_t simDeg = newDegree(deg1);
+	int64_t tmpDeg2 = deg2;
 
-	while (eqn1[simDeg] == 0 && eqn2[deg2] == 0) {
+	while (eqn1[simDeg] == 0 && eqn2[tmpDeg2] == 0) {
 		simDeg--;
-		deg2--;
+		tmpDeg2--;
 	}
 
 	int64_t *simEqn = newEquation(simDeg);
@@ -165,14 +177,58 @@ int64_t *simplifyEquation(int64_t *eqn1, int64_t deg1, int64_t *eqn2, int64_t de
 		simEqn[i] = eqn1[i];
 	}
 
+	int64_t divisor = eqn1[0];
+
+	for (int64_t i = 1; i < deg1 + 1; i++) {
+		if (eqn1[i] == 0) {
+			continue;
+		}
+		
+		divisor = gcd(divisor, eqn1[i]);
+
+		if (divisor == 1) {
+			break;
+		}
+	}
+
+	for (int64_t i = 0; i < deg2 + 1; i++) {
+		if (eqn2[i] == 0) {
+			continue;
+		}
+
+		divisor = gcd(divisor, eqn2[i]);
+
+		if (divisor == 1) {
+			break;
+		}
+	}
+
+	for (int64_t i = 0; i < simDeg + 1; i++) {
+		simEqn[i] /= divisor;
+	}
+
 	return simEqn;
 }
 
 void printEquation(int64_t *equation, int64_t degree) {
 	int32_t printOnce = 0;
 
+	// printf("degree=%ld\n", degree);
+
 	if (degree == 0) {
 		printf("%ld\n", equation[0]);
+		return;
+	}
+
+	int64_t check = 0;
+	for (int64_t i = 0; i < degree + 1; i++) {
+		if (equation[i] == 0) {
+			check++;
+		}
+	}
+
+	if (check == degree + 1) {
+		printf("0\n");
 		return;
 	}
 
