@@ -236,7 +236,7 @@ int32_t isFourConcealedTriplets(myMahjong mahjong) {
 	if (triplet == 4 && isClosedHand(mahjong)) {
 		if (mahjong.winningTile == mahjong.tiles[mahjong.totalTiles-1]) {
 			return TWO_YAKUMAN;
-		} else if (mahjong.selfDrawn == 1) {
+		} else {
 			return ONE_YAKUMAN;
 		}
 	}

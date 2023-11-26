@@ -151,7 +151,7 @@ Question 5 is about Japanese Mahjong. The question requires to calculate the sco
 
 The user is required to input the tiles meld by meld, stopping with the integer `0`. For simplicity, the input tiles are not required to find the higher combination. Only **"seven pairs"** and **"thirteen orphans"** are inputed as 1 meld.
 
-The user is then requires to input pairs, winning tile, self-drawn win, player's wind and prevailing wind. The program will then calculate the scores and output all possible yakus or yakumans. Output yakus or yakumans are in decreasing order according to hans, then followed by lexicographic order.
+The user is then requires to input pairs, winning tile, player's wind and prevailing wind. The program will then calculate the scores and output all possible yakus or yakumans. Output yakus or yakumans are in decreasing order according to hans, then followed by lexicographic order.
 
 One of the possible outputs are given below.
 
@@ -167,7 +167,6 @@ Please input meld: 7 9 8 0
 Is open/closed group(1: open 0: closed): 0
 Please input pair: 1 1
 Please input winning tile: 1
-Is Self-drawn win?(1: YES 0: NO): 1
 Player's wind(0:E 1:S 2:W 3:N): 0
 Prevailing wind(0:E 1:S 2:W 3:N): 0
 The Score is...
@@ -208,7 +207,6 @@ Please input meld: 7 8 9 0
 Is open/closed group(1: open 0: closed): 0
 Please input pair: 12 12
 Please input winning tile: 12
-Is Self-drawn win?(1: YES 0: NO): 1
 Player's wind(0:E 1:S 2:W 3:N): 0
 Prevailing wind(0:E 1:S 2:W 3:N): 0
 The Score is...
@@ -223,7 +221,7 @@ If the program encounters any of the following errors, it will output `Unreasona
 * The amount of same tile is larger than 4
 * Invalid number of tiles in a meld
 * Invalid meld
-* Invalid pairs, winning tile, self-drawn, player's wind or prevailing wind
+* Invalid pairs, winning tile, player's wind or prevailing wind
 
 ```console
 ./hw0405

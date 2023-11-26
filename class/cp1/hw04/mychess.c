@@ -12,7 +12,7 @@ int32_t checkmate(int32_t board[BOARD_X][BOARD_Y]) {
 
 	g_moves = 0;
 
-	for (int32_t i = RED_HORSE; i <= RED_SOLDIER; i++) {
+	for (int32_t i = RED_GENERAL; i <= RED_SOLDIER; i++) {
 		for (int32_t j = 0; j < BOARD_X; j++) {
 			for (int32_t k = 0; k < BOARD_Y; k++) {
 				if (board[j][k] == i) {
@@ -185,6 +185,16 @@ int32_t canCheckmate(const int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32
 	}
 
 	switch (piece) {
+		case RED_GENERAL:
+		for (int32_t i = newX; i < BOARD_X; i++) {
+			if (board[i][newY] == BLACK_GENERAL) {
+				return 1;
+			} else if (isRedPiece(board[i][newY]) || isBlackPiece(board[i][newY])) {
+				break;
+			}
+		}
+		break;
+
 		case RED_HORSE:
 		if (isValidPos(newX-1, newY) && board[newX-1][newY] == EMPTY) {
 			if ((isValidPos(newX-2, newY-1) && board[newX-2][newY-1] == BLACK_GENERAL) ||
@@ -350,6 +360,15 @@ int32_t canCheckmate(const int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32
 
 void findCheckmateMoves(const int32_t board[BOARD_X][BOARD_Y], int32_t piece, int32_t x, int32_t y) {
 	switch (piece) {
+		case RED_GENERAL:
+		if (isValidPiecePosition(piece, x, y-1) && canCheckmate(board, piece, x, y-1)) {
+			printf(MOVE(General), ++g_moves, x, y, x, y-1);
+		}
+		if (isValidPiecePosition(piece, x, y+1) && canCheckmate(board, piece, x, y+1)) {
+			printf(MOVE(General), ++g_moves, x, y, x, y+1);
+		}
+		break;
+
 		case RED_HORSE:
 		if (isValidPos(x-1, y) && board[x-1][y] == EMPTY) {
 			if (canCheckmate(board, piece, x-2, y-1)) {

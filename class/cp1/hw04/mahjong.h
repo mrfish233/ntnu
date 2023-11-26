@@ -45,13 +45,13 @@ int32_t isValidPair(int32_t tile1, int32_t tile2);
  */
 int32_t isValidWinningTile(myMahjong mahjong, int32_t tile);
 
-/**
- * Check if the drawn is valid.
- * @param mahjong The mahjong struct.
- * @param drawn The drawn.
- * @return 1 if valid, 0 if invalid.
- */
-int32_t isValidDrawn(myMahjong mahjong, int32_t drawn);
+// /**
+//  * Check if the drawn is valid.
+//  * @param mahjong The mahjong struct.
+//  * @param drawn The drawn.
+//  * @return 1 if valid, 0 if invalid.
+//  */
+// int32_t isValidDrawn(myMahjong mahjong, int32_t drawn);
 
 /**
  * Check if the wind is valid.
