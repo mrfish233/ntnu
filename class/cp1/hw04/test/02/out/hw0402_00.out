@@ -1,0 +1,6 @@
+Please enter f(x) degree: Please enter f(x) coefficients: Please enter g(x) degree: Please enter g(x) coefficients: f(x): 6x + 3
+g(x): 6x^3 + 8x^2 + 9
+(f(x)g(x))': 144x^3 + 198x^2 + 48x + 54
+ f(x)    -72x^3 - 102x^2 - 48x + 54
+(----)': --------------------------------------------
+ g(x)    36x^6 + 96x^5 + 64x^4 + 108x^3 + 144x^2 + 81
