@@ -3,7 +3,6 @@
 #include "mahjong.h"
 
 int main() {
-	// myMahjong mahjong = { {0}, {0}, { {0},{0} }, 0, 0, 0, 0, 0, 0 };
 	myMahjong mahjong = { {0}, {0}, { {0},{0} }, 0, 0, 0, 0, 0 };
 
 	// Hand input
@@ -38,7 +37,7 @@ int main() {
 			break;
 		}
 
-		printf("Is open/closed group(1: YES 0: NO): ");
+		printf("Is open group(1: YES 0: NO): ");
 
 		int32_t openMeld = 0;
 		if (scanf("%d", &openMeld) != 1 || (openMeld != 0 && openMeld != 1)) {
@@ -95,20 +94,6 @@ int main() {
 
 		mahjong.winningTile = tile;
 	}
-
-	// Self drawn input
-
-	// if (validHand) {
-	// 	int32_t selfDrawn = 0;
-	// 	printf("Is Self-drawn win?(1: YES 0: NO): ");
-
-	// 	if (scanf("%d", &selfDrawn) != 1 || !isValidDrawn(mahjong, selfDrawn)) {
-	// 		// printf("Invalid self drawn!\n");
-	// 		validHand = 0;
-	// 	}
-
-	// 	mahjong.selfDrawn = selfDrawn;
-	// }
 
 	// Wind input
 

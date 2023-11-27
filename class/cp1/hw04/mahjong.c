@@ -72,40 +72,6 @@ int32_t isValidWinningTile(myMahjong mahjong, int32_t tile) {
 	return check;
 }
 
-// int32_t isValidDrawn(myMahjong mahjong, int32_t drawn) {
-// 	if (drawn != 0 && drawn != 1) {
-// 		return 0;
-// 	}
-
-// 	if (mahjong.tiles[mahjong.totalTiles-1] == mahjong.winningTile) {
-// 		return 1;
-// 	}
-
-// 	if (mahjong.totalMelds == 1) {
-// 		return 1;
-// 	}
-
-// 	int32_t check = 0;
-
-// 	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
-// 		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
-// 		int32_t tail = mahjong.melds[i][MELD_TILES];
-
-// 		for (int32_t j = head; j < tail; j++) {
-// 			if ((mahjong.tiles[j] == mahjong.winningTile) && 
-// 				(isTripletOrKanMeld(mahjong, i) != 2) &&
-// 				(drawn == 0 || mahjong.melds[i][MELD_OPEN] == 0)) {
-// 				check = 1;
-// 				break;
-// 			}
-// 		}
-// 	}
-
-// 	printf("check=%d\n", check);
-
-// 	return check;
-// }
-
 int32_t isValidWind(int32_t wind) {
 	return (wind == 0 || wind == 1 || wind == 2 || wind == 3);
 }

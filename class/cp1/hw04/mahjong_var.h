@@ -12,7 +12,6 @@ typedef struct MyMahjong {
 	int32_t totalTiles;
 	int32_t totalMelds;
 	int32_t winningTile;
-	// int32_t selfDrawn;
 	int32_t playerWind;
 	int32_t prevailingWind;
 } myMahjong;

@@ -815,10 +815,7 @@ int32_t isThreeConcealedTriplets(myMahjong mahjong) {
 			continue;
 		}
 
-		int32_t head = (i == 0) ? 0 : mahjong.melds[i-1][MELD_TILES];
-		int32_t tile = mahjong.tiles[head];
-
-		if (mahjong.melds[i][MELD_OPEN] == 0 && tile != mahjong.winningTile) {
+		if (mahjong.melds[i][MELD_OPEN] == 0) {
 			close++;
 		}
 	}
@@ -941,6 +938,10 @@ int32_t hasHonerWhite(myMahjong mahjong) {
 }
 
 int32_t hasNoPointsHand(myMahjong mahjong) {
+	if (!isClosedHand(mahjong)) {
+		return 0;
+	}
+
 	int32_t noPointsHand = 0;
 
 	for (int32_t i = 0; i < mahjong.totalMelds; i++) {
