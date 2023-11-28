@@ -442,9 +442,9 @@ int32_t handleYaku(myMahjong mahjong) {
 		total += TWO_HAN;
 	}
 
-	if (isIdenticalSequences(mahjong) == TWO_HAN) {
+	if (isIdenticalSequences(mahjong) == THREE_HAN) {
 		printYaku(TWO_SETS_OF_IDENTICAL_SEQUENCES);
-		total += TWO_HAN;
+		total += THREE_HAN;
 	}
 
 	// 1 Han
@@ -875,7 +875,7 @@ int32_t isIdenticalSequences(myMahjong mahjong) {
 	}
 
 	if (identical == 2) {
-		return TWO_HAN;
+		return THREE_HAN;
 	} else if (identical == 1) {
 		return ONE_HAN;
 	}
@@ -1043,6 +1043,9 @@ void printYaku(int32_t yaku) {
 		case TERMINAL_IN_EACH_SET:
 		printf("Terminal in each set (3 Han)\n"); break;
 
+		case TWO_SETS_OF_IDENTICAL_SEQUENCES:
+		printf("Two sets of identical sequences (3 Han)\n"); break;
+
 		// 2 Han
 
 		case ALL_TERMINALS_AND_HONORS:
@@ -1081,9 +1084,6 @@ void printYaku(int32_t yaku) {
 		case THREE_KANS:
 		printf("Three kans (2 Han)\n"); break;
 
-		case TWO_SETS_OF_IDENTICAL_SEQUENCES:
-		printf("Two sets of identical sequences (2 Han)\n"); break;
-
 		// 1 Han
 
 		case ALL_SIMPLES:
@@ -1105,7 +1105,7 @@ void printYaku(int32_t yaku) {
 		printf("Honer: White (1 Han)\n"); break;
 
 		case NO_POINTS_HAND:
-		printf("No points Hand (1 Han)\n"); break;
+		printf("No-points Hand (1 Han)\n"); break;
 
 		case ONE_SET_OF_IDENTICAL_SEQUENCES:
 		printf("One set of identical sequences (1 Han)\n"); break;
