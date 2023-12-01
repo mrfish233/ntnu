@@ -1,4 +1,4 @@
-# hw01
+# hw0x
 
 41247039S 韓欣劭
 
@@ -6,7 +6,7 @@ Computer Programming (I), hw0x
 
 ## Table of Contents
 
-* [Run](#run-and-execute)
+* [Run and Execute](#run-and-execute)
 * [Question 1](#question-1)
 * [Question 2](#question-2)
 * [Question 3](#question-3)
@@ -24,9 +24,9 @@ make
 
 and all the c language codes will be compiled by using `gcc`. There will be 5 compiled file, naming `hw0x0x` where `x` is the question number.
 
-This homework has 5+1 questions. The [question]() and question's [additional information]() is here (since both links are not mine, the link may become invalid).
+This homework has 5+1 questions. The [question](#hw0x) and question's [additional information](#hw0x) is here (since both links are not mine, the link may become invalid).
 
-The first 5 questions are written in C language, and the bonus question is written in [hw0x0x.md](). The first 5 questions are executable, by typing
+The first 5 questions are written in C language, and the bonus question is written in [hw0x0x.md](#hw0x). The first 5 questions are executable, by typing
 
 ```console
 ./hw0x0x
@@ -39,7 +39,7 @@ where `x` is range from 1 to 5.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```console
-./hw0x05
+./hw0x01
 ```
 
 ### What I have learned/encountered in Q1
@@ -51,7 +51,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```console
-./hw0x05
+./hw0x02
 ```
 
 ### What I have learned/encountered
@@ -63,7 +63,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```console
-./hw0x05
+./hw0x03
 ```
 
 ### What I have learned/encountered
@@ -75,7 +75,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```console
-./hw0x05
+./hw0x04
 ```
 
 ### What I have learned/encountered
@@ -96,4 +96,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Bonus Question
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+the bonus question is written in [hw0x0x.md](#hw0x).
