@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <math.h>
 
 // I promise that A is an nxn matrix (2d array).
 // However , you need to check if the inputs are valid.
