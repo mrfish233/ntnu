@@ -1,8 +1,8 @@
 #include "mystatistics.h"
 
 int32_t statistics(int32_t *pData, int32_t size, double *pMean, double *pVariance, double *pStd) {
-    if (pData == NULL || size < 0 || pMean == NULL || pVariance == NULL || pStd == NULL) {
-        return 0;
+    if (pData == NULL || size <= 0 || pMean == NULL || pVariance == NULL || pStd == NULL) {
+        return -1;
     }
 
     double total = 0.0;
@@ -23,5 +23,5 @@ int32_t statistics(int32_t *pData, int32_t size, double *pMean, double *pVarianc
 
     *pStd = sqrt(*pVariance);
 
-    return 1;
+    return 0;
 }
