@@ -9,6 +9,6 @@
  * @param r The radius of sphere.
  * @param a,b,c,d The plane `ax+by+cz=d`.
  * @param pArea The pointer of cap area to calculate.
- * @return -1 if invalid input, 0 if invalid plane, 1 otherwise.
+ * @return -1 if invalid input, 0 if no cap area, 1 otherwise.
  */
 int32_t get_cap_area(double r, double a, double b, double c, double d, double *pArea);
