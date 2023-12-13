@@ -1,39 +1,56 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "myge.h"
+#include "./myge.h"
 
-#define SIZE 4
-
-int main() {
-    // int32_t matA[3][3] = {
-    //     {0, 1, 1},
-    //     {1, 2, 4},
-    //     {2, 3, 8}
-    // };
-
-    // int32_t y[3] = {6, 17, 34};
-
-    int32_t matA[SIZE][SIZE] = {
-        {1,1,1,1},
-        {0,3,4,2},
-        {-1,-1,0,3},
-        {3,2,-3,1},
-    };
-    int32_t y[SIZE] = {10,26,9,2};
-
-    int32_t *x = NULL;
-
-    int check = gaussian_elimination(SIZE, &matA[0][0], &y[0], &x);
-    if (check == 1) {
-        for (int32_t i = 0; i < SIZE; i++) {
-            printf("%d ", x[i]);
-        }
-        printf("\n");
-    } else {
-        printf("Return: %d\n", check);
-    }
-
-    if (x != NULL) free(x);
-
-    return 0;
+int main()
+{
+	int32_t size = 0;
+	int32_t nul = 0;
+	scanf("%d", &nul);
+	if (nul == 0)
+	{
+		scanf("%d", &size);
+		int32_t A[size][size];
+		int32_t y[size];
+		int32_t *x = NULL;
+		for (int32_t i = 0; i < size; i++)
+		{
+			for (int32_t j = 0; j < size; j++)
+			{
+				scanf("%d", &A[i][j]);
+			}
+		}
+		for (int32_t i = 0; i < size; i++)
+		{
+			scanf("%d", &y[i]);
+		}
+		int32_t return_value = gaussian_elimination(size, &A[0][0], &y[0], &x);
+		printf("return: %d\n", return_value);
+		printf("x = [");
+		if (return_value == 1)
+		{
+			for (int32_t i = 0; i < size; i++)
+			{	
+				printf("%d ", *(x+i));
+			}
+			printf("]^T\n");
+		}
+		free(x);
+	}
+	else if (nul == -1)
+	{
+		int32_t A[2][2] = {0};
+		int32_t y[2] = {0};
+		int32_t *x = NULL;
+		int32_t return_value = gaussian_elimination(0, &A[0][0], y, &x);
+		printf("return: %d\n", return_value);
+	}
+	else
+	{
+		int32_t *x = NULL;
+		int32_t return_value = gaussian_elimination(1, NULL, NULL, &x);
+		printf("return: %d\n", return_value);
+	}
+	
+	return 0;
 }

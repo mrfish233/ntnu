@@ -1,27 +1,41 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include "mystatistics.h"
+#include "./mystatistics.h"
 
-int main() {
-    int32_t n = 0;
-    int32_t *data = NULL;
+int main()
+{
+    int32_t size = 0;
 
-    scanf("%d", &n);
-    data = calloc(n, sizeof(int32_t));
+    double mean;
+    double variance;
+    double std;
+    int32_t nul = 0;
+    scanf("%d", &nul);
+    if (nul == 0)
+    {
+        scanf("%d", &size);
+        // int32_t data[size] = {0};
+        int32_t *data = calloc(size, sizeof(int32_t));
+        for (int32_t i = 0; i < size; i++)
+        {
+            scanf("%d", &data[i]);
+        }
 
-    for (int32_t i = 0; i < n; i++) {
-        scanf("%d", &data[i]);
+        printf("return: %d\n", statistics(data, size, &mean, &variance, &std));
+        printf("mean = %.3f\n", mean);
+        printf("variance = %.3f\n", variance);
+        printf("std = %.3f\n", std);
+
+        free(data);
     }
-
-    double mean = 0, var = 0, std = 0;
-
-    if (statistics(data, n, &mean, &var, &std)) {
-        printf("Mean: %lf\n", mean);
-        printf("Variance: %lf\n", var);
-        printf("Standard Deviation: %lf\n", std);
+    else if (nul == -1)
+    {
+        int32_t data[2] = {0};
+        printf("return: %d\n", statistics(data, 0, &mean, &variance, &std));
     }
-
-    free(data);
+    else
+    {
+        printf("return: %d\n", statistics(NULL, 0, NULL, NULL, NULL));
+    }
     return 0;
 }

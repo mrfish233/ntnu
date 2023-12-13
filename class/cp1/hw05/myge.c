@@ -42,7 +42,7 @@ int32_t gaussian_elimination(int32_t n, int32_t *pA, int32_t *py, int32_t **px) 
         swapRow(matrixAy, n + 1, i, largest);
 
         for (int32_t j = i + 1; j < n; j++) {
-            float factor = -(matrixAy[j][i] / matrixAy[i][i]);
+            double factor = -(matrixAy[j][i] / matrixAy[i][i]);
 
             for (int32_t k = i; k < n + 1; k++) {
                 matrixAy[j][k] += factor * matrixAy[i][k];
@@ -69,19 +69,12 @@ int32_t gaussian_elimination(int32_t n, int32_t *pA, int32_t *py, int32_t **px) 
 
     for (int32_t i = n - 1; i > 0; i--) {
         for(int32_t j = i - 1; j >= 0; j--) {
-            float factor = -(matrixAy[j][i] / matrixAy[i][i]);
+            double factor = -(matrixAy[j][i] / matrixAy[i][i]);
 
             for (int32_t k = n; k >= i; k--) {
                 matrixAy[j][k] += factor * matrixAy[i][k];
             }
         }
-    }
-
-    for (int32_t i = 0; i < n; i++) {
-        for (int32_t j = 0; j < n + 1; j++) {
-            printf("%8.2lf ", matrixAy[i][j]);
-        }
-        printf("\n");
     }
 
     // Save result to argument pointer

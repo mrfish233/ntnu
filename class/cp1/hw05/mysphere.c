@@ -10,7 +10,7 @@ int32_t get_cap_area(double r, double a, double b, double c, double d, double *p
     // Square distance from origin is (a*0 + b*0 + c*0 - d)^2 / (a^2 + b^2 + c^2)
     double planeSquareDist = (d * d) / (a * a + b * b + c * c);
 
-    if (planeSquareDist > (r * r)) {
+    if (planeSquareDist >= (r * r)) {
         return 0;
     }
 
