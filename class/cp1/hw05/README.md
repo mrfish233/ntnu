@@ -2,7 +2,7 @@
 
 41247039S 韓欣劭
 
-Computer Programming (I), hw0x
+Computer Programming (I), hw05
 
 ## Table of Contents
 
@@ -24,76 +24,87 @@ make
 
 and all the c language codes will be compiled by using `gcc`. There will be 5 compiled file, naming `hw0x0x` where `x` is the question number.
 
-This homework has 5+1 questions. The [question](#hw0x) and question's [additional information](#hw0x) is here (since both links are not mine, the link may become invalid).
+This homework has 5+1 questions. The [question](https://drive.google.com/file/d/1X8nfw5xhvEOjvxCWtp-uDlBebc2H4VeF/view) and question's [additional information](https://hackmd.io/@cp2023/cp1-hw5-info) is here (since both links are not mine, the link may become invalid).
 
-The first 5 questions are written in C language, and the bonus question is written in [hw0x0x.md](#hw0x). The first 5 questions are executable, by typing
+The first 5 questions are written in C language, and the bonus question is written in [hw0506.md](hw0506.md). The first 5 questions are executable, by typing
 
 ```console
-./hw0x0x
+./hw050x
 ```
 
 where `x` is range from 1 to 5.
 
 ## Question 1
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Question 1 is about statistics. The function will calculate the mean, variance and the standard deviation of given array of data. The result is stored in pointer.
 
-```console
-./hw0x01
-```
+If it is successfully calculated, the function will return 0. It will return -1 if one of the following errors occurs:
+
+* given data array or pointer is NULL
+* size is smaller than or equal to 0
 
 ### What I have learned/encountered in Q1
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+* Nothing special here.
 
 ## Question 2
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Question 2 is about Gaussian elimination. Given a `n*n` matrix and vector `y`, solve `x` for `Ax = y`.
 
-```console
-./hw0x02
-```
+If the inputs are correct, the function will return 0 for no solution, 1 for one solution and 2 for many solutions. It will return -1 if one of the following errors occurs:
 
-### What I have learned/encountered
+* `n` is smaller than or equal to 0.
+* matrix `A` and vector `y` is NULL.
+* vector `x` is not NULL.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### What I have learned/encountered in Q2
+
+* Double pointer.
 
 ## Question 3
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Question 3 is about sphere. The function will calculate the area of base of spherical cap cut off by a plane. The result is stored in a pointer.
 
-```console
-./hw0x03
-```
+If it is successfully calculated, the function will return 1. It will return 0 if no spherical cap is formed. It will return -1 if one of the following errors occurs:
 
-### What I have learned/encountered
+* The given plane is invalid.
+* The given radius of sphere is invalid.
+* The area pointer is NULL.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### What I have learned/encountered in Q3
+
+* Spherical cap.
 
 ## Question 4
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Question 4 is about TLV. By giving an array of TLV data, the function can convert the data to a series of TLV commands. Each TLV commands to be implemented is given in [hw05](https://drive.google.com/file/d/1X8nfw5xhvEOjvxCWtp-uDlBebc2H4VeF/view).
 
-```console
-./hw0x04
-```
+If it is successfully executed, the function will return 0. It will return -1 if one of the following errors occurs:
 
-### What I have learned/encountered
+* TLV array is NULL.
+* The given size is lower than or equal to 0.
+* The TLV array is invalid in size.
+* The length of each TLV is invalid.
+* The 'Cancel' TLV is used incorrectly.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### What I have learned/encountered in Q4
+
+* TLVs.
 
 ## Question 5
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Question 5 is about TAS speedrun. The function can generate a frame-by-frame array. This array is used to generate a `.fm2` file for TAS speedrun in NES platform.
 
-```console
-./hw0x05
-```
+The function will stop if one of the following errors occurs:
 
-### What I have learned/encountered
+* Size pointer in `button_set_frame()` is NULL.
+* Source array in `button_unset_frame()` is NULL.
+* Start frame is larger than end frame.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### What I have learned/encountered in Q5
+
+* The amazing of speedrun.
 
 ## Bonus Question
 
-the bonus question is written in [hw0x0x.md](#hw0x).
+The bonus question is written in [hw0506.md](hw0506.md).
