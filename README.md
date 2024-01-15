@@ -2,5 +2,5 @@
 
 All codes that I write is placed here. There're two directories:
 
-- class: my NTNU class codes
-- codes: all remaining codes, including hello-algo, LeetCode and StarCoder.
+- course: my NTNU course codes
+- program: all remaining codes, including hello-algo, LeetCode, StarCoder and some random codes.
