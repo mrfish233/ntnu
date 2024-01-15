@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp list_node.cpp -Wall -Wextra -g -o main
+	g++ main.cpp ../src/list_node.cpp -Wall -Wextra -g -o main
