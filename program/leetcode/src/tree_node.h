@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 
 struct TreeNode {
     int val;
@@ -16,8 +17,7 @@ struct TreeNode {
 
 std::vector<std::string> stringToVector(std::string str);
 
-TreeNode *initNodes(std::vector<std::string> nodes);
-TreeNode *initNodes(std::vector<std::string> nodes, size_t i);
+TreeNode *initNodes(std::string str);
 
 void printTree(TreeNode *root);
 void printNode(TreeNode *node);

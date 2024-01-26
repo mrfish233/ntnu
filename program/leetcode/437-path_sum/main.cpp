@@ -24,10 +24,7 @@ int main() {
     string target, str;
 
     while (cin >> target >> str) {
-        vector<string> treeNodes = stringToVector(str);
-        TreeNode *root = initNodes(treeNodes);
-
-        printTree(root);
+        TreeNode *root = initNodes(str);
 
         cout << pathSum(root, stoi(target)) << endl;
     }

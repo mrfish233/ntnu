@@ -9,14 +9,15 @@ const bool LEFT  = false;
 const bool RIGHT = true;
 
 int longestZigZag(TreeNode* root);
-int longestZigZag(TreeNode* root, bool dir);
+int longestZigZag(TreeNode* root, bool dir, int depth);
 
 int main() {
     string str;
 
     while (cin >> str) {
-        // vector<string> treeNodes = stringToVector(str);
-        TreeNode *root = initNodes(stringToVector(str));
+        TreeNode *root = initNodes(str);
+
+        printTree(root);
 
         cout << longestZigZag(root) << endl;
     }
@@ -29,26 +30,25 @@ int longestZigZag(TreeNode* root) {
         return 0;
     }
 
-    int leftZigZag  = longestZigZag(root, LEFT);
-    int rightZigZag = longestZigZag(root, RIGHT);
+    int left  = longestZigZag(root->left,  LEFT,  0);
+    int right = longestZigZag(root->right, RIGHT, 0);
 
-    return max(leftZigZag, rightZigZag) + 1;
+    return max(left, right);
 }
 
-int longestZigZag(TreeNode* root, bool dir) {
+int longestZigZag(TreeNode* root, bool dir, int len) {
     if (!root) {
-        return 0;
+        return len;
     }
 
-    int left  = longestZigZag(root->left, RIGHT);
-    int right = longestZigZag(root->right, LEFT);
+    int left = 0, right = 0;
 
-    if (root->left && dir == LEFT) {
-        left++;
-    }
-
-    if (root->right && dir == RIGHT) {
-        right++;
+    if (dir == LEFT) {
+        left  = longestZigZag(root->left,  LEFT,  0);
+        right = longestZigZag(root->right, RIGHT, len + 1);
+    } else {
+        left  = longestZigZag(root->left,  LEFT,  len + 1);
+        right = longestZigZag(root->right, RIGHT, 0);
     }
 
     return max(left, right);

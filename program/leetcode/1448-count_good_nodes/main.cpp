@@ -12,10 +12,9 @@ int main() {
     string str;
 
     while (cin >> str) {
-        vector<string> treeNodes = stringToVector(str);
-        TreeNode *root = initNodes(treeNodes);
+        TreeNode *root = initNodes(str);
 
-        cout << "Good nodes: " << goodNodes(root) << endl;
+        cout << goodNodes(root) << endl;
     }
 
     return 0;

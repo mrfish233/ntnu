@@ -13,11 +13,8 @@ int main() {
     string str1, str2;
 
     while (cin >> str1 >> str2) {
-        vector<string> nodes1 = stringToVector(str1);
-        vector<string> nodes2 = stringToVector(str2);
-
-        TreeNode *root1 = initNodes(nodes1);
-        TreeNode *root2 = initNodes(nodes2);
+        TreeNode *root1 = initNodes(str1);
+        TreeNode *root2 = initNodes(str2);
 
         cout << leafSimilar(root1, root2) << endl;
     }
