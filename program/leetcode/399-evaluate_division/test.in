@@ -1,0 +1,25 @@
+2 5
+a b 2.0
+b c 3.0
+a c
+b a
+a e
+a a
+x x
+
+3 5
+a b 1.5
+b c 2.5
+bc cd 5.0
+a c
+c b
+bc cd
+cd bc
+a cd
+
+1 4
+a b 0.5
+a b
+b a
+a c
+x y
