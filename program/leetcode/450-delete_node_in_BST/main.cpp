@@ -22,25 +22,19 @@ int main() {
 }
 
 TreeNode* deleteNode(TreeNode* root, int key) {
-    if (!root) {
-        return nullptr;
-    } else if (!root->left && !root->right) {
-        if (root->val == key) {
-            delete root;
-            root = nullptr;
-        }
-
+    if (root == nullptr) {
         return root;
     }
 
-    // Find node to be deleted
+    TreeNode *curr = root, *prev = nullptr;
 
-    TreeNode *curr  = root;
-    TreeNode *pCurr = nullptr;
+    while (curr != nullptr) {
+        if (curr->val == key) {
+            break;
+        }
 
-    while (curr && curr->val != key) {
+        prev = curr;
 
-        pCurr = curr;
         if (curr->val < key) {
             curr = curr->right;
         } else {
@@ -48,59 +42,36 @@ TreeNode* deleteNode(TreeNode* root, int key) {
         }
     }
 
-    if (!curr) {
+    if (curr == nullptr) {
         return root;
     }
 
-    // Find node to be replaced to deleted node
+    if (curr->left == nullptr || curr->right == nullptr) { // 0 or 1 child node
+        TreeNode *next = (curr->left) ? curr->left : curr->right;
 
-    TreeNode *temp  = curr;
-    TreeNode *pTemp = pCurr;
+        if (curr == root) {
+            root = next;
+        } else if (curr == prev->left) {
+            prev->left = next;
+        } else {
+            prev->right = next;
+        }
 
-    if (temp->right) {
-        pTemp = temp;
-        temp  = temp->right;
+        delete curr;
+    } else { // 2 child nodes
+        TreeNode *temp = curr->right;
 
         while (temp->left) {
-            pTemp = temp;
-            temp  = temp->left;
+            temp = temp->left;
         }
 
-        while (temp->right) {
-            pTemp = temp;
-            temp  = temp->right;
-            swap(pTemp->val, temp->val);
-        }
-    } else if (temp->left) {
-        pTemp = temp;
-        temp  = temp->left;
+        int tempVal = temp->val;
 
-        while (temp->right) {
-            pTemp = temp;
-            temp  = temp->right;
-        }
+        // Recursive delete node
+        root = deleteNode(root, tempVal);
 
-        while (temp->left) {
-            pTemp = temp;
-            temp  = temp->left;
-            swap(pTemp->val, temp->val);
-        }
+        curr->val = tempVal;
     }
-
-    // printf("curr: %d, pCurr: %d\n", curr->val, pCurr ? pCurr->val : -1);
-    // printf("temp: %d, pTemp: %d\n", temp->val, pTemp ? pTemp->val : -1);
-
-    // Replace and delete node
-
-    curr->val = temp->val;
-
-    if (pTemp->left == temp) {
-        pTemp->left = nullptr;
-    } else {
-        pTemp->right = nullptr;
-    }
-
-    delete temp;
 
     return root;
 }
