@@ -15,59 +15,59 @@ int main() {
 
     char c1 = 's';
 
-    // printf("str1: %s\n", mystrchr(str1, c1));
-    // printf("str2: %s\n", mystrchr(str2, c1));
-    // printf("str3: %s\n", mystrchr(str3, c1));
-    // printf("str4: %s\n", mystrchr(str4, c1));
-    // printf("str5: %s\n", mystrchr(&str5, c1));
-    // printf("str6: %s\n", mystrchr(&str6, c1));
-    // printf("str7: %s\n", mystrchr("a string 123", c1));
+    printf("str1: %s\n", mystrchr(str1, c1));
+    printf("str2: %s\n", mystrchr(str2, c1));
+    printf("str3: %s\n", mystrchr(str3, c1));
+    printf("str4: %s\n", mystrchr(str4, c1));
+    printf("str5: %s\n", mystrchr(&str5, c1));
+    printf("str6: %s\n", mystrchr(&str6, c1));
+    printf("str7: %s\n", mystrchr("a string 123", c1));
 
-    // printf("\n");
+    printf("\n");
 
-    // printf("str1: %s\n", mystrrchr(str1, c1));
-    // printf("str2: %s\n", mystrrchr(str2, c1));
-    // printf("str3: %s\n", mystrrchr(str3, c1));
-    // printf("str4: %s\n", mystrrchr(str4, c1));
-    // printf("str5: %s\n", mystrrchr(&str5, c1));
-    // printf("str6: %s\n", mystrrchr(&str6, c1));
-    // printf("str7: %s\n", mystrrchr("a string 123", c1));
+    printf("str1: %s\n", mystrrchr(str1, c1));
+    printf("str2: %s\n", mystrrchr(str2, c1));
+    printf("str3: %s\n", mystrrchr(str3, c1));
+    printf("str4: %s\n", mystrrchr(str4, c1));
+    printf("str5: %s\n", mystrrchr(&str5, c1));
+    printf("str6: %s\n", mystrrchr(&str6, c1));
+    printf("str7: %s\n", mystrrchr("a string 123", c1));
 
-    // printf("\n");
+    printf("\n");
 
-    // char *accept = "abcdefghijklmnopqrstuvwxyz";
-    // char *accept2 = "aeiou";
-    // char *reject = "1234567890";
+    char *accept = "abcdefghijklmnopqrstuvwxyz";
+    char *accept2 = "aeiou";
+    char *reject = "1234567890";
 
-    // printf("str1: %ld\n", mystrspn(str1, accept));
-    // printf("str2: %ld\n", mystrspn(str2, accept));
-    // printf("str3: %ld\n", mystrspn(str3, accept));
-    // printf("str4: %ld\n", mystrspn(str4, accept));
-    // printf("str5: %ld\n", mystrspn(&str5, accept));
-    // printf("str6: %ld\n", mystrspn(&str6, accept));
-    // printf("str7: %ld\n", mystrspn("a string 123", accept));
+    printf("str1: %ld\n", mystrspn(str1, accept));
+    printf("str2: %ld\n", mystrspn(str2, accept));
+    printf("str3: %ld\n", mystrspn(str3, accept));
+    printf("str4: %ld\n", mystrspn(str4, accept));
+    printf("str5: %ld\n", mystrspn(&str5, accept));
+    printf("str6: %ld\n", mystrspn(&str6, accept));
+    printf("str7: %ld\n", mystrspn("a string 123", accept));
 
-    // printf("\n");
+    printf("\n");
 
-    // printf("str1: %ld\n", mystrcspn(str1, reject));
-    // printf("str2: %ld\n", mystrcspn(str2, reject));
-    // printf("str3: %ld\n", mystrcspn(str3, reject));
-    // printf("str4: %ld\n", mystrcspn(str4, reject));
-    // printf("str5: %ld\n", mystrcspn(&str5, reject));
-    // printf("str6: %ld\n", mystrcspn(&str6, reject));
-    // printf("str7: %ld\n", mystrcspn("a string 123", reject));
+    printf("str1: %ld\n", mystrcspn(str1, reject));
+    printf("str2: %ld\n", mystrcspn(str2, reject));
+    printf("str3: %ld\n", mystrcspn(str3, reject));
+    printf("str4: %ld\n", mystrcspn(str4, reject));
+    printf("str5: %ld\n", mystrcspn(&str5, reject));
+    printf("str6: %ld\n", mystrcspn(&str6, reject));
+    printf("str7: %ld\n", mystrcspn("a string 123", reject));
 
-    // printf("\n");
+    printf("\n");
 
-    // printf("str1: %c %s\n", *(mystrpbrk(str1, accept2)), mystrpbrk(str1, accept2));
-    // printf("str7: %c %s\n", *(mystrpbrk("a string 123", accept2)), mystrpbrk("a string 123", accept2));
+    printf("str1: %c %s\n", *(mystrpbrk(str1, accept2)), mystrpbrk(str1, accept2));
+    printf("str7: %c %s\n", *(mystrpbrk("a string 123", accept2)), mystrpbrk("a string 123", accept2));
 
-    // printf("\n");
+    printf("\n");
 
-    // printf("str1: %c %s\n", *(strpbrk(str1, accept2)), strpbrk(str1, accept2));
-    // printf("str7: %c %s\n", *(strpbrk("a string 123", accept2)), strpbrk("a string 123", accept2));
+    printf("str1: %c %s\n", *(strpbrk(str1, accept2)), strpbrk(str1, accept2));
+    printf("str7: %c %s\n", *(strpbrk("a string 123", accept2)), strpbrk("a string 123", accept2));
 
-    // printf("\n");
+    printf("\n");
 
     char *needle1 = "is";
     char *needle2 = malloc(10 * sizeof(char));
