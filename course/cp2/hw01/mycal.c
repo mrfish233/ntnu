@@ -9,6 +9,8 @@ int32_t calculate(char *pExpr, int32_t base, char **ppResult) {
     int64_t *operands = NULL, check = 0;
     char *operators = NULL;
 
+    // Tokenize the expression and add the operands and operators to the arrays
+
     char *token = strtok(pExpr, " ");
 
     while (token != NULL) {
@@ -29,6 +31,8 @@ int32_t calculate(char *pExpr, int32_t base, char **ppResult) {
         token = strtok(NULL, " ");
     }
 
+    // Calculate the result
+
     int64_t sum = 0;
 
     check = calculateResult(operands, operators, operandSize, operatorSize, &sum);
@@ -38,7 +42,7 @@ int32_t calculate(char *pExpr, int32_t base, char **ppResult) {
         return -1;
     }
 
-    // printf("=%ld\n", sum);
+    // Convert the result to the base
 
     check = convertToBaseStr(sum, base, ppResult);
 
@@ -121,8 +125,6 @@ int32_t convertToBaseStr(int64_t number, int32_t base, char **ppResult) {
     for (int64_t i = size - 1; i >= 0; i--) {
         int64_t digit = temp % base;
 
-        // printf("%ld\n", temp);
-
         if (digit < 10) {
             (*ppResult)[i + flag] = digit + '0';
         } else {
@@ -153,8 +155,6 @@ int32_t convertToBaseStr(int64_t number, int32_t base, char **ppResult) {
 int32_t addNewOperand(int64_t **operands, int64_t size, char *operand) {
     int64_t num = convertToBase10Int(operand);
 
-    // printf("%ld", num);
-
     if (num == -1) {
         return -1;
     }
@@ -180,8 +180,6 @@ int32_t addNewOperator(char **operators, int64_t size, char *operator) {
     if (op != '+' && op != '-' && op != '*') {
         return -1;
     }
-
-    // printf("%c", op);
 
     if (*operators == NULL) {
         *operators = (char *) calloc(1, sizeof(char));
@@ -234,8 +232,6 @@ int32_t calculateResult(int64_t *operands, char *operators, int64_t operandSize,
             result -= operands[i + 1];
         }
     }
-
-    // printf("%ld\n", result);
 
     *pResult = result;
 
