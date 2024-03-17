@@ -37,8 +37,8 @@ int main() {
 
     sPoly pFx = {
         .size = 2,
-        .pPowers = (uint32_t[]) {1000000000, 1},
-        .pCoefficients = (int32_t[]) {1, 1}
+        .pPowers = (uint32_t[]) {1, 0},
+        .pCoefficients = (int32_t[]) {4, -3}
     };
 
     printf("pFy:\n");
@@ -51,10 +51,12 @@ int main() {
         printf("%3d %3d\n", pFx.pCoefficients[i], pFx.pPowers[i]);
     }
 
-    if (chain_rule(&pResult, &pFy, &pFx) == 0) {
+    int32_t res = chain_rule(&pResult, &pFy, &pFx);
+
+    if (res == 0) {
         printf("pResult:\n");
         for (uint32_t i = 0; i < pResult.size; i++) {
-            printf("%10d %10d\n", pResult.pCoefficients[i], pResult.pPowers[i]);
+            printf("%3d %3d\n", pResult.pCoefficients[i], pResult.pPowers[i]);
         }
     } else {
         printf("Error\n");
