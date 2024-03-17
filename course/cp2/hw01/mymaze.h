@@ -41,6 +41,13 @@ typedef struct _sPath
 } sPath;
 
 /**
+ * Direction enum
+ */
+typedef enum {
+    NORTH, EAST, SOUTH, WEST
+} Direction;
+
+/**
  * Find the minimum cost path from the top-left corner to the bottom-right corner of the maze.
  * @param pMaze the maze
  * @param row the number of rows
@@ -59,23 +66,15 @@ int32_t find_min_path(const sRoom *pMaze, const uint8_t row, const uint8_t col, 
 int32_t doorNum(uint8_t door, uint8_t direction);
 
 /**
- * Check if the next position is reachable.
+ * Check if the given position is valid.
  * @param pMaze the maze
  * @param row the number of rows
  * @param col the number of columns
- * @param currPos the current position
- * @param nextPos the next position
- * @return 1: reachable, 0: blocked
+ * @param pMinPath the minimum cost path
+ * @param dir the direction
+ * @return 1: valid, 0: invalid, -1: the position is already in the path
  */
-int32_t isReachable(const sRoom *pMaze, const uint8_t row, const uint8_t col, const sPoint currPos, const sPoint nextPos);
-
-/**
- * Check if the positions are the same.
- * @param p1 the first position
- * @param p2 the second position
- * @return 1: same, 0: different
- */
-int32_t isSamePos(const sPoint p1, const sPoint p2);
+int32_t isValidPos(const sRoom *pMaze, const uint8_t row, const uint8_t col, const sPath *pMinPath, Direction dir);
 
 /**
  * Find the minimal cost path from 4 directions.

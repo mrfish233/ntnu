@@ -12,83 +12,51 @@ int32_t find_min_path(const sRoom *pMaze, const uint8_t row, const uint8_t col, 
         pMinPath->pPath[0].col = 0;
 
         pMinPath->length = 1;
-        pMinPath->cost = pMaze[0].cost;
+        pMinPath->cost   = pMaze[0].cost;
     }
 
-    sPoint *path = pMinPath->pPath;
-
     sPath availablePath[4] = {
-        {0, -1, NULL},
-        {0, -1, NULL},
-        {0, -1, NULL},
-        {0, -1, NULL}
+        {0, 0, NULL}, {0, 0, NULL}, {0, 0, NULL}, {0, 0, NULL}
     };
 
-    int32_t dx[] = {-1, 0, 1, 0};
-    int32_t dy[] = {0, 1, 0, -1};
-
-    int32_t x = path[pMinPath->length - 1].row;
-    int32_t y = path[pMinPath->length - 1].col;
-
-    int32_t prev_x = -1;
-    int32_t prev_y = -1;
-
     // Check if the current position is the destination
-    if (x == row - 1 && y == col - 1) {
+
+    sPoint currPos = pMinPath->pPath[pMinPath->length - 1];
+
+    if (currPos.row == (uint32_t) row - 1 && currPos.col == (uint32_t) col - 1) {
         return 1;
     }
 
-    if (pMinPath->length > 1) {
-        prev_x = path[pMinPath->length - 2].row;
-        prev_y = path[pMinPath->length - 2].col;
-    }
+    // printf("currPos: (%d,%d)\n", currPos.row, currPos.col);
 
-    for (uint8_t i = 0; i < 4; i++) {
-        int32_t new_x = x + dx[i];
-        int32_t new_y = y + dy[i];
+    for (int32_t i = 0; i < 4; i++) {
+        int32_t valid = isValidPos(pMaze, row, col, pMinPath, i);
 
-        if (new_x < 0 || new_x >= row || new_y < 0 || new_y >= col) {
+        if (valid == 0) {
             continue;
+        } else if (valid == -1) {
+            return 0;
         }
 
-        if (new_x == prev_x && new_y == prev_y) {
-            continue;
+        sPoint nextPos = currPos;
+
+        if (i == NORTH) {
+            nextPos.row--;
+        } else if (i == EAST) {
+            nextPos.col++;
+        } else if (i == SOUTH) {
+            nextPos.row++;
+        } else if (i == WEST) {
+            nextPos.col--;
         }
 
-        int32_t currPos = x * col + y;
-        int32_t nextPos = new_x * col + new_y;
-
-        int32_t currDoor = doorNum(pMaze[currPos].doors, i);
-        int32_t nextDoor = doorNum(pMaze[nextPos].doors, (i + 2) % 4);
-
-        // Check if the next position is reachable
-
-        if (currDoor != nextDoor) {
-            continue;
-        }
-
-        // Check if the next position is already in the path
-
-        for (uint32_t j = 0; j < pMinPath->length; j++) {
-            int32_t temp_x = pMinPath->pPath[j].row;
-            int32_t temp_y = pMinPath->pPath[j].col;
-
-            if (temp_x == prev_x && temp_y == prev_y) {
-                continue;
-            }
-
-            if (temp_x == new_x && temp_y == new_y) {
-                return 0;
-            }
-        }
-
-        // printf("new_x: %d, new_y: %d, length: %d, cost: %d\n", new_x, new_y, pMinPath->length, pMinPath->cost);
+        int32_t next = nextPos.row * col + nextPos.col;
 
         // Recursively find the path
 
         sPath newPath = {
             .length = pMinPath->length + 1,
-            .cost   = pMinPath->cost + pMaze[nextPos].cost,
+            .cost   = pMinPath->cost + pMaze[next].cost,
             .pPath  = (sPoint *) calloc(newPath.length, sizeof(sPoint))
         };
 
@@ -96,8 +64,7 @@ int32_t find_min_path(const sRoom *pMaze, const uint8_t row, const uint8_t col, 
             newPath.pPath[j] = pMinPath->pPath[j];
         }
 
-        newPath.pPath[newPath.length - 1].row = new_x;
-        newPath.pPath[newPath.length - 1].col = new_y;
+        newPath.pPath[newPath.length - 1] = nextPos;
 
         int32_t find = find_min_path(pMaze, row, col, &newPath);
 
@@ -117,6 +84,62 @@ int32_t find_min_path(const sRoom *pMaze, const uint8_t row, const uint8_t col, 
 
 int32_t doorNum(uint8_t door, uint8_t direction) {
     return (door >> ((3 - direction) * 2)) & 0x03;
+}
+
+int32_t isValidPos(const sRoom *pMaze, const uint8_t row, const uint8_t col, const sPath *pMinPath, Direction dir) {
+    sPoint currPos = pMinPath->pPath[pMinPath->length - 1];
+    sPoint prevPos = {row, col};
+    sPoint nextPos = currPos;
+
+    if (pMinPath->length > 1) {
+        prevPos = pMinPath->pPath[pMinPath->length - 2];
+    }
+
+    // Check invalid position
+
+    if ((dir == NORTH && currPos.row == 0) ||
+        (dir == EAST  && currPos.col == (uint32_t) col - 1) ||
+        (dir == SOUTH && currPos.row == (uint32_t) row - 1) ||
+        (dir == WEST  && currPos.col == 0)) {
+        return 0;
+    }
+
+    if (dir == NORTH) {
+        nextPos.row--;
+    } else if (dir == EAST) {
+        nextPos.col++;
+    } else if (dir == SOUTH) {
+        nextPos.row++;
+    } else if (dir == WEST) {
+        nextPos.col--;
+    }
+
+    // Check if walking back
+
+    if (nextPos.row == prevPos.row && nextPos.col == prevPos.col) {
+        return 0;
+    }
+
+    // Check if the next position is reachable
+
+    int32_t currDoor = doorNum(pMaze[currPos.row * col + currPos.col].doors, dir);
+    int32_t nextDoor = doorNum(pMaze[nextPos.row * col + nextPos.col].doors, (dir + 2) % 4);
+
+    if (currDoor != nextDoor) {
+        return 0;
+    }
+
+    // Check if the next position is already in the path
+
+    for (int32_t i = 0; i < (int32_t) pMinPath->length - 2; i++) {
+        sPoint tempPos = pMinPath->pPath[i];
+
+        if (tempPos.row == nextPos.row && tempPos.col == nextPos.col) {
+            return -1;
+        }
+    }
+
+    return 1;
 }
 
 int32_t findMinDir(sPath *pDir, sPath *pMinPath) {
