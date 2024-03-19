@@ -8,40 +8,24 @@ int32_t chain_rule(sPoly *pResult, const sPoly *pFy, const sPoly *pFx) {
     sPoly fyPrime = {0, NULL, NULL};
     sPoly fxPrime = {0, NULL, NULL};
 
-    if (derivative(&fyPrime, pFy) == -1 || derivative(&fxPrime, pFx) == -1) {
-        return -1;
-    }
+    int32_t check = 0;
 
-    // printf("fyPrime:\n");
-    // for (uint32_t i = 0; i < fyPrime.size; i++) {
-    //     printf("%3d %3d\n", fyPrime.pCoefficients[i], fyPrime.pPowers[i]);
-    // }
+    // Steps of chain rule:
+    // 1. Get derivatives of f1(x) and f2(y)
+    // 2. Substitude f1(x) into f2'(y)
+    // 3. Multiply the result of step 2 with f1'(x)
 
-    // printf("fxPrime:\n");
-    // for (uint32_t i = 0; i < fxPrime.size; i++) {
-    //     printf("%3d %3d\n", fxPrime.pCoefficients[i], fxPrime.pPowers[i]);
-    // }
-
-    // Reset pResult
-
-    clear(pResult);
-
-    // Substitute fx into fyPrime
-
-    if (substitute(pResult, &fyPrime, pFx) == -1) {
-        return -1;
-    }
-
-    // Multiply the result with fxPrime
-
-    if (multiply(pResult, &fxPrime) == -1) {
-        return -1;
+    if ((derivative(&fyPrime, pFy) == -1) ||
+        (derivative(&fxPrime, pFx) == -1) ||
+        (substitute(pResult, &fyPrime, pFx) == -1) ||
+        (multiply(pResult, &fxPrime) == -1)) {
+        check = -1;
     }
 
     clear(&fyPrime);
     clear(&fxPrime);
 
-    return 0;
+    return check;
 }
 
 bool isValid(const sPoly *pF) {
@@ -80,36 +64,50 @@ int32_t substitute(sPoly *pResult, const sPoly *pG, const sPoly *pF) {
         return -1;
     }
 
-    sPoly temp = {1, NULL, NULL};
+    sPoly temp = {0, NULL, NULL};
+    sPoly curr = {0, NULL, NULL};
+
     addTerm(&temp, 0, 1);
 
     uint32_t currentPower = 0;
 
+    int32_t check = 0;
+
+    // Steps of substitude:
+    // 1. Get power of f(x) from current term of g(x)
+    // 2. Get coefficient from current term of g(x)
+    // 3. Multiply the result of step 1 and 2
+    // 4. Sum the result of step 3
+    // 5. Repeatedly completing steps above for all terms of g(x)
+
     for (uint32_t i = pG->size; i > 0; i--) {
         while (currentPower < pG->pPowers[i - 1]) {
             if (multiply(&temp, pF) == -1) {
-                return -1;
+                check = -1;
+                break;
             }
 
             currentPower++;
         }
 
-        sPoly curr = {0, NULL, NULL};
-
-        if (addTerm(&curr, 0, pG->pCoefficients[i - 1]) == -1) {
-            return -1;
+        if (check == -1) {
+            break;
         }
 
-        if (multiply(&curr, &temp) == -1) {
-            return -1;
-        }
+        clear(&curr);
 
-        if (add(pResult, &curr) == -1) {
-            return -1;
+        if ((addTerm(&curr, 0, pG->pCoefficients[i - 1]) == -1) ||
+            (multiply(&curr, &temp) == -1) ||
+            (add(pResult, &curr) == -1)) {
+            check = -1;
+            break;
         }
     }
 
-    return 0;
+    clear(&temp);
+    clear(&curr);
+
+    return check;
 }
 
 int32_t add(sPoly *pResult, const sPoly *pF) {
@@ -133,6 +131,8 @@ int32_t multiply(sPoly *pResult, const sPoly *pF) {
 
     sPoly temp = {0, NULL, NULL};
 
+    int32_t check = 0;
+
     // Multiply pF with pResult
 
     for (uint32_t i = 0; i < pF->size; i++) {
@@ -141,6 +141,7 @@ int32_t multiply(sPoly *pResult, const sPoly *pF) {
             int32_t coefficient = pF->pCoefficients[i] * pResult->pCoefficients[j];
 
             if (addTerm(&temp, power, coefficient) == -1) {
+                clear(&temp);
                 return -1;
             }
         }
@@ -151,12 +152,12 @@ int32_t multiply(sPoly *pResult, const sPoly *pF) {
     clear(pResult);
 
     if (add(pResult, &temp) == -1) {
-        return -1;
+        check = -1;
     }
 
     clear(&temp);
 
-    return 0;
+    return check;
 }
 
 int32_t addTerm(sPoly *pF, uint32_t power, int32_t coefficient) {

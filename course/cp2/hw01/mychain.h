@@ -52,7 +52,6 @@ int32_t derivative(sPoly *pResult, const sPoly *pF);
 int32_t substitute(sPoly *pResult, const sPoly *pG, const sPoly *pF);
 
 /**
-
  * Add a polynomial to result polynomial.
  * @param pResult: pointer to the result polynomial
  * @param pF: pointer to the polynomial
