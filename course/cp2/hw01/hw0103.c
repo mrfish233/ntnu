@@ -18,15 +18,15 @@ int main() {
     // };
 
     sPoly pFy = {
-        .size = 1,
-        .pPowers = (uint32_t[]) {2},
-        .pCoefficients = (int32_t[]) {1}
+        .size = 4,
+        .pPowers = (uint32_t[]) {1,2,3,4},
+        .pCoefficients = (int32_t[]) {-667,466,558,-235}
     };
 
     sPoly pFx = {
-        .size = 2,
-        .pPowers = (uint32_t[]) {1000000000, 0},
-        .pCoefficients = (int32_t[]) {1, 1}
+        .size = 1,
+        .pPowers = (uint32_t[]) {1},
+        .pCoefficients = (int32_t[]) {0}
     };
 
     // sPoly pFy = {

@@ -1,5 +1,7 @@
 #include "mychain.h"
 
+#include <stdio.h>
+
 int32_t chain_rule(sPoly *pResult, const sPoly *pFy, const sPoly *pFx) {
     if (pResult == NULL || !isValid(pFy) || !isValid(pFx)) {
         return -1;
@@ -83,6 +85,7 @@ int32_t substitute(sPoly *pResult, const sPoly *pG, const sPoly *pF) {
     for (uint32_t i = pG->size; i > 0; i--) {
         while (currentPower < pG->pPowers[i - 1]) {
             if (multiply(&temp, pF) == -1) {
+                // printf("bad\n");
                 check = -1;
                 break;
             }
@@ -112,6 +115,7 @@ int32_t substitute(sPoly *pResult, const sPoly *pG, const sPoly *pF) {
 
 int32_t add(sPoly *pResult, const sPoly *pF) {
     if (pResult == NULL || !isValid(pF)) {
+        // printf("bad3\n");
         return -1;
     }
 
@@ -128,6 +132,8 @@ int32_t multiply(sPoly *pResult, const sPoly *pF) {
     if (pResult == NULL || !isValid(pF)) {
         return -1;
     }
+
+    // printf("pf: %u, res: %u\n", pF->size, pResult->size);
 
     sPoly temp = {0, NULL, NULL};
 
@@ -146,6 +152,10 @@ int32_t multiply(sPoly *pResult, const sPoly *pF) {
             }
         }
     }
+
+    // if (temp.pCoefficients == NULL) {
+    //     printf("%u\n", temp.size);
+    // }
 
     // Copy temp to pResult
 
