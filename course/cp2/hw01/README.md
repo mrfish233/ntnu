@@ -1,99 +1,123 @@
-# hw0x
+# hw01
 
-41247039S 韓欣劭
+Name: 41247039S 韓欣劭
 
-Computer Programming (I), hw0x
+Course: Computer Programming II
+
+Link:
+
+- [Question link](https://drive.google.com/file/d/1Wdv4nLaoXsXFZX17OleQpllvq5ii_n08/view?pli=1)
+- [Additional information](https://hackmd.io/@cp2023/cp2-hw1-info)
 
 ## Table of Contents
 
-* [Run and Execute](#run-and-execute)
-* [Question 1](#question-1)
-* [Question 2](#question-2)
-* [Question 3](#question-3)
-* [Question 4](#question-4)
-* [Question 5](#question-5)
-* [Bonus Question](#bonus-question)
+* [p1 My String Library](#p1-my-string-library)
+* [p2 String Calculator](#p2-string-calculator)
+* [p3 Chain Rule](#p3-chain-rule)
+* [p4 Maze](#p4-maze)
+* [p5 Taiko Music Generator](#p5-taiko-music-generator)
+* [p6 Bonus](#p6-bonus)
 
-## Run And Execute
+## p1 My String Library
 
-This is just a homework. Therefore it's easy to run these codes. Make sure to `unzip` thie file after download. To run the code, simply just type
+This library creates some string function that is similar to original C library included in `<string.h>`. The function lists are stated below:
 
-```console
-make
+```c
+char *mystrchr(const char *s, int c);
+char *mystrrchr(const char *s, int c);
+size_t mystrspn(const char *s, const char *accept);
+size_t mystrcspn(const char *s, const char *reject);
+char *mystrpbrk(const char *s, const char *accept);
+char *mystrstr(const char *haystack, const char *needle);
+char *mystrtok(char *str, const char *delim);
 ```
 
-and all the c language codes will be compiled by using `gcc`. There will be 5 compiled file, naming `hw0x0x` where `x` is the question number.
+For more information about the functions above, please refer to `mystring.h`.
 
-This homework has 5+1 questions. The [question](#hw0x) and question's [additional information](#hw0x) is here (since both links are not mine, the link may become invalid).
+## p2 String Calculator
 
-The first 5 questions are written in C language, and the bonus question is written in [hw0x0x.md](#hw0x). The first 5 questions are executable, by typing
+The `calculate()` function in `mycal.h` calculates the arithmetic expression with different base, and gives result in provided base.
 
-```console
-./hw0x0x
+```c
+int32_t calculate(char *pExpr, int32_t base, char **ppResult);
 ```
 
-where `x` is range from 1 to 5.
+- `pExpr`: should not exceed the length of 100. `pExpr` follows the format `<operand 1> (operator 1) <operand 2> (operator 2) ... <operand n> (operator n)`
+- `<operand k>`: `<digits>_<base>`. For example, `123_10` means the number 123 is in base 10; `ABC_16` means the number ABC is in base 16.
+  - `<digits>`: should not exceed the range of `int32_t`.
+  - `<base>`: in the range of 2 and 16 (inclusive).
+- `<operator k>`: `+`, `-` and `*`
+- `base`: in the range of 2 and 16 (inclusive).
+- `ppResult`: the pointer to save the result string. Should be `NULL` when passing in.
 
-## Question 1
+The function will return 0 and save the result to `ppResult` if the input is correct, otherwise it will return -1.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+## p3 Chain Rule
 
-```console
-./hw0x01
+The `chain_rule()` function in `mychain.h` calculates the chain rule for `dz/dy * dy/dx`.
+
+```c
+int32_t chain_rule(sPoly *pResult, const sPoly *pFy, const sPoly *pFx);
 ```
 
-### What I have learned/encountered in Q1
+- `pResult`: the pointer of result polynomial. Make sure that the values inside `pResult` is initialized to prevent runtime error. It should be initialized as:
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-## Question 2
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-```console
-./hw0x02
+```c
+sPoly pResult = {
+    .size = 0;
+    .pPowers = NULL,
+    .pCoefficients = NULL
+}
 ```
 
-### What I have learned/encountered
+- `pFy`: the polynomial of `f_1(y)`.
+- `pFx`: the polynomial of `f_2(x)`.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+The function will return 0 and save the result to `pResult` if the input is correct, otherwise it will return -1.
 
-## Question 3
+## p4 Maze
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+The function `find_min_path()` in `mymaze.h` finds the minimum cost of path that walks from upper-left corner of maze to lower-right of maze.
 
-```console
-./hw0x03
+```c
+int32_t find_min_path(const sRoom *pMaze, const uint8_t row, const uint8_t col, sPath *pMinPath);
 ```
 
-### What I have learned/encountered
+- `pMaze` the maze, which includes the cost of each room and the door number of each directions of the room.
+- cost: the cost required to pass that room.
+- door number: check the availability to pass from that direction. It's 8 a bit numbers, `aabbccdd` and `aa`, `bb`, `cc`, `dd` represents direction of up, right, down and left respectively.
+- `row`: the total row number of maze.
+- `col`: the total column number of maze.
+- `pMinPath`: the pointer of path to store the minimum cost of path.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+The function will return 0 if there is no path, -1 if any error inputs, 1 otherwise.
 
-## Question 4
+## p5 Taiko Music Generator
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Please refer to [question](https://drive.google.com/file/d/1Wdv4nLaoXsXFZX17OleQpllvq5ii_n08/view?pli=1) and [additional information](https://hackmd.io/@cp2023/cp2-hw1-info) for a complete description of this function.
 
-```console
-./hw0x04
+- Input: The tja file from the game "Taiko no Tatsujin".
+- Output: Translated tja file with following format:
+
+```text
+course: 3
+[1, 1.646000]
+[1, 1.822471]
+[2, 1.998941]
+...
+
+course: 2
+...
+...
 ```
 
-### What I have learned/encountered
+- `course: k`: specifies which course is using for following notes. `k` is range from 0 to 4 (inclusive).
+- `[x, y]`: `x` describes the type of note, `y` describes the time that note appears from the song.
+- `x`: only includes DON, KA, BIGDON and BIGKA, which represents as 1, 2, 3 and 4 respectively.
+- `y`: the time of note in seconds.
 
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+If there's error input in the tja file, nothing will output and the program will be terminated.
 
-## Question 5
+## p6 Bonus
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-```console
-./hw0x05
-```
-
-### What I have learned/encountered
-
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-## Bonus Question
-
-the bonus question is written in [hw0x0x.md](#hw0x).
+The bonus is written in [hw0106.md](hw0106.md).
